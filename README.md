@@ -18,6 +18,10 @@ watch is computed, not animated.
 [![37 kB gzip](https://img.shields.io/badge/core-37%20kB%20gzip-2f9e44)](#tech-stack)
 [![MIT](https://img.shields.io/badge/license-MIT-8a8f98)](LICENSE)
 
+<img src="assets/demo-plate.gif" width="760" alt="The index plate assembling itself: twelve numbered leader lines drawing out from the exploded aircraft drawing to name each chapter.">
+
+*The index is the drawing. Twelve callouts, twelve chapters.*
+
 </div>
 
 ---
@@ -102,6 +106,7 @@ Then open the printed URL. No key is needed to read the course or fly the sandbo
 | `npm run verify:videos` | Re-checks every clip for link rot and embedding permission |
 | `npm run gen` | Regenerates imagery (needs `codex` logged in) |
 | `npm run curate` | Refreshes video candidates (needs a free YouTube Data API v3 key) |
+| `python scripts/make-demo-gif.py` | Re-renders the README demo from the live geometry and timings |
 
 Only the last two need credentials. Copy `.env.example` to `.env` if you want them.
 
