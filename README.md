@@ -1,154 +1,175 @@
+<div align="center">
+
+<img src="assets/logo.svg" width="64" height="64" alt="">
+
 # Flight Dynamics
 
-A visual learning platform for one topic, taught properly. Twelve concepts, in the order
-they make sense, each with a concrete anchor, hand-authored figures you step through, the
-common misconception named out loud, curated video that plays in the app, and a checkride.
-Every chapter ends in a 3D sandbox where you fly the thing you just read about.
+**Learn why an aeroplane flies — then go and prove it, in a simulator that is telling you the truth.**
 
-```bash
-npm install && npm run dev
-```
+Twelve chapters. Thirty hand-drawn plates that build as you read. Twelve 3D sandboxes on one
+six-axis flight model carrying real Cessna 172 stability derivatives — so the Dutch roll you
+watch is computed, not animated.
+
+[![Vite 7](https://img.shields.io/badge/Vite-7-646CFF)](https://vite.dev)
+[![Three.js 0.181](https://img.shields.io/badge/Three.js-0.181-000000)](https://threejs.org)
+[![No framework](https://img.shields.io/badge/framework-none-555555)](#tech-stack)
+[![6-axis model](https://img.shields.io/badge/flight%20model-6%20axis-1971c2)](#the-flight-model)
+[![Physics asserted](https://img.shields.io/badge/physics-asserted%20in%20check-2f9e44)](#verification)
+[![37 kB gzip](https://img.shields.io/badge/core-37%20kB%20gzip-2f9e44)](#tech-stack)
+[![MIT](https://img.shields.io/badge/license-MIT-8a8f98)](LICENSE)
+
+</div>
 
 ---
 
-## What's here
+## Why this exists
 
-| | |
-|---|---|
-| **12 lessons** | Four forces → lift → stall → drag → axes → stability → longitudinal modes → lateral modes → turning → envelope → equations of motion → control |
-| **30 authored figures** | Hand-built SVG, 2–4 progressive sheets each, themed, screen-reader described |
-| **12 flight sandboxes** | Three.js on one shared 6-axis flight model — every chapter gets its own task, controls, arrows and instrument readout |
-| **34 curated videos** | Picked by hand from 191 API candidates, each with a written rationale |
-| **12 stage checks** | One per lesson, each targeting that lesson's misconception |
-| **32-card catalogue** | Derived from the lessons, never authored beside them — spaced with Leitner boxes, plus a scored exam mode |
-| **A final checkride** | Seven items flown in the sandbox. Each asks you to produce a claim the course made; the model judges it |
-| **12 hero images** | Generated with gpt-image-2 via the `gpt-image-bridge` skill. Currently unused by the UI — kept as provenance, not shipped. |
+Most explanations of flight are either a children's diagram that is quietly wrong, or a
+textbook that assumes you already know. This sits in between: it names the thing you probably
+believe, shows you why it is false, and then hands you the controls so you can check.
 
-## Layout
+Twelve misconceptions get taken apart. Two of them have killed people:
 
-```
-index.html              Vite entry; carries the direction contract as a comment
-src/
-  main.js               router (hash-based)
-  data/
-    svg.js              SVG primitives encoding the visual grammar
-    diagrams.js         all 30 figures
-    lessons.js          lesson content
-    videos.js           generated from content/videos.json — don't hand-edit
-    deck.js             derives the revision deck FROM the lessons; no card text here
-  ui/
-    home.js             the plate index — balloons over the exploded drawing
-    lesson.js           the work bench — reading column + pinned figure
-    cards.js            the card catalogue: study and examination
-    checkride.js        the final test, flown
-    player.js           the in-app video plate
-    util.js             progress, drawn arrow mark, element helper
-  sim/
-    flight-model.js     6-axis flight model with C172 derivatives; no DOM, no Three
-    sandbox.js          the Three.js sandbox, dynamically imported
-    tasks.js            what each chapter's sandbox asks you to do; no Three, so
-                        lesson.js can read it without pulling the 3D engine in
-  styles/
-    tokens.css          semantic colour; the single source of truth
-    app.css             the world
-content/
-  visual-grammar.md     the design contract every figure obeys
-  concepts.json         the curriculum spine
-  style-prefix.txt      locked prompt prefix for image generation
-  videos.json           all 191 video candidates + editorial picks
-  assets.md             provenance ledger, append-only
-assets/generated/       generated imagery; only what is imported gets bundled
-scripts/
-  gen.mjs               image generation
-  yt.mjs                video search / curate / verify
-  check-model.mjs       flight-model self-check
-  check-checkride.mjs   flies every checkride item to prove it is passable
-TOOLING-RESEARCH.md     the full survey this was built from
-```
+> **"A stall is caused by flying too slowly."** A wing stalls at an *angle*. You can stall at
+> cruise speed in a hard pull-up — and the final checkride asks you to do exactly that.
 
-## The three rules that shaped everything
+> **"The autopilot flies the plane."** It holds one number. It has no idea whether that number
+> is still the right one, and it will hold it faithfully into terrain.
 
-**1. Colour means something.** Lift is blue, weight near-black, thrust green, drag red,
-moments orange, angles amber, reference frames grey. A reader who learns those on lesson
-one can read any figure without a legend. The interface itself spends no colour — chrome
-is achromatic, so a coloured mark is always a force and never a button. See
-`content/visual-grammar.md` §1.
+## Highlights
 
-**2. Generated imagery never carries facts.** Hero art, atmosphere and texture are
-generated. Every labelled technical figure is authored by hand. An image model will
-invent components and mislabel axes, and a confidently wrong diagram in a teaching
-product is worse than no diagram. `concepts.json` enforces this structurally: technical
-figures have no prompt field, so they cannot be generated by accident.
+- **Twelve chapters** — four forces → lift → stall → drag → axes → stability → longitudinal
+  modes → lateral modes → turning → envelope → equations of motion → control
+- **30 authored SVG plates**, 2–4 progressive sheets each, that *assemble as you scroll* the
+  paragraphs explaining them
+- **12 flight sandboxes** — one scene, a different task, controls and instrument panel per chapter
+- **A final checkride** — seven items flown, not answered. Each asks you to produce a claim the
+  course made, and the flight model judges it
+- **32-card revision deck** with Leitner spacing, *derived from the lessons* so it cannot drift
+- **34 curated videos** from 24 channels, playing **inside** the app — nothing is requested from
+  Google until you press play, and the end of a clip is intercepted so YouTube's suggestion grid
+  never renders
+- **No framework, no backend, no accounts.** Progress is `localStorage`
 
-**3. The sandbox reads the model, not a script.** Every number on the instrument panel
-comes from `src/sim/flight-model.js` integrating at 1/240 s. Arrow lengths are scaled
-against weight, so "lift exceeds weight" is literally what you see. Nothing is faked to
-look right — if the physics is wrong, the picture goes wrong with it, which is the point.
+## The flight model
 
-The geometry, inertias and stability derivatives are converted to SI from the
-[JSBSim](https://github.com/JSBSim-Team/jsbsim) `c172x` definition (GPL, by Tony Peden),
-itself built from publicly available Cessna 172 data. Dutch roll, the phugoid and the rest
-are not scripted animations: they emerge from those coefficients, and `npm run check`
-measures them and compares them with theory on every run.
+`src/sim/flight-model.js` is a rigid-body model with linear aerodynamics, in about 300 readable
+lines. Geometry, inertias and stability derivatives are converted to SI from the
+[JSBSim](https://github.com/JSBSim-Team/jsbsim) `c172x` definition of a 1982 Cessna 172P.
 
-## Working on it
+Nothing is scripted. Every mode falls out of those coefficients, and every run asserts it:
+
+| | measured | theory |
+|---|---|---|
+| Short period | 0.98 s | 1.04 s |
+| Phugoid | 26.7 s | 22.7 s (π√2·V/g) |
+| Dutch roll | 2.24 s, damped | 2.44 s |
+| Roll subsidence τ | 0.07 s | 0.09 s |
+| Spiral | convergent | — |
+| Load factor at 60° bank | 1.99 g | 1.99 g (1/cos φ) |
+
+The turn is the one to look at: nothing imposes `n = 1/cos φ`. The aileron holds the bank, the
+elevator holds the height, and the load factor is whatever falls out. It matches to within
+**0.001 g from 0° to 60°**.
+
+## Tech stack
+
+| Layer | Choice | Why |
+|---|---|---|
+| Build | Vite 7 | One dependency, one-second builds |
+| UI | Vanilla ES modules | Twelve pages of static prose did not need a framework |
+| 3D | Three.js 0.181 | Code-split; a chapter you only read never downloads it |
+| Figures | Hand-authored SVG | Generated imagery never carries facts — see [NOTICE](NOTICE) |
+| Type | Archivo / Archivo Narrow / JetBrains Mono | Self-hosted, no font CDN |
+| Physics | Written from scratch | The learner is shown this exact file |
+
+Core bundle is **37 kB gzip**; Three.js is a separate 128 kB chunk fetched on demand.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
 ```
-Vite dev server with HMR. Set `PORT` to pin the port.
 
-```bash
-npm run check
+Then open the printed URL. No key is needed to read the course or fly the sandboxes.
+
+| Script | Does |
+|---|---|
+| `npm run dev` | Dev server with HMR. `PORT` pins the port |
+| `npm run check` | Asserts the physics and flies every checkride item |
+| `npm run build` | Production build |
+| `npm run verify:videos` | Re-checks every clip for link rot and embedding permission |
+| `npm run gen` | Regenerates imagery (needs `codex` logged in) |
+| `npm run curate` | Refreshes video candidates (needs a free YouTube Data API v3 key) |
+
+Only the last two need credentials. Copy `.env.example` to `.env` if you want them.
+
+## Project structure
+
 ```
-Runs two suites. The model check asserts every claim a chapter makes: stall speed,
-liftoff, climb load factor, minimum-drag speed, short period, phugoid, Dutch roll period
-and damping, roll subsidence, spiral direction, and that a level turn pulls exactly
-1/cos φ at g·tanφ/V. The checkride check then *flies* all seven exam items with a crude
-autopilot standing in for a learner, and fails the build if any item is unreachable — an
-exam question nobody can pass is worse than no question. Run after touching `src/sim/`.
-
-```bash
-npm run build
+src/
+  data/     lessons, 30 figures, SVG primitives, the derived revision deck
+  sim/      flight-model.js · sandbox.js · tasks.js (what each chapter asks)
+  ui/       home · lesson · cards · checkride · credits · player · logo
+  styles/   tokens.css (semantic colour) · app.css
+content/    curriculum spine, visual grammar, video candidates, asset ledger
+scripts/    generation, curation, and the two check suites
+DESIGN.md   the design system, derived from the shipped build
 ```
-Production build. Three.js is code-split into its own chunk and only fetched when someone
-presses **Fly it yourself**, so a chapter you only read never downloads it.
 
-```bash
-node scripts/gen.mjs --dry
-```
-Assemble and print every image prompt without generating. Costs nothing.
+## Verification
 
-```bash
-node scripts/gen.mjs four-forces
-```
-Generate one concept's imagery into `assets/generated/`. Needs `codex` logged in via
-ChatGPT. Generate one, look at it, adjust `content/style-prefix.txt`, then run `--all`.
+`npm run check` runs two suites and fails on either.
 
-```bash
-node scripts/yt.mjs curate
-```
-Refresh video candidates. Needs a free YouTube Data API v3 key in `.env` as
-`GOOGLE_API_KEY`. Then set `"picked": true`, write a `note`, and run `npm run videos`.
+**The model check** asserts stall speed, takeoff roll, climb load factor, minimum-drag speed,
+both longitudinal modes, all three lateral modes, and that a level turn pulls exactly `1/cos φ`
+at `g·tanφ/V`.
 
-```bash
-node scripts/yt.mjs verify
-```
-Check every saved video still resolves. Link rot is the standing failure mode of
-curated video — run this monthly.
+**The checkride check** *flies* all seven exam items with a crude autopilot standing in for a
+learner who understood the chapter, and fails if any item is unreachable — an exam question
+nobody can pass is worse than no question. It has already caught a real bug: elevator travel set
+to 20° instead of the real aircraft's 23° meant full back stick could only command 17.4° of angle
+of attack against a 16° stall, so **the aeroplane could not be stalled at speed at all** — the
+exact thing chapter 3 exists to disprove.
 
-## Known limits
+## Design
 
-- Diagrams are built as strings rather than DOM. Fine at this size; if the figure count
-  doubles again, reach for a real component layer.
-- The model is a rigid body with linear aerodynamics and Ixz assumed zero. That is enough
-  for every mode the twelve chapters teach and it keeps the file readable, which is the
-  point — but it is not a replacement for JSBSim, and it does not pretend to be.
-- No chapter gets a sandbox its physics cannot honestly compute. If that ever changes,
-  `MISSING` in `src/sim/tasks.js` is where the reason goes.
-- Progress is `localStorage` only — no accounts, no sync, no backend. That was deliberate:
-  it removes auth, a database and a privacy policy from the project entirely.
-- The climb figure draws 30° because a realistic 6° makes `L = W cos γ` visually
-  identical to `L = W`. The exaggeration is stated in the caption and the `<desc>`.
-- Videos play in-app on a plate. Nothing is requested from Google until someone presses
-  play, and the clip's end is intercepted so YouTube's suggestion grid never renders.
+The whole thing is an aircraft maintenance manual that happens to be interactive. Square
+corners, three line weights, no shadows anywhere, a ruled zone grid down all four margins.
+
+The organising rule is that **colour is scarce and means something**. The interface spends none
+of it — every control is paper, ink and grey — so the entire budget goes to the physics: lift is
+blue, thrust green, drag red, weight ink. A coloured mark on any page can only ever be a
+statement about forces. See [DESIGN.md](DESIGN.md).
+
+## Roadmap
+
+- [ ] Animate the index plate
+- [ ] A second subject on the same engine, to prove the format travels
+- [ ] Deploy a public demo
+- [ ] Accessibility pass on the sandbox instrument panel
+
+## Contributing
+
+Issues and pull requests welcome. Two house rules, both load-bearing:
+
+1. **No sandbox for a chapter whose physics the model cannot honestly compute.** Miming a Dutch
+   roll it is not calculating would be the worst thing this project could ship. `MISSING` in
+   `src/sim/tasks.js` is where the reason goes.
+2. **Generated imagery never carries facts.** Technical figures are authored by hand.
+
+If a chapter is wrong, that is the most valuable issue you can open.
+
+## Credits
+
+Built on other people's measurements. **JSBSim** and Tony Peden for the C172 data,
+**NASA/NACA** for the public-domain literature, **Three.js**, **Omnibus-Type** and **JetBrains**
+for the faces, and **24 YouTube channels** whose teaching is better in five minutes than a page
+of prose could be. Full attribution in [NOTICE](NOTICE) and on the in-app Sources page.
+
+Inspired by [Cell Architecture Studio](https://github.com/cclank/cell-architecture-studio).
+
+## License
+
+[MIT](LICENSE). See [NOTICE](NOTICE) for third-party material.
