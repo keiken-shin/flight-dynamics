@@ -68,7 +68,7 @@ export function renderLesson(root, id) {
         strip.appendChild(b);
       }
     }
-    if (total > 1) strip.appendChild(el("span", "sheets__hint", "step through the build"));
+    if (total > 1) strip.appendChild(el("span", "sheets__hint", `tap 1 to build it up`));
     /* Opens COMPLETE. The prose right after a figure reference describes the
        finished drawing, so the finished drawing is what has to be there; the
        tabs replay how it got that way. */
@@ -261,20 +261,26 @@ export function renderLesson(root, id) {
   if (i < LESSONS.length - 1)
     foot.appendChild(Object.assign(el("a", "", `<span>${LESSONS[i + 1].title}</span>${mark()}`),
       { href: "#" + LESSONS[i + 1].id }));
-  col.appendChild(foot);
 
-  /* ── the sandbox: apply what you just read ──────────────────────────────
-     Its own section, spanning the full width at the very end of the chapter.
+  /* ── after the chapter ──────────────────────────────────────────────────
+     The apply surface and the footer nav sit OUTSIDE the two-column grid, as
+     plain blocks beneath it. That placement is the whole fix.
 
-     It used to live on the bench, and that was two bugs in one. `mountFigure`
-     replaces the bench's contents, so the launch control was destroyed the first
-     time scrolling swapped the figure — and below 1020px the bench is
-     display:none, which made the button and the entire sandbox invisible on
-     every phone. It also belongs last on reading order: flying the thing is what
-     you do after the chapter, not something to trip over between figures. */
+     Inside the grid they were a third row under a sticky element, and a sticky
+     element overhangs the row after it rather than stopping at it — so the
+     launch control was drawn straight across the figure's caption. Painting it
+     over the bench made the collision opaque instead of removing it. Out here
+     the grid has ended, the bench has nowhere left to reach, and both can have
+     the full width honestly.
+
+     Order matters too: read the chapter, fly it, then leave. The footer nav used
+     to sit above the sandbox inside the reading column, which put "next chapter"
+     before the thing the chapter was building toward. */
   const apply = el("div", "apply");
-  wrap.append(head, col, benchWrap, apply);
-  root.appendChild(wrap);
+  const after = el("div", "after");
+  after.append(apply, foot);
+  wrap.append(head, col, benchWrap);
+  root.append(wrap, after);
 
   showFigure(figIds[0]);
 

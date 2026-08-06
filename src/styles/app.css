@@ -345,9 +345,13 @@ button { font: inherit; color: inherit; }
 .lesson { display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); gap: 0 var(--gutter); }
 .lesson__head { grid-column: 1; grid-row: 1; padding-top: 40px; min-width: 0; }
 .col { grid-column: 1; grid-row: 2; padding: 0 0 40px; min-width: 0; }
-/* The apply surface spans both columns at the foot of the chapter: the sandbox
-   deserves the whole width, and it is the last thing you do here. */
-.apply { grid-column: 1 / -1; grid-row: 3; padding-bottom: 50px; }
+/* Everything after the chapter lives BELOW the grid, not in a third row of it.
+   A third row sits under the sticky bench, which overhangs the row after it
+   rather than stopping at it — that is what drew the launch control across the
+   figure's caption. Out here the grid has ended and there is nothing to collide
+   with, so full width is honest rather than a fight. */
+.after { padding-bottom: 20px; }
+.apply { margin-bottom: 34px; }
 .apply .launch { border: var(--w-rule) solid var(--ink); border-top-width: var(--w-rule); }
 .apply .sandbox { border: var(--w-rule) solid var(--ink); }
 .col > *, .lesson__head > * { max-width: 68ch; }   /* body measure, per the craft floor */
@@ -672,7 +676,10 @@ button { font: inherit; color: inherit; }
 .mk-h { fill: currentColor; stroke: none; }
 
 /* footer nav */
-.foot { display: flex; justify-content: space-between; gap: 16px; margin-top: 40px; }
+/* Full width now that it sits below the grid rather than inside the reading
+   column, and after the sandbox: read the chapter, fly it, then leave. */
+.foot { display: flex; justify-content: space-between; gap: 16px;
+        padding-top: 22px; border-top: var(--w-rule) solid var(--ink); }
 .foot a { display: inline-flex; align-items: center; gap: 9px;
           text-decoration: none; padding: 13px 16px; border: var(--w-hair) solid var(--rule);
           font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }

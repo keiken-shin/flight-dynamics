@@ -328,6 +328,9 @@ Every figure is authored SVG built from `src/data/svg.js` primitives, with `<tit
 
 This is a correctness rule, not a preference. On the negative plate `--f-weight` resolves to `--ink`, so an airframe drawn at full ink and the weight arrow are the *same colour exactly* (contrast 1.00) and the one force the reader is looking for disappears into the fuselage. Restoring the airframe to full ink re-breaks it.
 
+### After the Chapter
+`.after` is a plain block below the two-column grid holding the apply surface and then the footer nav, in that order: read the chapter, fly it, then leave. Both take the full width honestly, because out here nothing sticky can reach them. The footer used to sit inside the reading column *above* the sandbox, which put "next chapter" before the thing the chapter was building toward.
+
 ### The 3D Sandbox
 The same world in three dimensions. Geometry is built, not downloaded, so it keeps the line-drawing character: solid meshes at `paper-sunk` with `ink-2` edge lines. Every colour is read from the same custom properties via `getComputedStyle`, so the scene, its fog, its ground and its four arrows are the same palette the figures use. Arrows are scaled against weight so "longer than weight" is literally what the reader sees; sprite labels are mono. The HUD's exit control returns the bench to its plate.
 
@@ -373,6 +376,7 @@ Each item resets the aircraft to its own start, because failing item six must no
 - **Don't** add a second accent, or reuse the accent inside the semantic set — its absence there is what keeps interface from reading as data.
 - **Don't** add a fourth line weight or a sixth type role.
 - **Don't** put two figure references back to back — a section with no prose in it is a figure with nothing said about it.
+- **Don't** put anything in a third grid row under the sticky bench. A sticky element overhangs the row after it rather than stopping at it — 87px on a 2000×700 viewport — which drew the launch control straight across the figure's caption and read as a line struck through the text. Raising its `z-index` only made the collision opaque. Everything after the chapter belongs **below the grid**, in `.after`, where the grid has ended and there is nothing to collide with.
 - **Don't** put the launch control or the sandbox on the bench. `mountFigure` replaces the bench's contents, so a figure swap destroys anything else living there; and below 1020px the bench is `display: none`, which made the button and the whole sandbox invisible on every phone. The apply surface spans both columns at the foot of the chapter, where flying the thing belongs.
 - **Don't** draw an airframe at full ink, in a figure or in the sandbox. It out-shouts the forces, and on the negative plate it is the same value as the weight arrow.
 - **Don't** fill a 3D body with the scene background colour, and don't let fog eat the ground. Both were shipped once and both erased the horizon.
