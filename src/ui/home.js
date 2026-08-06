@@ -3,6 +3,7 @@ import plateUrl from "../../assets/generated/plate-aircraft.png";
 import { el, progress } from "./util.js";
 import { catalogueStrip } from "./cards.js";
 import { checkrideStrip } from "./checkride.js";
+import { creditsStrip } from "./credits.js";
 
 /* Balloon stations over the plate, in the raster's own 1536x1024 space.
  * `b` is the balloon, placed in paper the illustration actually left empty;
@@ -137,6 +138,6 @@ export function renderHome(root) {
 
   /* Back matter, the way a manual carries it: the parts table, then the index
      of everything worth remembering out of it. */
-  root.append(lede, stage, table, catalogueStrip(), checkrideStrip());
+  root.append(lede, stage, table, catalogueStrip(), checkrideStrip(), creditsStrip());
   document.title = "Flight Dynamics";
 }

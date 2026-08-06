@@ -4,6 +4,7 @@ import { renderHome } from "./ui/home.js";
 import { renderLesson } from "./ui/lesson.js";
 import { renderCards } from "./ui/cards.js";
 import { renderCheckride, stopCheckride } from "./ui/checkride.js";
+import { renderCredits } from "./ui/credits.js";
 import { el, applyPlate, currentPlate, cyclePlate } from "./ui/util.js";
 
 const app = document.getElementById("app");
@@ -63,6 +64,9 @@ function route({ meta, index }) {
   } else if (id === "checkride") {
     meta.textContent = "Final test";
     renderCheckride(app);
+  } else if (id === "credits") {
+    meta.textContent = "Sources";
+    renderCredits(app);
   } else if (i === -1) {
     meta.textContent = `${LESSONS.length} chapters`;
     renderHome(app);

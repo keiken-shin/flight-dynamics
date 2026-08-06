@@ -767,3 +767,28 @@ button { font: inherit; color: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
+
+/* ── sources ───────────────────────────────────────────────────────────── */
+.catalogue--src { margin-top: -1px; }
+.src { border: var(--w-hair) solid var(--rule); margin-bottom: 14px; }
+.src__cap {
+  display: flex; gap: 14px; padding: 8px 14px;
+  border-bottom: var(--w-hair) solid var(--rule); background: var(--paper-sunk);
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.src__cap span:first-child { font-weight: 600; color: var(--ink); }
+.src__cap span:last-child { margin-left: auto; }
+.src__who { margin: 13px 14px 0; font-size: 15px; font-weight: 600; }
+.src__what { margin: 6px 14px 0; font-size: 15px; color: var(--ink-2); }
+.src__url {
+  display: block; margin: 10px 14px 14px; font-family: var(--f-mono);
+  font-size: 11px; letter-spacing: .04em; color: var(--ink-3); text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.src__url:hover { color: var(--accent); }
+.credits__list { margin-top: 6px; }
+.credits__list .c-item { width: 52px; text-align: right; }
+.credits__list .c-rem { font-size: 13.5px; }
+.credits__foot { margin-top: 22px; }
+.credits__foot code { font-family: var(--f-mono); font-size: 13px; color: var(--ink); }
