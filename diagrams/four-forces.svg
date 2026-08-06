@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" data-state="4"
+     role="img" aria-labelledby="ff-title ff-desc" class="figure">
+  <title id="ff-title">The four forces on an aircraft in steady level flight</title>
+  <desc id="ff-desc">A light aircraft in side view, nose to the left. Four force arrows
+    radiate from its centre of gravity: lift straight up, weight straight down, thrust
+    forward toward the nose, and drag aft toward the tail. All four arrows are drawn the
+    same length, because in steady level flight lift balances weight and thrust balances
+    drag. The figure is built in four steps: the aircraft alone, then weight, then lift,
+    then thrust and drag together.</desc>
+
+  <style>
+    /* Two-layer tokens. The private --_x layer resolves to the host's token when
+       src/styles/tokens.css is present, and otherwise to a scheme-appropriate literal.
+       This is what makes the file correct BOTH standalone (either OS theme) and
+       inlined in the themed app — a single-layer var(--x, literal) can only ever
+       carry one fallback, which is why this rendered near-black on black at first. */
+    .figure {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      --_ink:      var(--ink,      #1f2a37);
+      --_ink-soft: var(--ink-soft, #55606d);
+      --_chip:     var(--chip-bg,  #f7f5f0);
+      --_lift:     var(--f-lift,   #1971c2);
+      --_weight:   var(--f-weight, #212529);
+      --_thrust:   var(--f-thrust, #2f9e44);
+      --_drag:     var(--f-drag,   #e03131);
+    }
+    @media (prefers-color-scheme: dark) {
+      .figure {
+        --_ink:      var(--ink,      #e6e3dd);
+        --_ink-soft: var(--ink-soft, #9aa3ad);
+        --_chip:     var(--chip-bg,  #14181d);
+        --_lift:     var(--f-lift,   #4dabf7);
+        --_weight:   var(--f-weight, #e9ecef);
+        --_thrust:   var(--f-thrust, #51cf66);
+        --_drag:     var(--f-drag,   #ff6b6b);
+      }
+    }
+
+    .airframe { fill: none; stroke: var(--_ink); stroke-width: 1.5;
+                stroke-linejoin: round; }
+    .cg-ring  { fill: none; stroke: var(--_ink); stroke-width: 1.5; }
+    .cg-fill  { fill: var(--_ink); }
+
+    .force    { stroke-width: 2.5; stroke-linecap: butt; fill: none; }
+    .f-lift   { stroke: var(--_lift);   marker-end: url(#ah-lift); }
+    .f-weight { stroke: var(--_weight); marker-end: url(#ah-weight); }
+    .f-thrust { stroke: var(--_thrust); marker-end: url(#ah-thrust); }
+    .f-drag   { stroke: var(--_drag);   marker-end: url(#ah-drag); }
+
+    /* Labels sit in a chip on the figure, never in a legend — §3 */
+    .chip      { fill: var(--_chip); rx: 4; }
+    .chip-text { font-size: 15px; font-weight: 500; text-anchor: middle;
+                 dominant-baseline: middle; }
+    .t-lift   { fill: var(--_lift); }
+    .t-weight { fill: var(--_weight); }
+    .t-thrust { fill: var(--_thrust); }
+    .t-drag   { fill: var(--_drag); }
+
+    .caption { font-size: 16px; text-anchor: middle; fill: var(--_ink-soft); }
+
+    /* Progressive build — same viewBox, same positions, only additions appear (§4.2) */
+    .s2, .s3, .s4, .cap { transition: opacity .35s ease; }
+    .cap { opacity: 0; }
+    svg[data-state="1"] .s2, svg[data-state="1"] .s3, svg[data-state="1"] .s4,
+    svg[data-state="2"] .s3, svg[data-state="2"] .s4,
+    svg[data-state="3"] .s4 { opacity: 0; }
+    svg[data-state="1"] .cap1, svg[data-state="2"] .cap2,
+    svg[data-state="3"] .cap3, svg[data-state="4"] .cap4 { opacity: 1; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .s2, .s3, .s4, .cap { transition: none; }
+    }
+  </style>
+
+  <defs>
+    <marker id="ah-lift" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--_lift)"/>
+    </marker>
+    <marker id="ah-weight" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--_weight)"/>
+    </marker>
+    <marker id="ah-thrust" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--_thrust)"/>
+    </marker>
+    <marker id="ah-drag" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--_drag)"/>
+    </marker>
+  </defs>
+
+  <!-- ── State 1 · the aircraft, unfilled so force arrows read through it ── -->
+  <g class="s1">
+    <path class="airframe" d="M 262 256
+      C 258 244 266 236 280 232 C 305 224 340 221 380 220
+      L 468 221 C 492 221 508 217 522 211 L 566 194
+      C 574 191 578 196 574 203 L 556 234
+      C 548 244 530 250 505 252 L 350 262
+      C 300 265 268 264 262 256 Z"/>
+    <!-- High wing, thick enough to read as a section rather than a floating rule -->
+    <path class="airframe" d="M 344 214 L 458 212 L 464 222 L 344 224 Z"/>
+    <!-- Lift strut: one line, and the figure instantly reads as a light aircraft -->
+    <path class="airframe" d="M 420 224 L 356 258"/>
+    <path class="airframe" d="M 516 213 L 548 168 L 566 170 L 566 196 Z"/>
+    <path class="airframe" d="M 538 201 L 584 198 L 586 204 L 538 207 Z"/>
+    <ellipse class="airframe" cx="260" cy="244" rx="4" ry="26"/>
+
+    <!-- Centre of gravity, drawn with the standard quartered symbol -->
+    <circle class="cg-ring" cx="400" cy="250" r="9"/>
+    <path class="cg-fill" d="M 400 250 L 400 241 A 9 9 0 0 1 409 250 Z"/>
+    <path class="cg-fill" d="M 400 250 L 400 259 A 9 9 0 0 1 391 250 Z"/>
+  </g>
+
+  <!-- ── State 2 · weight ── -->
+  <g class="s2">
+    <line class="force f-weight" x1="400" y1="262" x2="400" y2="395"/>
+    <rect class="chip" x="357" y="399" width="86" height="26"/>
+    <text class="chip-text t-weight" x="400" y="413">W — weight</text>
+  </g>
+
+  <!-- ── State 3 · lift. Same length as weight: in steady level flight they balance ── -->
+  <g class="s3">
+    <line class="force f-lift" x1="400" y1="238" x2="400" y2="105"/>
+    <rect class="chip" x="365" y="75" width="70" height="26"/>
+    <text class="chip-text t-lift" x="400" y="89">L — lift</text>
+  </g>
+
+  <!-- ── State 4 · thrust and drag, also equal ── -->
+  <g class="s4">
+    <line class="force f-thrust" x1="388" y1="250" x2="267" y2="250"/>
+    <rect class="chip" x="180" y="237" width="84" height="26"/>
+    <text class="chip-text t-thrust" x="222" y="251">T — thrust</text>
+
+    <line class="force f-drag" x1="412" y1="250" x2="533" y2="250"/>
+    <rect class="chip" x="542" y="237" width="76" height="26"/>
+    <text class="chip-text t-drag" x="580" y="251">D — drag</text>
+  </g>
+
+  <!-- ── Captions ── -->
+  <g class="caption">
+    <text class="cap cap1" x="400" y="468">An aircraft, and its centre of gravity.</text>
+    <text class="cap cap2" x="400" y="468">Weight always pulls toward the earth, from the centre of gravity.</text>
+    <text class="cap cap3" x="400" y="468">Lift opposes it. Here they are equal — so the aircraft holds its altitude.</text>
+    <text class="cap cap4" x="400" y="468">Thrust and drag balance too. All four equal: nothing changes.</text>
+  </g>
+</svg>

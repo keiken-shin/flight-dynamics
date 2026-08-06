@@ -1,0 +1,37 @@
+STYLE — binding for every image in this set. Do not deviate.
+
+Medium: flat-plane digital illustration built from clean vector-like shapes with a fine
+matte paper grain over the whole frame. Screen-printed poster feel — four to six flat
+colours, a faint misregistration at colour edges, no gradients anywhere except one soft
+vertical wash in the sky. Not photorealistic. Not a 3D render. No glossy highlights, no
+specular reflections, no lens flare, no bokeh, no chrome, no metallic sheen.
+
+Reference sensibility: the 1975 NASA Graphics Standards Manual crossed with mid-century
+European travel-poster lithography and Ladybird "How It Works" cutaway illustration.
+Restrained, confident, engineered. Zero whimsy, zero cuteness, zero drama.
+
+Palette — use these six and nothing else:
+  paper  #F2EEE6  warm off-white ground; always the dominant field
+  slate  #1F2A37  near-black, for silhouette and line
+  deep   #1B4965  primary form colour
+  mid    #62929E  secondary planes and atmosphere
+  amber  #E8973A  the single accent; never more than 5% of the frame
+  bone   #D9D2C5  shadow falling on paper
+
+Light: one soft directional source from the upper left, about 35° above the horizon.
+Shadows are flat shapes in bone — hard-edged, never blurred, never dark.
+
+Camera: straight-on, or a shallow three-quarter view. Long-lens compression. No
+wide-angle distortion, no dramatic low or high angle, no vanishing-point theatrics.
+Horizon dead level and low in the frame.
+
+Composition: the emptiness is as much the subject as the object is. Any size figure
+given below is a HARD CEILING, not a target — err smaller than it says. At least 55% of
+the total frame area must be completely bare ground with nothing drawn on it, and that
+bare area must be one contiguous region, not thin slivers scattered around the edges.
+The subject never touches or crops the frame edge. Centred, or placed on a clean third.
+
+Forbidden without exception: text, letters, numerals, labels, arrows, callout lines,
+leader lines, measurement ticks, scale bars, grids, logos, watermarks, signatures, UI
+chrome, or diagram annotation of any kind. These images carry atmosphere only. Every
+label in this project is added afterwards, by hand, in vector — where it can be correct.

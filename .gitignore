@@ -1,0 +1,34 @@
+# Secrets. .env holds the YouTube Data API key; .env.example is the template
+# and IS tracked.
+.env
+.env.local
+
+# Dependencies and build output — both reproducible from package-lock.json.
+node_modules/
+dist/
+
+# Design process, not product. Screenshots, comps and sketches are how the build
+# arrived at its direction; they run to ~33 MB, they date the moment anything
+# moves, and nothing in the app reads them. What IS kept out of .impeccable is
+# the design system itself: design.json (the detector reads it), the surface
+# briefs, and the direction payload recording which direction was chosen.
+.impeccable/shots/
+.impeccable/sketches/
+.impeccable/mocks/
+.impeccable/questions/
+.impeccable/hook.cache.json
+
+# Generated imagery. plate-aircraft.png is imported by src/ui/home.js, so the
+# build fails without it — it is tracked. The twelve hero images are not
+# referenced by any page; they stay on disk and out of history, because adding
+# 24 MB to a repo later is one commit while removing it later is a rewrite.
+# Track them with `git add -f` if they should be versioned.
+assets/generated/*.png
+!assets/generated/plate-aircraft.png
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

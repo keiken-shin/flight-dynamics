@@ -1,0 +1,27 @@
+{
+  "name": "flight-dynamics",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A visual learning platform for flight dynamics.",
+  "scripts": {
+    "dev": "vite --port 63598",
+    "build": "vite build",
+    "preview": "vite preview",
+    "curate": "node scripts/yt.mjs curate",
+    "verify:videos": "node scripts/yt.mjs verify",
+    "gen": "node scripts/gen.mjs",
+    "check": "node scripts/check-model.mjs && node scripts/check-checkride.mjs",
+    "videos": "node scripts/yt.mjs emit",
+    "check:exam": "node scripts/check-checkride.mjs"
+  },
+  "devDependencies": {
+    "vite": "^7.1.0"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource/archivo-narrow": "^5.3.0",
+    "three": "^0.181.0"
+  }
+}

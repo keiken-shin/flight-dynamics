@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-06T00:00:00Z",
+  "title": "Design System: Flight Dynamics",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Index Stock", "canonical": "#f4f4f1", "darkPlate": "#101318", "tonalRamp": ["#26261f", "#3b3b32", "#535349", "#6d6d62", "#8b8b7f", "#adaca0", "#d0cfc4", "#f4f4f1"] },
+      "paper-sunk": { "role": "neutral", "displayName": "Sunk Stock", "canonical": "#eceae5", "darkPlate": "#171b21", "tonalRamp": ["#25241f", "#3a3832", "#514f48", "#6b695f", "#89867a", "#aaa79b", "#cdcac0", "#eceae5"] },
+      "ink": { "role": "neutral", "displayName": "Linework Ink", "canonical": "#14171c", "darkPlate": "#eceae5", "tonalRamp": ["#14171c", "#22262e", "#333944", "#48505d", "#616a78", "#8b929d", "#b8bdc4", "#e3e5e9"] },
+      "ink-2": { "role": "neutral", "displayName": "Secondary Ink", "canonical": "#454b55", "darkPlate": "#a8adb6", "tonalRamp": ["#161920", "#22262e", "#31363f", "#454b55", "#5d646f", "#7b828d", "#a2a8b1", "#cdd1d6"] },
+      "ink-3": { "role": "neutral", "displayName": "Tertiary Ink", "canonical": "#6b7079", "darkPlate": "#7d838d", "tonalRamp": ["#191b1f", "#282b31", "#393d44", "#4c5158", "#6b7079", "#8b8f97", "#aeb2b8", "#d3d5d9"] },
+      "rule": { "role": "neutral", "displayName": "Hairline Rule", "canonical": "#c9c7c0", "darkPlate": "#333942", "tonalRamp": ["#211f1a", "#35322c", "#4b4740", "#635f56", "#7e796f", "#9b968b", "#b5b1a8", "#c9c7c0"] },
+      "rule-soft": { "role": "neutral", "displayName": "Grid Rule", "canonical": "#dedcd5", "darkPlate": "#232830", "tonalRamp": ["#23221d", "#38352f", "#4e4a43", "#66625a", "#827d73", "#a09b90", "#c0bcb2", "#dedcd5"] },
+      "accent": { "role": "primary", "displayName": "Chart Magenta", "canonical": "#d6006e", "darkPlate": "#ff2d8e", "tonalRamp": ["#3a001e", "#570030", "#750041", "#930054", "#b30066", "#d6006e", "#ff2d8e", "#ffa6cf"] },
+      "accent-ink": { "role": "neutral", "displayName": "Type on Accent", "canonical": "#ffffff", "darkPlate": "#101318", "tonalRamp": ["#262626", "#3d3d3d", "#575757", "#747474", "#949494", "#b7b7b7", "#dbdbdb", "#ffffff"] },
+      "f-lift": { "role": "secondary", "displayName": "Lift Blue", "canonical": "#1971c2", "darkPlate": "#4dabf7", "tonalRamp": ["#08243d", "#0c3559", "#104876", "#155c95", "#1971c2", "#3f95dd", "#79b8ec", "#bcdcf7"] },
+      "f-weight": { "role": "secondary", "displayName": "Weight Ink", "canonical": "#14171c", "darkPlate": "#eceae5", "tonalRamp": ["#14171c", "#22262e", "#333944", "#48505d", "#616a78", "#8b929d", "#b8bdc4", "#e3e5e9"] },
+      "f-thrust": { "role": "secondary", "displayName": "Thrust Green", "canonical": "#2f9e44", "darkPlate": "#51cf66", "tonalRamp": ["#0a2c12", "#10411c", "#175726", "#1f6e31", "#28863c", "#2f9e44", "#51cf66", "#a9e8b6"] },
+      "f-drag": { "role": "secondary", "displayName": "Drag Red", "canonical": "#e03131", "darkPlate": "#ff6b6b", "tonalRamp": ["#3d0e0e", "#5a1414", "#791b1b", "#9a2323", "#bd2a2a", "#e03131", "#ff6b6b", "#ffb8b8"] },
+      "f-other": { "role": "secondary", "displayName": "Other Violet", "canonical": "#7048e8", "darkPlate": "#b197fc", "tonalRamp": ["#1d1140", "#2c1a5f", "#3c2380", "#4d2ca2", "#5e37c5", "#7048e8", "#b197fc", "#dfd5fe"] },
+      "m-moment": { "role": "secondary", "displayName": "Moment Orange", "canonical": "#f76707", "darkPlate": "#ff922b", "tonalRamp": ["#411b02", "#5f2703", "#803404", "#a24205", "#c65106", "#f76707", "#ff922b", "#ffcda1"] },
+      "v-flow": { "role": "secondary", "displayName": "Flow Teal", "canonical": "#0c8599", "darkPlate": "#22b8cf", "tonalRamp": ["#03242a", "#04353e", "#054753", "#075b6a", "#097083", "#0c8599", "#22b8cf", "#9de0ea"] },
+      "a-angle": { "role": "secondary", "displayName": "Angle Amber", "canonical": "#c77800", "darkPlate": "#ffd43b", "tonalRamp": ["#352000", "#4f3000", "#6a4100", "#875300", "#a56500", "#c77800", "#ffd43b", "#ffeeae"] },
+      "p-low": { "role": "tertiary", "displayName": "Pressure Low", "canonical": "#1971c2", "darkPlate": "#4dabf7", "tonalRamp": ["#08243d", "#0c3559", "#104876", "#155c95", "#1971c2", "#3f95dd", "#79b8ec", "#bcdcf7"] },
+      "p-high": { "role": "tertiary", "displayName": "Pressure High", "canonical": "#e03131", "darkPlate": "#ff6b6b", "tonalRamp": ["#3d0e0e", "#5a1414", "#791b1b", "#9a2323", "#bd2a2a", "#e03131", "#ff6b6b", "#ffb8b8"] },
+      "ref": { "role": "tertiary", "displayName": "Reference Grey", "canonical": "#8a8f98", "darkPlate": "#6c727c", "tonalRamp": ["#1c1e21", "#2c2f33", "#3e4247", "#52565d", "#686d75", "#8a8f98", "#b2b6bc", "#d8dade"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Plate Title", "purpose": "One per page: the index headline and each lesson's title. Archivo Narrow only; the normal width wraps the headline and is a different character." },
+      "headline": { "displayName": "Section Head", "purpose": "In-column section heads inside the reading column." },
+      "title": { "displayName": "Lede / Subtitle", "purpose": "The one-line lesson summary under the display title, capped at 40ch." },
+      "body": { "displayName": "Reading", "purpose": "The reading column at a 68ch measure. Set-apart body steps to 18-18.5px." },
+      "label": { "displayName": "Instrument Label", "purpose": "All mono chrome: figure references, sheet counters, table headers, instrument labels, HUD, launch control. Every numeral in the build lives in this face." }
+    },
+    "lineWeights": [
+      { "name": "hair", "value": "0.5px", "purpose": "Zone grid, table interiors, quiet boxes, figure detail layer." },
+      { "name": "rule", "value": "1px", "purpose": "A real border, a leader line, a plot axis." },
+      { "name": "line", "value": "1.5px", "purpose": "A drawn object's outline in a figure." },
+      { "name": "force", "value": "2.5px", "purpose": "Figure force arrows only — heavier than any structural line by intent." }
+    ],
+    "shadows": [],
+    "motion": [
+      { "name": "ease", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "The one authored motion: leader lines drawing in, figure sheet crossfades." },
+      { "name": "dur", "value": "420ms", "purpose": "Long transition budget; the leader draw-in runs 620ms with a 46ms per-balloon stagger." },
+      { "name": "dur-fast", "value": "160ms", "purpose": "Theme swap and state changes." }
+    ],
+    "breakpoints": [
+      { "name": "lap", "value": "1020px" },
+      { "name": "phone", "value": "620px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Plate",
+      "kind": "card",
+      "refersTo": "plate",
+      "description": "The only container this world has: square, hairline, no elevation, with an optional mono caption strip.",
+      "html": "<div class=\"ds-plate\"><div class=\"ds-plate-body\">Angle of attack is the angle between the chord line and the relative wind — not the angle to the horizon.</div><div class=\"ds-plate-cap\"><span>Fig. 3\u20132</span><span>Sheet 4 of 4</span></div></div>",
+      "css": ".ds-plate { border: 1px solid var(--rule, #c9c7c0); background: var(--paper, #f4f4f1); color: var(--ink, #14171c); border-radius: 0; font-family: var(--f-body, 'Archivo Variable', system-ui, sans-serif); font-size: 16.5px; line-height: 1.62; } .ds-plate-body { padding: 17px 19px; } .ds-plate-cap { border-top: 0.5px solid var(--rule, #c9c7c0); padding: 7px 12px; display: flex; gap: 14px; align-items: center; font-family: var(--f-mono, 'JetBrains Mono Variable', ui-monospace, monospace); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3, #6b7079); }"
+    },
+    {
+      "name": "Sheet Tabs",
+      "kind": "chip",
+      "refersTo": "sheet-tab",
+      "description": "Step backwards through a figure's progressive build. Opens on the complete sheet; the pressed tab is solid ink, never accent.",
+      "html": "<div class=\"ds-sheets\"><span class=\"ds-sheets-lab\">Sheet 4 of 4</span><button class=\"ds-sheet\" type=\"button\" aria-pressed=\"false\">1</button><button class=\"ds-sheet\" type=\"button\" aria-pressed=\"false\">2</button><button class=\"ds-sheet\" type=\"button\" aria-pressed=\"false\">3</button><button class=\"ds-sheet\" type=\"button\" aria-pressed=\"true\">4</button></div>",
+      "css": ".ds-sheets { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-top: 0.5px solid var(--rule, #c9c7c0); background: var(--paper, #f4f4f1); } .ds-sheets-lab { font-family: var(--f-mono, ui-monospace, monospace); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3, #6b7079); margin-right: 4px; } .ds-sheet { width: 26px; height: 26px; cursor: pointer; background: var(--paper, #f4f4f1); border: 0.5px solid var(--rule, #c9c7c0); border-radius: 0; font-family: var(--f-mono, ui-monospace, monospace); font-size: 11px; color: var(--ink-2, #454b55); } .ds-sheet:hover { border-color: var(--ink, #14171c); color: var(--ink, #14171c); } .ds-sheet:focus-visible { outline: 2px solid var(--accent, #d6006e); outline-offset: 2px; } .ds-sheet[aria-pressed=\"true\"] { background: var(--ink, #14171c); border-color: var(--ink, #14171c); color: var(--paper, #f4f4f1); font-weight: 600; }"
+    },
+    {
+      "name": "Launch Control",
+      "kind": "button",
+      "refersTo": "launch",
+      "description": "The primary action, living in the plate's own caption strip as a hairline control rather than a filled slab.",
+      "html": "<button class=\"ds-launch\" type=\"button\"><span>Fly it yourself</span></button>",
+      "css": ".ds-launch { display: flex; width: 100%; align-items: center; gap: 9px; padding: 9px 12px; cursor: pointer; text-align: left; background: none; color: var(--ink, #14171c); border: 0; border-top: 0.5px solid var(--rule, #c9c7c0); border-radius: 0; font-family: var(--f-mono, ui-monospace, monospace); font-size: 10.5px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; } .ds-launch::after { content: \"\\2192\"; color: var(--accent, #d6006e); } .ds-launch:hover { background: var(--paper-sunk, #eceae5); } .ds-launch:focus-visible { outline: 2px solid var(--accent, #d6006e); outline-offset: 2px; } .ds-launch:disabled { color: var(--ink-3, #6b7079); cursor: default; }"
+    },
+    {
+      "name": "Misconception Box",
+      "kind": "custom",
+      "refersTo": "plate",
+      "description": "Achromatic set-apart block with a heavy ink top rule and a drawn revision triangle. No kicker label, no semantic colour.",
+      "html": "<div class=\"ds-myth\"><div class=\"ds-myth-b\"><p class=\"ds-myth-claim\"><svg class=\"ds-revmark\" viewBox=\"0 0 14 12\" aria-hidden=\"true\"><path d=\"M7 0 L14 12 L0 12 Z\"/></svg><span>\u201cA wing works because air over the top has further to travel.\u201d</span></p><p class=\"ds-myth-truth\">It doesn\u2019t, and the two parcels never meet again. Lift comes from the wing turning the flow downward.</p></div></div>",
+      "css": ".ds-myth { border: 0.5px solid var(--rule, #c9c7c0); border-top: 1px solid var(--ink, #14171c); background: var(--paper, #f4f4f1); color: var(--ink, #14171c); border-radius: 0; font-family: var(--f-body, system-ui, sans-serif); line-height: 1.62; } .ds-myth-b { padding: 17px 19px; } .ds-myth-claim { display: flex; gap: 11px; align-items: baseline; font-size: 18px; font-weight: 600; margin: 0 0 .7em; } .ds-revmark { width: 14px; height: 12px; flex: none; fill: var(--ink, #14171c); } .ds-myth-truth { margin: 0; color: var(--ink-2, #454b55); font-size: 16.5px; }"
+    },
+    {
+      "name": "Check Options",
+      "kind": "custom",
+      "refersTo": "check-option",
+      "description": "Comprehension check. The question is the heading — no label above it. Answering disables the set and marks right/wrong with a 1px semantic border.",
+      "html": "<div class=\"ds-check\"><div class=\"ds-check-b\"><p class=\"ds-check-q\">An aircraft in a steady climb: how does thrust compare with drag?</p><button class=\"ds-opt ds-opt-right\" type=\"button\" disabled>Thrust exceeds drag</button><button class=\"ds-opt\" type=\"button\">They are equal</button><button class=\"ds-opt ds-opt-wrong\" type=\"button\" disabled>Drag exceeds thrust</button><p class=\"ds-check-why\"><strong>Why:</strong> in a climb, thrust also carries part of the weight along the flight path.</p></div></div>",
+      "css": ".ds-check { border: 1px solid var(--ink, #14171c); background: var(--paper, #f4f4f1); color: var(--ink, #14171c); border-radius: 0; font-family: var(--f-body, system-ui, sans-serif); line-height: 1.62; } .ds-check-b { padding: 17px 19px; } .ds-check-q { font-size: 18px; font-weight: 600; margin: 0 0 14px; } .ds-opt { display: block; width: 100%; text-align: left; font: inherit; font-size: 15.5px; color: inherit; padding: 11px 14px; margin-bottom: 8px; cursor: pointer; background: var(--paper, #f4f4f1); border: 0.5px solid var(--rule, #c9c7c0); border-radius: 0; } .ds-opt:hover:not(:disabled) { border-color: var(--ink, #14171c); } .ds-opt:focus-visible { outline: 2px solid var(--accent, #d6006e); outline-offset: 2px; } .ds-opt-right { border-color: var(--f-thrust, #2f9e44); border-width: 1px; } .ds-opt-wrong { border-color: var(--f-drag, #e03131); border-width: 1px; } .ds-check-why { font-size: 15px; color: var(--ink-2, #454b55); margin: 12px 0 0; }"
+    },
+    {
+      "name": "Drafting Scale",
+      "kind": "input",
+      "refersTo": "plate",
+      "description": "A control read like an instrument: mono label, end marks, a ticked track and a square accent thumb, with a right-aligned mono output.",
+      "html": "<div class=\"ds-instr\"><div class=\"ds-ctl\"><label for=\"ds-thr\">Throttle</label><div class=\"ds-scale\"><span>0%</span><div class=\"ds-track\"><input id=\"ds-thr\" type=\"range\" min=\"0\" max=\"100\" value=\"64\"></div><span>100%</span></div><output>64%</output></div></div>",
+      "css": ".ds-instr { border-top: 1px solid var(--ink, #14171c); background: var(--paper, #f4f4f1); padding: 14px 12px 12px; } .ds-ctl { display: grid; grid-template-columns: 88px 1fr 62px; gap: 12px; align-items: center; } .ds-ctl label { font-family: var(--f-mono, ui-monospace, monospace); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2, #454b55); } .ds-ctl output { font-family: var(--f-mono, ui-monospace, monospace); font-size: 12.5px; text-align: right; color: var(--ink, #14171c); } .ds-scale { display: grid; grid-template-columns: auto 1fr auto; gap: 9px; align-items: center; } .ds-scale span { font-family: var(--f-mono, ui-monospace, monospace); font-size: 9.5px; color: var(--ink-3, #6b7079); white-space: nowrap; } .ds-track { position: relative; } .ds-track::after { content: \"\"; position: absolute; left: 0; right: 0; top: 15px; height: 5px; background-image: repeating-linear-gradient(to right, var(--rule, #c9c7c0) 0 1px, transparent 1px 10%); pointer-events: none; } .ds-ctl input[type=\"range\"] { display: block; width: 100%; height: 22px; background: none; -webkit-appearance: none; appearance: none; } .ds-ctl input[type=\"range\"]::-webkit-slider-runnable-track { height: 2px; background: var(--rule, #c9c7c0); } .ds-ctl input[type=\"range\"]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 20px; margin-top: -9px; background: var(--accent, #d6006e); border: 0; border-radius: 0; cursor: grab; } .ds-ctl input[type=\"range\"]::-moz-range-thumb { width: 12px; height: 20px; background: var(--accent, #d6006e); border: 0; border-radius: 0; cursor: grab; }"
+    },
+    {
+      "name": "Force Readout",
+      "kind": "custom",
+      "refersTo": "plate",
+      "description": "Four hairline cells, each a mono caption over a value coloured by its own force. The only chrome that carries semantic colour, because each cell IS a force.",
+      "html": "<div class=\"ds-readout\"><div class=\"ds-v-lift\"><span>Lift</span><b>11,240 N</b></div><div class=\"ds-v-weight\"><span>Weight</span><b>10,880 N</b></div><div class=\"ds-v-thrust\"><span>Thrust</span><b>2,140 N</b></div><div class=\"ds-v-drag\"><span>Drag</span><b>1,905 N</b></div></div>",
+      "css": ".ds-readout { display: grid; grid-template-columns: repeat(4, 1fr); border: 0.5px solid var(--rule, #c9c7c0); background: var(--paper, #f4f4f1); } .ds-readout > div { padding: 8px 10px; border-right: 0.5px solid var(--rule, #c9c7c0); } .ds-readout > div:last-child { border-right: 0; } .ds-readout span { display: block; font-family: var(--f-mono, ui-monospace, monospace); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3, #6b7079); } .ds-readout b { display: block; font-family: var(--f-mono, ui-monospace, monospace); font-size: 15px; font-weight: 500; margin-top: 2px; } .ds-v-lift b { color: var(--f-lift, #1971c2); } .ds-v-weight b { color: var(--f-weight, #14171c); } .ds-v-thrust b { color: var(--f-thrust, #2f9e44); } .ds-v-drag b { color: var(--f-drag, #e03131); }"
+    },
+    {
+      "name": "Balloon Callout",
+      "kind": "nav",
+      "refersTo": "plate",
+      "description": "The numbered ring on a leader line: the index plate's only navigation. Fills solid ink once its lesson is complete.",
+      "html": "<svg class=\"ds-stage\" viewBox=\"0 0 320 150\" width=\"320\" height=\"150\" aria-hidden=\"true\"><g class=\"ds-balloon\"><line class=\"ds-lead\" x1=\"70\" y1=\"58\" x2=\"210\" y2=\"110\"/><circle class=\"ds-ring\" cx=\"52\" cy=\"52\" r=\"21\"/><text class=\"ds-num\" x=\"52\" y=\"52\">01</text><text class=\"ds-name\" x=\"81\" y=\"48\">FOUR FORCES</text></g><g class=\"ds-balloon ds-done\" transform=\"translate(0 60)\"><circle class=\"ds-ring\" cx=\"52\" cy=\"52\" r=\"21\"/><text class=\"ds-num\" x=\"52\" y=\"52\">02</text><text class=\"ds-name\" x=\"81\" y=\"48\">LIFT</text></g></svg>",
+      "css": ".ds-stage { display: block; background: var(--paper, #f4f4f1); } .ds-balloon { cursor: pointer; } .ds-lead { stroke: var(--ink-3, #6b7079); stroke-width: 1px; fill: none; } .ds-ring { fill: var(--paper, #f4f4f1); stroke: var(--ink, #14171c); stroke-width: 1px; } .ds-num { fill: var(--ink, #14171c); font-family: var(--f-mono, ui-monospace, monospace); font-size: 11px; font-weight: 600; text-anchor: middle; dominant-baseline: central; } .ds-name { fill: var(--ink-2, #454b55); font-family: var(--f-mono, ui-monospace, monospace); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; } .ds-balloon:hover .ds-lead { stroke: var(--accent, #d6006e); stroke-width: 1.5px; } .ds-balloon:hover .ds-ring { stroke: var(--accent, #d6006e); } .ds-balloon:hover .ds-num { fill: var(--accent, #d6006e); } .ds-balloon:hover .ds-name { fill: var(--ink, #14171c); } .ds-done .ds-ring { fill: var(--ink, #14171c); } .ds-done .ds-num { fill: var(--paper, #f4f4f1); }"
+    },
+    {
+      "name": "Parts Index Row",
+      "kind": "custom",
+      "refersTo": "plate",
+      "description": "The parts table carrying real lessons: mono item number, body-weight link, secondary remarks, and a mono status that reads complete in thrust green.",
+      "html": "<table class=\"ds-index\"><thead><tr><th>Item</th><th>Lesson</th><th>Remarks</th><th></th></tr></thead><tbody><tr class=\"ds-done-row\"><td class=\"ds-c-item\">01</td><td><a href=\"#\">The four forces</a></td><td class=\"ds-c-rem\">Everything an aircraft does is these four, in balance or not.</td><td class=\"ds-c-st\">complete</td></tr><tr><td class=\"ds-c-item\">02</td><td><a href=\"#\">Lift</a></td><td class=\"ds-c-rem\">The wing turns the flow down; the flow pushes the wing up.</td><td class=\"ds-c-st\"></td></tr></tbody></table>",
+      "css": ".ds-index { width: 100%; border-collapse: collapse; background: var(--paper, #f4f4f1); color: var(--ink, #14171c); font-family: var(--f-body, system-ui, sans-serif); font-size: 16.5px; line-height: 1.62; } .ds-index th { text-align: left; font-family: var(--f-mono, ui-monospace, monospace); font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3, #6b7079); padding: 8px 12px; border-bottom: 1px solid var(--ink, #14171c); } .ds-index td { padding: 11px 12px; border-bottom: 0.5px solid var(--rule-soft, #dedcd5); vertical-align: baseline; } .ds-index tr:hover td { background: var(--paper-sunk, #eceae5); } .ds-index a { color: inherit; text-decoration: none; font-weight: 600; } .ds-index a:hover { color: var(--accent, #d6006e); } .ds-c-item { width: 62px; font-family: var(--f-mono, ui-monospace, monospace); color: var(--ink-3, #6b7079); font-size: 12.5px; } .ds-c-rem { color: var(--ink-2, #454b55); font-size: 14.5px; } .ds-c-st { width: 92px; text-align: right; font-family: var(--f-mono, ui-monospace, monospace); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3, #6b7079); } .ds-done-row .ds-c-st { color: var(--f-thrust, #2f9e44); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Illustrated Parts Catalogue",
+    "overview": "The artifact is an aircraft maintenance manual that happens to be interactive. Every page is a numbered plate on index stock: a ruled zone-grid margin runs down all four sides carrying letter and number ticks, a rule-bottomed title bar names the plate and its chapter, and the content sits inside hairline boxes with square corners and no shadow anywhere. Chrome is drawn, not styled — borders, rules and line weights do all the structural work that a conventional interface would give to fills, radii and elevation.\n\nThe system's single organising decision is that colour is a scarce, meaningful substance. The interface itself spends none of it: everything the reader clicks, reads or navigates by is paper, ink and grey. That budget is handed entirely to the physics — lift is blue, thrust is green, drag is red, weight is ink — so that a coloured mark anywhere on the page can only ever be a statement about forces. One accent exists, a chart magenta borrowed from the airspace rings on a sectional, and it is deliberately absent from the semantic set so the interface can never be mistaken for data. It appears in slivers: a focus ring, a caret, a slider thumb, a hover state, a formula's term key, one trailing arrow.\n\nDark mode is not an inversion filter but a negative plate — the same drawing seen on a light table, white line on black. It is written out as a duplicated token block rather than routed through a second indirection layer, because two readable blocks beat one clever one. The raster plate on the index flips with it, so the illustration is the same document either way.",
+    "keyCharacteristics": [
+      "Square corners everywhere (0 radius); the only exception is the label chip inside figures (4px)",
+      "Exactly three line weights: hairline (0.5px), rule (1px), line (1.5px)",
+      "Zero elevation — no box-shadow exists anywhere in the build",
+      "Achromatic chrome and a semantic force palette that never mix",
+      "One rationed accent, absent from the semantic set",
+      "All numerals, labels and instrument readings in mono, tabular",
+      "One authored motion moment (leader lines drawing in); everything else is a state change"
+    ],
+    "rules": [
+      { "name": "The Two Palettes Rule", "body": "Chrome is achromatic; semantic colour carries meaning and nothing else. A colour on this page is a claim about physics, so chrome never wears one. A drag-red border on a callout reads as a drag annotation — the misconception box is therefore achromatic with a drawn revision triangle, and the active sheet tab is ink, not accent.", "section": "colors" },
+      { "name": "The One Accent Rule", "body": "There is exactly one accent, and it is absent from the semantic set. It is rationed to marks measured in pixels: a focus ring, a caret, a thumb, a hover, one arrow. A filled accent slab anywhere in a first viewport spends the whole colour budget on chrome and is a defect, not a variant.", "section": "colors" },
+      { "name": "The Negative Plate Rule", "body": "Dark mode is the same drawing on a light table, not a generic inversion. Both the prefers-color-scheme path and the explicit data-plate=\"negative\" attribute carry the full duplicated token block, and any treatment that depends on plate polarity (the raster's blend mode) must handle both paths or the auto-dark reader gets black on black.", "section": "colors" },
+      { "name": "The One Ramp Rule", "body": "Five roles, and that is the whole system: display, headline, title, body, label. A new surface picks a role; it does not invent a size.", "section": "typography" },
+      { "name": "The Mono Numeral Rule", "body": "Every numeral the reader might compare — instrument readouts, force values, table item numbers, sheet counters, figure numbers, balloon numbers — is JetBrains Mono with tabular figures, so digits stay in column as they change.", "section": "typography" },
+      { "name": "The Flat Plate Rule", "body": "Nothing floats. A surface is distinguished from its neighbour by border weight or by one tonal step, never by a shadow, and never by lifting on hover.", "section": "elevation" },
+      { "name": "The One Animation Rule", "body": "The plate draws itself in once, on load. Every other movement in the build is a state change, not an animation.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep chrome achromatic. Paper, ink, grey and one rationed accent is the whole interface palette.",
+      "Do reserve the semantic palette for statements about physics, and address it by kind, never by colour value.",
+      "Do draw structure with the three line weights — hairline 0.5px, rule 1px, line 1.5px — and upgrade to a 1px ink border when a container is an instrument.",
+      "Do use a thin ruled box for set-apart text (the concrete anchor and misconception boxes are both hairline boxes).",
+      "Do open a progressive figure on its COMPLETE sheet and let the tabs step backwards through the build.",
+      "Do set every numeral, label and instrument reading in JetBrains Mono with tabular figures.",
+      "Do size a force arrow by its magnitude. In the sandbox, arrow length IS the measurement; only the label may be clamped to stay in frame.",
+      "Do carry both dark-mode paths (prefers-color-scheme and data-plate=\"negative\") when a treatment depends on plate polarity.",
+      "Do hold body text to the 68ch measure and keep the index plate at 900px minimum on small screens, scrolling sideways rather than shrinking."
+    ],
+    "donts": [
+      "Don't put a semantic colour on chrome. A drag-red callout border reads as a drag annotation; a misconception box is achromatic.",
+      "Don't fill the active sheet tab — or any first-viewport block — with the accent. That control is solid ink.",
+      "Don't add a kicker or eyebrow label above a block. \"Common misconception\", \"Check yourself\" and their kind do not exist here; the drawn revision triangle and the question itself carry the flag.",
+      "Don't build a coloured left-bar callout. Set-apart text gets a hairline ruled box; an aside gets a hairline left rule in rule grey.",
+      "Don't introduce a corner radius. Every chrome element is square.",
+      "Don't add a shadow, a blur, a translucency layer or a lift-on-hover. There is no elevation in this system.",
+      "Don't add a second accent, or reuse the accent inside the semantic set — its absence there is what keeps interface from reading as data.",
+      "Don't add a fourth line weight or a sixth type role.",
+      "Don't animate anything new. The plate's leader lines draw in once; everything else is a state change.",
+      "Don't put figure labels in a legend, or pass a colour into a figure primitive."
+    ]
+  }
+}

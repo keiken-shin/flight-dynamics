@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" data-state="4"
+     role="img" aria-labelledby="ffc-title ffc-desc" class="figure">
+  <title id="ffc-title">Why lift is less than weight in a steady climb</title>
+  <desc id="ffc-desc">The same aircraft, now in a steady climb, pitched thirty degrees
+    above the horizon. Weight still points straight down and is unchanged. But lift acts
+    perpendicular to the flight path, not to the horizon, so it only has to balance the
+    part of weight that lies perpendicular to the flight path — which is smaller than
+    weight itself. The lift arrow is visibly shorter than the weight arrow. Thrust,
+    meanwhile, is visibly longer than drag, because thrust must overcome drag and the
+    remaining component of weight along the flight path. The figure builds in four steps:
+    the climb geometry, then weight, then weight resolved perpendicular to the flight
+    path, then lift, thrust and drag together.</desc>
+
+  <style>
+    .figure {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      --_ink:      var(--ink,      #1f2a37);
+      --_ink-soft: var(--ink-soft, #55606d);
+      --_chip:     var(--chip-bg,  #f7f5f0);
+      --_lift:     var(--f-lift,   #1971c2);
+      --_weight:   var(--f-weight, #212529);
+      --_thrust:   var(--f-thrust, #2f9e44);
+      --_drag:     var(--f-drag,   #e03131);
+      --_angle:    var(--a-angle,  #f59f00);
+      --_ref:      var(--ref,      #868e96);
+    }
+    @media (prefers-color-scheme: dark) {
+      .figure {
+        --_ink:      var(--ink,      #e6e3dd);
+        --_ink-soft: var(--ink-soft, #9aa3ad);
+        --_chip:     var(--chip-bg,  #14181d);
+        --_lift:     var(--f-lift,   #4dabf7);
+        --_weight:   var(--f-weight, #e9ecef);
+        --_thrust:   var(--f-thrust, #51cf66);
+        --_drag:     var(--f-drag,   #ff6b6b);
+        --_angle:    var(--a-angle,  #ffd43b);
+        --_ref:      var(--ref,      #6c757d);
+      }
+    }
+
+    .airframe { fill: none; stroke: var(--_ink); stroke-width: 1.5; stroke-linejoin: round; }
+    .cg-ring  { fill: none; stroke: var(--_ink); stroke-width: 1.5; }
+    .cg-fill  { fill: var(--_ink); }
+
+    /* Reference frames sit behind everything — 1px dashed at 40%, never competing (§1) */
+    .ref { fill: none; stroke: var(--_ref); stroke-width: 1; stroke-dasharray: 3 3;
+           opacity: .55; }
+    .arc { fill: none; stroke: var(--_angle); stroke-width: 1; }
+
+    .force    { stroke-width: 2.5; stroke-linecap: butt; fill: none; }
+    .f-lift   { stroke: var(--_lift);   marker-end: url(#c-lift); }
+    .f-weight { stroke: var(--_weight); marker-end: url(#c-weight); }
+    .f-thrust { stroke: var(--_thrust); marker-end: url(#c-thrust); }
+    .f-drag   { stroke: var(--_drag);   marker-end: url(#c-drag); }
+
+    /* A resolved component is not an independent force, so it is drawn thinner and
+       dashed — the reader should never count it as a fifth arrow. */
+    .component { stroke: var(--_weight); stroke-width: 1.5; stroke-dasharray: 7 4;
+                 fill: none; marker-end: url(#c-comp); }
+
+    .chip      { fill: var(--_chip); rx: 4; }
+    .chip-text { font-size: 15px; font-weight: 500; text-anchor: middle;
+                 dominant-baseline: middle; }
+    .sm        { font-size: 13px; font-weight: 400; }
+    .t-lift   { fill: var(--_lift); }
+    .t-weight { fill: var(--_weight); }
+    .t-thrust { fill: var(--_thrust); }
+    .t-drag   { fill: var(--_drag); }
+    .t-angle  { fill: var(--_angle); }
+
+    .caption { font-size: 16px; text-anchor: middle; fill: var(--_ink-soft); }
+
+    .s2, .s3, .s4, .cap { transition: opacity .35s ease; }
+    .cap { opacity: 0; }
+    svg[data-state="1"] .s2, svg[data-state="1"] .s3, svg[data-state="1"] .s4,
+    svg[data-state="2"] .s3, svg[data-state="2"] .s4,
+    svg[data-state="3"] .s4 { opacity: 0; }
+    svg[data-state="1"] .cap1, svg[data-state="2"] .cap2,
+    svg[data-state="3"] .cap3, svg[data-state="4"] .cap4 { opacity: 1; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .s2, .s3, .s4, .cap { transition: none; }
+    }
+  </style>
+
+  <defs>
+    <marker id="c-lift" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--_lift)"/></marker>
+    <marker id="c-weight" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--_weight)"/></marker>
+    <marker id="c-thrust" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--_thrust)"/></marker>
+    <marker id="c-drag" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--_drag)"/></marker>
+    <marker id="c-comp" viewBox="0 0 10 10" refX="8.5" refY="5"
+            markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--_weight)"/></marker>
+  </defs>
+
+  <!-- ── State 1 · the climb geometry ───────────────────────────────────────
+       Climb angle is drawn at 30°, steeper than any real light aircraft, so the
+       difference between lift and weight is large enough to see. The caption says so. -->
+  <g class="s1">
+    <line class="ref" x1="250" y1="250" x2="565" y2="250"/>
+    <line class="ref" x1="261" y1="170" x2="513" y2="315"/>
+    <path class="arc" d="M 338 250 A 62 62 0 0 0 346 219"/>
+    <text class="chip-text sm t-angle" x="329" y="235">&#947;</text>
+
+    <!-- +30, not -30: SVG rotates clockwise on screen (y grows downward), so a
+         left-pointing nose pitches UP under a positive angle. -->
+    <g transform="rotate(30 400 250)">
+      <path class="airframe" d="M 262 256
+        C 258 244 266 236 280 232 C 305 224 340 221 380 220
+        L 468 221 C 492 221 508 217 522 211 L 566 194
+        C 574 191 578 196 574 203 L 556 234
+        C 548 244 530 250 505 252 L 350 262
+        C 300 265 268 264 262 256 Z"/>
+      <path class="airframe" d="M 344 214 L 458 212 L 464 222 L 344 224 Z"/>
+      <path class="airframe" d="M 420 224 L 356 258"/>
+      <path class="airframe" d="M 516 213 L 548 168 L 566 170 L 566 196 Z"/>
+      <path class="airframe" d="M 538 201 L 584 198 L 586 204 L 538 207 Z"/>
+      <ellipse class="airframe" cx="260" cy="244" rx="4" ry="26"/>
+    </g>
+
+    <circle class="cg-ring" cx="400" cy="250" r="9"/>
+    <path class="cg-fill" d="M 400 250 L 400 241 A 9 9 0 0 1 409 250 Z"/>
+    <path class="cg-fill" d="M 400 250 L 400 259 A 9 9 0 0 1 391 250 Z"/>
+  </g>
+
+  <!-- ── State 2 · weight, unchanged and still earth-vertical ── -->
+  <g class="s2">
+    <line class="force f-weight" x1="400" y1="262" x2="400" y2="390"/>
+    <rect class="chip" x="357" y="397" width="86" height="26"/>
+    <text class="chip-text t-weight" x="400" y="411">W — weight</text>
+  </g>
+
+  <!-- ── State 3 · resolve weight perpendicular to the flight path ──────────
+       Magnitude W·cos γ. Drawn dashed and collinear with where lift will appear,
+       so state 4 lands as a visual proof rather than an assertion. -->
+  <g class="s3">
+    <line class="component" x1="394" y1="260" x2="341" y2="353"/>
+    <line class="ref" x1="340" y1="355" x2="400" y2="390"/>
+    <rect class="chip" x="258" y="353" width="72" height="24"/>
+    <text class="chip-text sm t-weight" x="294" y="366">W cos &#947;</text>
+  </g>
+
+  <!-- ── State 4 · lift matches only that component; thrust must beat drag AND
+       the leftover along-path component of weight ── -->
+  <g class="s4">
+    <line class="force f-lift" x1="406" y1="240" x2="460" y2="145"/>
+    <rect class="chip" x="457" y="119" width="70" height="26"/>
+    <text class="chip-text t-lift" x="492" y="133">L — lift</text>
+
+    <line class="force f-thrust" x1="390" y1="244" x2="287" y2="185"/>
+    <rect class="chip" x="198" y="149" width="84" height="26"/>
+    <text class="chip-text t-thrust" x="240" y="163">T — thrust</text>
+
+    <line class="force f-drag" x1="410" y1="256" x2="452" y2="280"/>
+    <rect class="chip" x="464" y="279" width="76" height="26"/>
+    <text class="chip-text t-drag" x="502" y="293">D — drag</text>
+  </g>
+
+  <g class="caption">
+    <text class="cap cap1" x="400" y="468">A steady climb. The flight path now sits at an angle to the horizon.</text>
+    <text class="cap cap2" x="400" y="468">Weight has not changed. It still pulls straight down, toward the earth.</text>
+    <text class="cap cap3" x="400" y="468">But lift answers to the flight path — and only this much of weight lies across it.</text>
+    <text class="cap cap4" x="400" y="468">So lift is less than weight. Thrust is more than drag. Nothing is balanced.</text>
+  </g>
+</svg>

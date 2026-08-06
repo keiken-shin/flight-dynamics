@@ -1,0 +1,68 @@
+{
+  "title": "Choose the visual world",
+  "question": "The roll assigned Illustrated Parts Catalogue. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Illustrated Parts Catalogue",
+      "kicker": "THE ROLL",
+      "lineage": "aircraft maintenance manual exploded-isometric plates",
+      "thesis": "The manual an engineer actually trusts — every idea is a numbered plate you take apart with your hands.",
+      "palette": ["#F4F4F1", "#14171C", "#D6006E", "#8A8F98"],
+      "materials": ["index stock", "two-colour plate printing", "balloon callouts on leader lines", "revision bars"],
+      "viewport": "A full-bleed exploded isometric of an aircraft, drawn in fine black line on index stock, balloons numbered 1–12 hanging off leader lines. Each balloon is a lesson. No hero copy competing with it — the plate is the navigation, and hovering a balloon lights its leader line magenta and names the concept.",
+      "risk": "A manual is a book, and this brief exists because the last build read like one. It only escapes if the plates are enormous, the callouts are alive under the cursor, and colour is hoarded for meaning — a timid rendition lands exactly where we started.",
+      "case": "Chrome is deliberately achromatic — paper, ink, one chart-magenta accent borrowed from sectional airspace rings. Every other colour on the page is semantic: lift blue, thrust green, drag red. Because the interface spends no colour, the physics is the only thing that glows.",
+      "sketch": ".impeccable/sketches/assigned.png"
+    },
+    {
+      "id": "challenger-zine",
+      "label": "Hand-drawn Zine",
+      "lineage": "marker-and-doodle technical zine",
+      "thesis": "A friend sketching it on a napkin — marker headings, doodle arrows, highlighter on the one line that matters.",
+      "palette": ["#FBF6E9", "#1A1A1A", "#FFD84D", "#22B8A6"],
+      "materials": ["marker ink", "highlighter swipe", "rough hand-drawn SVG paths"],
+      "viewport": "A cheerful marker headline over a doodled aircraft, hand-drawn arrows looping to callouts, comic panels you step through.",
+      "risk": "Mascots and marker undercut the same artifact's other jobs.",
+      "case": "Fuses well and answers 'not a textbook' most directly of anything dealt — the 30 SVG figures could take rough hand paths tomorrow. But it's the one world here that would embarrass the artifact in front of the two audiences you named last: company onboarding material and a portfolio piece.",
+      "sketch": ".impeccable/sketches/challenger-zine.png",
+      "hero": "https://impeccable.style/worlds/cards/hand-drawn-zine-explainer-hero.webp"
+    },
+    {
+      "id": "challenger-ikeda",
+      "label": "Datamatics",
+      "lineage": "Ryoji Ikeda data-sublime fields",
+      "thesis": "Physics as a strobing data field — hairline barcode columns, monospace numerics, full-frame inversion.",
+      "palette": ["#FFFFFF", "#000000", "#FFFFFF", "#000000"],
+      "materials": ["pure black and white", "canvas-rendered lattices", "tabular monospace"],
+      "viewport": "A wall of hairline vertical bars holding like a frozen barcode, one sine curve tracing the lattice, dense numerals packed in the margin.",
+      "risk": "Pure black and white erases the semantic colour system.",
+      "case": "Easily the most arresting thing dealt, and nobody would call it a book. But it fails on product truth: the entire figure system depends on lift being blue and drag being red, and a world that admits no colour cannot carry that. Clarity wins conflicts.",
+      "sketch": ".impeccable/sketches/challenger-ikeda.png",
+      "hero": "https://impeccable.style/worlds/cards/ikeda-datamatics-hero.webp"
+    },
+    {
+      "id": "challenger-chart",
+      "label": "Salt-stiffened Chart",
+      "lineage": "weathered navigation chart, inference as wayfinding",
+      "thesis": "Learning as navigation — oblique light raises a route that was always faintly there.",
+      "palette": ["#D8C9A8", "#5A4632", "#B03A2E", "#7A8B7F"],
+      "materials": ["vellum", "iron-gall ink", "tide-stain blooms", "oblique-light layers"],
+      "viewport": "A whole chart at deep zoom, marginalia crowding the edges, a faded route rising under raking light as you trace it.",
+      "risk": "Antique register fights a modern engineering subject.",
+      "case": "Navigation-as-inference is a genuinely good learning mechanic, and cartography really is in a pilot's daily world — sectional charts, not treasure maps. But weathered vellum makes transonic shock waves and PID loops feel like folklore.",
+      "sketch": ".impeccable/sketches/challenger-chart.png",
+      "hero": "https://impeccable.style/worlds/cards/wayfinding-cartography-signage-salt-stiffened-treasure-map-hero.webp"
+    }
+  ],
+  "reroll": true,
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "What online courses ship, executed impeccably: white ground, large friendly display type, a grid of lesson cards, a progress ring, soft spot illustration.",
+    "viewport": "A centred headline, a subhead, and a responsive card grid of twelve lessons with completion states.",
+    "risk": "Instantly legible, instantly forgettable, and indistinguishable from every other course platform.",
+    "sketch": ".impeccable/sketches/canon.png"
+  },
+  "steer": true
+}
