@@ -1,0 +1,58 @@
+Flight Dynamics
+Copyright (c) 2026 Anubhav Kumar
+Licensed under the MIT License (see LICENSE).
+
+This project incorporates material from the sources below. The in-app Sources
+page (#credits) carries the same list for readers.
+
+────────────────────────────────────────────────────────────────────────────
+JSBSim — https://github.com/JSBSim-Team/jsbsim
+    JSBSim is LGPL 2.1. Its `c172x` aircraft definition is GPL, by Tony Peden.
+
+    No JSBSim code is used here. src/sim/flight-model.js is written from
+    scratch. What IS taken is measured data: the geometry, inertias and
+    stability derivatives of a 1982 Cessna 172P, converted to SI from the
+    c172x definition and listed in the AIRCRAFT constant.
+
+    These are physical measurements of a real aircraft rather than authored
+    expression, and they are used as facts. The c172x file states of itself
+    that it "models a 1982 Cessna 172P based on publicly available data and
+    technical resources" — so the underlying figures are drawn from public
+    sources, and what is reused here is those figures, not their arrangement,
+    their surrounding XML, or any part of the JSBSim engine.
+
+    They are credited here and on the in-app Sources page because they are the
+    expensive half of any flight model, they took a wind tunnel and a flight
+    test programme that this project could never have run, and the honest
+    division of labour in this subject is that the mathematics is free while
+    the coefficients cost a fortune.
+
+────────────────────────────────────────────────────────────────────────────
+NASA / NACA technical reports — https://ntrs.nasa.gov/
+    Public domain. Stability-derivative conventions and the closed-form mode
+    approximations that scripts/check-model.mjs asserts against.
+
+────────────────────────────────────────────────────────────────────────────
+Three.js — https://threejs.org/  — MIT, mrdoob and contributors.
+
+Archivo and Archivo Narrow — Omnibus-Type — SIL Open Font License 1.1.
+JetBrains Mono — JetBrains — SIL Open Font License 1.1.
+    Self-hosted via Fontsource; no third-party font service is contacted.
+
+────────────────────────────────────────────────────────────────────────────
+Curated video
+    34 clips from 24 YouTube channels are embedded through the standard
+    YouTube player. Each remains the property of its creator, is served from
+    its own channel, and counts toward that channel's views. Every channel and
+    the specific clips used are credited on the in-app Sources page.
+
+    To have a clip removed, open an issue. `npm run verify:videos` already
+    re-checks reachability and embedding permission.
+
+────────────────────────────────────────────────────────────────────────────
+Generated imagery
+    assets/generated/plate-aircraft.png was produced with gpt-image-2.
+    Generated imagery is used for illustration only. Every labelled technical
+    figure is authored by hand in src/data/diagrams.js, because an image model
+    will invent components and mislabel axes, and a confidently wrong diagram
+    in a teaching product is worse than no diagram.
