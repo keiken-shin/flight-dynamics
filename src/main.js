@@ -6,6 +6,7 @@ import { renderCards } from "./ui/cards.js";
 import { renderCheckride, stopCheckride } from "./ui/checkride.js";
 import { renderCredits } from "./ui/credits.js";
 import { el, applyPlate, currentPlate, cyclePlate } from "./ui/util.js";
+import { logoSvg, faviconDataUri } from "./ui/logo.js";
 
 const app = document.getElementById("app");
 
@@ -28,7 +29,7 @@ function zoneRails() {
 
 function header() {
   const bar = el("header", "bar");
-  const home = el("a", "bar__title", "Flight Dynamics");
+  const home = el("a", "bar__title", logoSvg({ size: 20 }) + "<span>Flight Dynamics</span>");
   home.href = "#";
   const meta = el("span", "bar__meta");
   const spacer = el("span", "bar__spacer");
@@ -77,6 +78,8 @@ function route({ meta, index }) {
 }
 
 applyPlate(currentPlate());
+// The mark doubles as the favicon; one geometry, no extra request, no raster.
+document.querySelector('link[rel="icon"]')?.setAttribute("href", faviconDataUri());
 zoneRails();
 const h = header();
 document.querySelector(".plate-frame").prepend(h.bar);

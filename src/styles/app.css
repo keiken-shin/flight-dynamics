@@ -98,9 +98,14 @@ button { font: inherit; color: inherit; }
   border-bottom: var(--w-rule) solid var(--ink);
 }
 .bar__title {
+  display: inline-flex; align-items: center; gap: 9px; align-self: center;
   font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
   text-decoration: none;
 }
+/* The mark is ink, like every other drawn thing here — it is a symbol from the
+   plates, not a brand badge, so it does not get to spend the accent. */
+.logo { flex: none; display: block; color: var(--ink); }
+.bar__title:hover .logo { color: var(--accent); }
 .bar__spacer { flex: 1; }
 .bar__meta, .bar button {
   font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .1em;
