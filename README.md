@@ -168,8 +168,6 @@ Built on other people's measurements. **JSBSim** and Tony Peden for the C172 dat
 for the faces, and **24 YouTube channels** whose teaching is better in five minutes than a page
 of prose could be. Full attribution in [NOTICE](NOTICE) and on the in-app Sources page.
 
-Inspired by [Cell Architecture Studio](https://github.com/cclank/cell-architecture-studio).
-
 ## License
 
 [MIT](LICENSE). See [NOTICE](NOTICE) for third-party material.
