@@ -53,6 +53,10 @@ export function renderLesson(root, id) {
     const label = el("span", "sheets__lab", "");
     strip.appendChild(label);
     const btns = [];
+    /* The strip has to SAY it is steppable. Driving the build off scroll instead
+       looked clever and failed on the content: a chapter is ~330 words, so a
+       section passes in a couple of flicks and four steps blur past with no
+       chance to read any of them. Clicking is the reader's own clock. */
     const c = { svg, total, label, btns, plate: plateName, at: 0, pinned: false };
     if (total > 1) {
       for (let n = 1; n <= total; n++) {
@@ -64,7 +68,11 @@ export function renderLesson(root, id) {
         strip.appendChild(b);
       }
     }
-    setStepOn(c, 1);
+    if (total > 1) strip.appendChild(el("span", "sheets__hint", "step through the build"));
+    /* Opens COMPLETE. The prose right after a figure reference describes the
+       finished drawing, so the finished drawing is what has to be there; the
+       tabs replay how it got that way. */
+    setStepOn(c, total);
     return c;
   }
 
@@ -255,12 +263,21 @@ export function renderLesson(root, id) {
       { href: "#" + LESSONS[i + 1].id }));
   col.appendChild(foot);
 
-  wrap.append(head, col, benchWrap);
+  /* ── the sandbox: apply what you just read ──────────────────────────────
+     Its own section, spanning the full width at the very end of the chapter.
+
+     It used to live on the bench, and that was two bugs in one. `mountFigure`
+     replaces the bench's contents, so the launch control was destroyed the first
+     time scrolling swapped the figure — and below 1020px the bench is
+     display:none, which made the button and the entire sandbox invisible on
+     every phone. It also belongs last on reading order: flying the thing is what
+     you do after the chapter, not something to trip over between figures. */
+  const apply = el("div", "apply");
+  wrap.append(head, col, benchWrap, apply);
   root.appendChild(wrap);
 
   showFigure(figIds[0]);
 
-  /* ── the sandbox: apply what you just read ── */
   if (hasTask(les.id)) {
     const launch = el("button", "launch", `<span>Fly it yourself</span>${mark()}`);
     launch.type = "button";
@@ -272,60 +289,34 @@ export function renderLesson(root, id) {
       launch.remove();
       launch.disabled = false;
       launch.firstChild.textContent = "Fly it yourself";
-      // The sandbox REPLACES the plate on the bench rather than stacking under
-      // it — two aircraft on one bench is twice the height and half the point.
-      bench.querySelector(".fig-host").hidden = true;
-      bench.querySelector(".sheets").hidden = true;
       const host = el("div", "sandbox");
-      bench.appendChild(host);
+      apply.appendChild(host);
       const stop = mountSandbox(host, () => {
-        // Returning to the plate restores the reading bench.
         stop();
         host.remove();
-        bench.querySelector(".fig-host").hidden = false;
-        bench.querySelector(".sheets").hidden = false;
-        bench.appendChild(launch);
+        apply.appendChild(launch);
       }, les.id);
       const prev = teardown;
       teardown = () => { stop(); prev?.(); };
       host.scrollIntoView({ block: "nearest", behavior: "smooth" });
     };
-    bench.appendChild(launch);
+    apply.appendChild(launch);
   }
 
-  /* The bench follows the reading, and the plate BUILDS as you read it.
-     An IntersectionObserver could say which figure is current but not how far
-     through its own approach it is, so the step never advanced and the strip sat
-     on the last tab forever. Reading position gives both: which figure, and how
-     close you are to reaching it. The drawing assembles in step with the
-     paragraphs that explain it — which is what the progressive states and their
-     per-step captions were built for. */
-  const refs = [...col.querySelectorAll(".figref")];
-  if (refs.length) {
-    /* A figure assembles on the APPROACH to its own reference, and is finished
-       by the time the reference reaches the reading line.
+  /* Scroll's only remaining job is deciding WHICH figure the bench holds on a
+     wide screen. Stepping belongs to the reader.
 
-       Building it *after* the reference — the obvious reading of "the plate
-       builds as you read" — was wrong twice over. It made the bench show the
-       finished drawing on arrival and then rewind to a bare outline once you
-       scrolled, so the step numbers appeared to run backwards; and it put step 1
-       beside the paragraph that describes all four arrows, because that
-       paragraph immediately follows the reference.
-
-       Assembling on approach fixes both. Scrolling down only ever moves a build
-       forward, and the prose that describes a finished figure is read in front
-       of a finished figure. */
-    const BASE = () => Math.max(320, innerHeight * 0.72);
-
-    /* Narrow screens have no bench, so each reference carries its own plate.
-       Mounted once, up front — building them lazily would mean measuring a
-       figure that is not in the DOM yet. */
+     Driving the build off scroll read well as an idea and failed on the content.
+     A chapter is about 330 words, so a figure's own section passes in a couple
+     of flicks and four steps blur past unread. The strip opens complete, says
+     what it is, and waits to be tapped. */
+  const sections = [...col.querySelectorAll(".fig-section")];
+  if (sections.length) {
     const NARROW = matchMedia("(max-width: 1020px)");
-    const sections = [...col.querySelectorAll(".fig-section")];
-    /* Mounted on first narrow use, not up front: on a wide screen these plates
-       are display:none, and rendering two or three SVGs nobody will see is work
-       for nothing. A resize into the narrow layout calls track(), which mounts
-       them then. */
+
+    /* Narrow screens have no bench, so every section carries its own plate.
+       Mounted on first narrow use, not up front: on a wide screen these are
+       display:none, and rendering SVGs nobody will see is work for nothing. */
     const inline = [];
     const mountInline = () => {
       if (inline.length) return;
@@ -333,58 +324,14 @@ export function renderLesson(root, id) {
         mountFigure(s.querySelector(".figref__plate"), s.dataset.fig, plateName(s.dataset.fig))));
     };
 
-    /* An inline plate assembles as it rises into view and is finished by the
-       time it locks under the header — the same rule as the bench, expressed in
-       the only geometry a single column has. */
-    const trackInline = () => {
-      mountInline();
-      const stick = stickTop();
-      sections.forEach((s, n) => {
-        const c = inline[n];
-        if (c.pinned) return;
-        const top = s.querySelector(".figref__plate").getBoundingClientRect().top + scrollY;
-        const span = Math.max(1, innerHeight - stick);
-        const p = Math.min(1, Math.max(0, (scrollY - (top - innerHeight)) / span));
-        setStepOn(c, 1 + Math.floor(p * (c.total - 0.001)));
-      });
-    };
-    const stickTop = () => {
-      const bar = document.querySelector(".bar");
-      const rail = parseFloat(getComputedStyle(document.documentElement)
-        .getPropertyValue("--margin-rail")) || 20;
-      return rail + (bar ? bar.getBoundingClientRect().height : 40);
-    };
-
     const track = () => {
-      if (NARROW.matches) return trackInline();
-      const line = scrollY + innerHeight * 0.28;    // the reading line
-      const tops = refs.map((r) => r.getBoundingClientRect().top + scrollY);
-
-      /* Each figure's approach is capped to the room it actually has. A fixed
-         reach is longer than the gap between two references in a tight chapter,
-         and the next figure then starts building ABOVE the current one's own
-         reference — stealing the bench before its prose has been read. Here the
-         references sit 492px apart against a 518px reach, so Fig 1-2 took over
-         26px before you reached Fig 1-1. */
-      const reach = (n) => (n === 0
-        ? BASE()
-        : Math.max(160, Math.min(BASE(), (tops[n] - tops[n - 1]) * 0.55)));
-
-      // Active figure: the furthest-along one that has begun approaching.
-      let k = -1, prog = 0;
-      for (let n = 0; n < tops.length; n++) {
-        const r = reach(n);
-        const p = (line - (tops[n] - r)) / r;
-        if (p > 0) { k = n; prog = Math.min(1, p); }
-      }
-      if (k === -1) { showFigure(refs[0].dataset.fig); if (!pinned) setStep(1); return; }
-
-      showFigure(refs[k].dataset.fig);
-      if (pinned || !cur) return;
-      setStep(1 + Math.floor(prog * (cur.total - 0.001)));
+      if (NARROW.matches) return mountInline();
+      const line = scrollY + innerHeight * 0.34;
+      const tops = sections.map((s) => s.getBoundingClientRect().top + scrollY);
+      let k = 0;
+      for (let n = 0; n < tops.length; n++) if (tops[n] <= line) k = n;
+      showFigure(sections[k].dataset.fig);
     };
-    // Called directly rather than rAF-throttled: three rects and an early-out on
-    // an unchanged sheet is cheaper than the bookkeeping to defer it.
     addEventListener("scroll", track, { passive: true });
     addEventListener("resize", track, { passive: true });
     track();

@@ -215,6 +215,7 @@ export const LESSONS = [
     { t: "concrete", text: "Describe a bee hovering in a room. Where is it — three numbers. Which way is it pointing — three more. You are done. There is no seventh question you could ask about its position and orientation." },
     { t: "p", text: "A rigid body in space has six degrees of freedom. For an aircraft we usually express them in body axes, fixed to the airframe and rotating with it: x forward along the fuselage, y out the right wing, z downward through the belly." },
     { t: "fig", id: "equations-of-motion/frames" },
+    { t: "p", text: "Two frames, because they answer different questions. Earth axes say where the aircraft is and where it is heading — the part a map cares about. Body axes say what the aircraft is doing to itself, and they are the only frame in which the aerodynamic forces come out simple, because a wing has no idea which way north is. Everything below is written in body axes and rotated back out to the earth afterwards, and that rotation is the only reason the equations look harder than they are." },
     { t: "fig", id: "equations-of-motion/six-states" },
     { t: "p", text: "Three velocities — u, v, w — and three rotation rates — p, q, r. Feed the aerodynamic forces and moments into Newton's laws written for a rotating frame, integrate, and you have a flight simulator." },
     F(`<i>m</i> ( <i>u̇</i> + <i>qw</i> − <i>rv</i> ) = <i>X</i> − <i>mg</i> sin <i>θ</i>`,

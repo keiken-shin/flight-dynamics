@@ -344,7 +344,12 @@ button { font: inherit; color: inherit; }
    first viewport still names the lesson. */
 .lesson { display: grid; grid-template-columns: minmax(0, 46fr) minmax(0, 54fr); gap: 0 var(--gutter); }
 .lesson__head { grid-column: 1; grid-row: 1; padding-top: 40px; min-width: 0; }
-.col { grid-column: 1; grid-row: 2; padding: 0 0 90px; min-width: 0; }
+.col { grid-column: 1; grid-row: 2; padding: 0 0 40px; min-width: 0; }
+/* The apply surface spans both columns at the foot of the chapter: the sandbox
+   deserves the whole width, and it is the last thing you do here. */
+.apply { grid-column: 1 / -1; grid-row: 3; padding-bottom: 50px; }
+.apply .launch { border: var(--w-rule) solid var(--ink); border-top-width: var(--w-rule); }
+.apply .sandbox { border: var(--w-rule) solid var(--ink); }
 .col > *, .lesson__head > * { max-width: 68ch; }   /* body measure, per the craft floor */
 
 /* Pinned, and never taller than what is left of the viewport — a bench that
@@ -533,8 +538,14 @@ button { font: inherit; color: inherit; }
 .fig-host svg.figure { display: block; width: 100%; height: auto; }
 
 .sheets {
-  display: flex; align-items: center; gap: 8px; padding: 9px 12px;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 9px 12px;
   border-top: var(--w-hair) solid var(--rule);
+}
+/* Says out loud that the numbers do something. Without it a reader has no
+   reason to touch them, and the build nobody triggers may as well not exist. */
+.sheets__hint {
+  font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-3); margin-left: auto;
 }
 .sheets__lab { font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em;
                text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
@@ -749,17 +760,17 @@ button { font: inherit; color: inherit; }
   .col { order: 2; }
   .lesson__sub { margin-bottom: 1.4em; }
 
+  /* Not sticky. A pinned plate held the top of the screen through the Watch
+     list and the stage check, where it had nothing to say, and pinning only
+     existed to serve a scroll-driven build that no longer exists. It sits where
+     its reference is, and the reader taps through it there. */
   .figref__plate {
-    display: block;
-    position: sticky; top: calc(var(--margin-rail) + 44px); z-index: 3;
-    margin-top: 10px;
-    background: var(--paper);          /* opaque, so the next plate covers it */
-    border: var(--w-rule) solid var(--ink);
+    display: block; margin-top: 10px;
+    background: var(--paper); border: var(--w-rule) solid var(--ink);
   }
-  /* A plate may not eat the screen. Capped, and the drawing scales inside it. */
-  .figref__plate .fig-host { max-height: 38vh; overflow: hidden; }
   .figref__plate .fig-host svg.figure { display: block; width: 100%; height: auto; }
   .figref__plate .sheets { border-top: var(--w-hair) solid var(--rule); }
+  .apply { padding-bottom: 30px; }
   .home__lede { grid-template-columns: minmax(0, 1fr); gap: 18px; }
 
   /* The plate is the only navigation, so it may not shrink into illegibility.
