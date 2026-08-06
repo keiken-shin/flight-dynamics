@@ -113,12 +113,12 @@ components:
     backgroundColor: "{colors.paper}"
     textColor: "{colors.ink}"
     rounded: "{rounded.none}"
-  sheet-tab:
+  step-tab:
     backgroundColor: "{colors.paper}"
     textColor: "{colors.ink-2}"
     rounded: "{rounded.none}"
     size: "26px"
-  sheet-tab-active:
+  step-tab-active:
     backgroundColor: "{colors.ink}"
     textColor: "{colors.paper}"
     rounded: "{rounded.none}"
@@ -280,8 +280,12 @@ A numbered ring over the exploded plate: 21px circle, paper fill, 1px ink stroke
 ### The Bench (signature)
 The pinned right column: a 1px ink plate holding one figure at a time, a hairline-topped sheet strip, and — when a sandbox exists — an instrument panel and HUD stacked under it. The figure swaps as the reading passes each figure reference (IntersectionObserver at the upper third), so the reader works at a bench rather than scrolling a page.
 
-- **Sheet strip:** the label names the **plate**, then the sheet — `Fig. 2–2 · Sheet 3 of 3`. Seven of the twelve lessons give every figure the same sheet count, so a strip reading only `Sheet 3 of 3` looked frozen while scrolling swapped the drawing beneath it. The plate number is also what ties the bench back to the `Fig. 2–2` reference in the reading.
-- **Sheet tabs:** 26×26 square, hairline `rule`, mono 11px in secondary ink; hover to ink border and ink text; the pressed tab fills solid **ink** with paper text (never accent — a filled magenta block in the lesson's first viewport is the chrome-spends-the-budget mistake).
+- **Step strip:** the label names the **plate**, then the step — `Fig. 2–2 · Step 3 of 3`. Seven of the twelve lessons give every figure the same step count, so a strip reading only `Step 3 of 3` looked frozen while scrolling swapped the drawing beneath it. The plate number is also what ties the bench back to the `Fig. 2–2` reference in the reading.
+
+  **"Step", never "sheet".** In a real parts catalogue *Sheet 2 of 4* is a different page carrying different content. These are one drawing at successive stages of its own assembly, each keeping everything before it and adding one thing. Called sheets, readers concluded they were missing three other figures.
+
+- **A figure assembles on the APPROACH to its reference, and is complete when the reference reaches the reading line.** Building it *after* the reference — the obvious reading of "the plate builds as you read" — fails twice: the bench shows the finished drawing on arrival and then rewinds to a bare outline once you scroll, so the numbers appear to run backwards; and step 1 lands beside the paragraph describing all four arrows, because that paragraph immediately follows the reference. Each approach is capped to the room actually available between two references, or a tight chapter has the next figure stealing the bench before the current one's prose has been read.
+- **Step tabs:** 26×26 square, hairline `rule`, mono 11px in secondary ink. They read as a build, not as pagination: passed steps take a `paper-sunk` ground with an `ink-3` border, the current step fills solid **ink** with paper text, and steps ahead stay hollow (never accent — a filled magenta block in the lesson's first viewport is the chrome-spends-the-budget mistake).
 - **Sheet order:** a figure opens on its COMPLETE sheet, labelled `Sheet n of n`. The tabs step *backwards* through the build. A manual shows the assembled drawing; disassembly is what the tabs are for.
 
 ### Figure Reference
@@ -351,7 +355,7 @@ Each item resets the aircraft to its own start, because failing item six must no
 - **Do** reserve the semantic palette for statements about physics, and address it by `kind`, never by colour value.
 - **Do** draw structure with the three line weights — hairline 0.5px, rule 1px, line 1.5px — and upgrade to a 1px ink border when a container is an instrument.
 - **Do** use a thin ruled box for set-apart text (the concrete anchor and misconception boxes are both hairline boxes).
-- **Do** open a progressive figure on its COMPLETE sheet and let the tabs step backwards through the build.
+- **Do** let a progressive figure assemble on the approach to its reference, and let the tabs step back through the build afterwards.
 - **Do** set every numeral, label and instrument reading in JetBrains Mono with tabular figures.
 - **Do** size a force arrow by its magnitude. In the sandbox, arrow length *is* the measurement; only the label may be clamped to stay in frame.
 - **Do** carry both dark-mode paths (`prefers-color-scheme` and `data-plate="negative"`) when a treatment depends on plate polarity.

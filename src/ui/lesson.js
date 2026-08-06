@@ -43,16 +43,28 @@ export function renderLesson(root, id) {
   let cur = null;      // { svg, total, label, btns, plate }
   let pinned = false;  // a manual tab click holds until the figure changes
 
-  /* Setting the sheet is separate from swapping the figure, because reading
-     scroll drives the first and the figure references drive the second. */
-  function setSheet(n) {
+  /* Setting the step is separate from swapping the figure, because reading
+     scroll drives the first and the figure references drive the second.
+
+     "Step", not "sheet". In a real parts catalogue Sheet 2 of 4 is a different
+     page carrying different content; these are one drawing at successive stages
+     of its own assembly, each keeping everything before it and adding one thing.
+     The word promised pagination and delivered a build, and readers reasonably
+     concluded they were missing three other figures. */
+  function setStep(n) {
     if (!cur) return;
     const v = Math.max(1, Math.min(cur.total, n));
     if (v === cur.at) return;
     cur.at = v;
     cur.svg.setAttribute("data-state", String(v));
-    cur.label.textContent = `${cur.plate} · Sheet ${v} of ${cur.total}`;
-    cur.btns.forEach((x, j) => x.setAttribute("aria-pressed", j + 1 === v ? "true" : "false"));
+    cur.label.textContent = `${cur.plate} · Step ${v} of ${cur.total}`;
+    // Passed / current / ahead, so the strip reads as a build rather than as
+    // four interchangeable pages.
+    cur.btns.forEach((x, j) => {
+      const n1 = j + 1;
+      x.setAttribute("aria-pressed", n1 === v ? "true" : "false");
+      x.dataset.at = n1 < v ? "done" : n1 === v ? "now" : "todo";
+    });
   }
 
   function showFigure(figId) {
@@ -63,9 +75,9 @@ export function renderLesson(root, id) {
     const svg = figHost.querySelector("svg");
     const total = svg.querySelectorAll('g[class^="s"]').length;
 
-    /* The strip names the PLATE, not just the sheet. Seven of the twelve lessons
-       give every figure the same sheet count, so a strip that only ever read
-       "Sheet 4 of 4" looked frozen while scrolling swapped the drawing beneath
+    /* The strip names the PLATE, not just the step. Seven of the twelve lessons
+       give every figure the same step count, so a strip that only ever read
+       "Step 4 of 4" looked frozen while scrolling swapped the drawing beneath
        it. The plate number is also what ties the bench back to the "Fig. 2–1"
        reference in the reading. */
     const plate = `Fig. ${i + 1}–${figIds.indexOf(figId) + 1}`;
@@ -77,18 +89,16 @@ export function renderLesson(root, id) {
       for (let n = 1; n <= total; n++) {
         const b = el("button", "", String(n));
         b.type = "button";
-        b.setAttribute("aria-label", `${plate}, sheet ${n} of ${total}`);
-        b.onclick = () => { pinned = true; setSheet(n); };
+        b.setAttribute("aria-label", `${plate}, step ${n} of ${total}`);
+        b.onclick = () => { pinned = true; setStep(n); };
         btns.push(b);
         sheets.appendChild(b);
       }
     }
-    /* Open COMPLETE. A manual shows you the assembled drawing; sheet 1 is an
-       arrow-less outline, and opening on it put that outline beside a paragraph
-       reading "all four arrows are the same length". Reading scroll then takes
-       over and builds the plate up as the prose explains it. */
+    /* Open on step 1 — the drawing has not been explained yet, so it has not
+       been drawn yet. `track` builds it from here. */
     cur = { svg, total, label, btns, plate, at: 0 };
-    setSheet(total);
+    setStep(1);
   }
 
   /* ── title block ──
@@ -264,33 +274,53 @@ export function renderLesson(root, id) {
 
   /* The bench follows the reading, and the plate BUILDS as you read it.
      An IntersectionObserver could say which figure is current but not how far
-     through its section you are, so the sheet never advanced and the strip sat
+     through its own approach it is, so the step never advanced and the strip sat
      on the last tab forever. Reading position gives both: which figure, and how
-     much of its prose you have covered. Each figure's section runs from its own
-     reference to the next one, and the sheet steps 1..total across it, so the
-     drawing assembles in step with the paragraphs that explain it — which is
-     what the progressive states and their per-sheet captions were built for. */
+     close you are to reaching it. The drawing assembles in step with the
+     paragraphs that explain it — which is what the progressive states and their
+     per-step captions were built for. */
   const refs = [...col.querySelectorAll(".figref")];
   if (refs.length) {
-    const foot = col.querySelector(".foot");
+    /* A figure assembles on the APPROACH to its own reference, and is finished
+       by the time the reference reaches the reading line.
+
+       Building it *after* the reference — the obvious reading of "the plate
+       builds as you read" — was wrong twice over. It made the bench show the
+       finished drawing on arrival and then rewind to a bare outline once you
+       scrolled, so the step numbers appeared to run backwards; and it put step 1
+       beside the paragraph that describes all four arrows, because that
+       paragraph immediately follows the reference.
+
+       Assembling on approach fixes both. Scrolling down only ever moves a build
+       forward, and the prose that describes a finished figure is read in front
+       of a finished figure. */
+    const BASE = () => Math.max(320, innerHeight * 0.72);
     const track = () => {
       const line = scrollY + innerHeight * 0.28;    // the reading line
       const tops = refs.map((r) => r.getBoundingClientRect().top + scrollY);
-      let k = -1;
-      for (let n = 0; n < tops.length; n++) if (tops[n] <= line) k = n;
 
-      // Above the first reference: nothing has been explained yet, so the bench
-      // holds the finished drawing rather than an empty outline.
-      if (k === -1) { showFigure(refs[0].dataset.fig); if (!pinned) setSheet(cur?.total ?? 1); return; }
+      /* Each figure's approach is capped to the room it actually has. A fixed
+         reach is longer than the gap between two references in a tight chapter,
+         and the next figure then starts building ABOVE the current one's own
+         reference — stealing the bench before its prose has been read. Here the
+         references sit 492px apart against a 518px reach, so Fig 1-2 took over
+         26px before you reached Fig 1-1. */
+      const reach = (n) => (n === 0
+        ? BASE()
+        : Math.max(160, Math.min(BASE(), (tops[n] - tops[n - 1]) * 0.55)));
+
+      // Active figure: the furthest-along one that has begun approaching.
+      let k = -1, prog = 0;
+      for (let n = 0; n < tops.length; n++) {
+        const r = reach(n);
+        const p = (line - (tops[n] - r)) / r;
+        if (p > 0) { k = n; prog = Math.min(1, p); }
+      }
+      if (k === -1) { showFigure(refs[0].dataset.fig); if (!pinned) setStep(1); return; }
 
       showFigure(refs[k].dataset.fig);
       if (pinned || !cur) return;
-      const end = k + 1 < tops.length
-        ? tops[k + 1]
-        : (foot ? foot.getBoundingClientRect().top + scrollY : document.documentElement.scrollHeight);
-      const span = Math.max(1, end - tops[k]);
-      const p = Math.min(1, Math.max(0, (line - tops[k]) / span));
-      setSheet(1 + Math.floor(p * (cur.total - 0.001)));
+      setStep(1 + Math.floor(prog * (cur.total - 0.001)));
     };
     // Called directly rather than rAF-throttled: three rects and an early-out on
     // an unchanged sheet is cheaper than the bookkeeping to defer it.

@@ -541,10 +541,14 @@ button { font: inherit; color: inherit; }
   font-family: var(--f-mono); font-size: 11px; color: var(--ink-2);
 }
 .sheets button:hover { border-color: var(--ink); color: var(--ink); }
-/* Ink, not accent: this sits in the lesson's first viewport, and a filled
-   magenta block there is the same chrome-spends-the-colour-budget mistake the
-   launch slab was. */
-.sheets button[aria-pressed="true"] {
+/* The strip is a BUILD, not four interchangeable pages, so the steps you have
+   already passed have to look passed. Ink, not accent: this sits in the lesson's
+   first viewport, and a filled magenta block there is the same
+   chrome-spends-the-colour-budget mistake the launch slab was. */
+.sheets button[data-at="done"] {
+  background: var(--paper-sunk); border-color: var(--ink-3); color: var(--ink-2);
+}
+.sheets button[data-at="now"], .sheets button[aria-pressed="true"] {
   background: var(--ink); border-color: var(--ink); color: var(--paper); font-weight: 600;
 }
 
