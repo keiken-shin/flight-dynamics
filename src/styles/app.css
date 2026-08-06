@@ -353,7 +353,6 @@ button { font: inherit; color: inherit; }
 .after { padding-bottom: 20px; }
 .apply { margin-bottom: 34px; }
 .apply .launch { border: var(--w-rule) solid var(--ink); border-top-width: var(--w-rule); }
-.apply .sandbox { border: var(--w-rule) solid var(--ink); }
 .col > *, .lesson__head > * { max-width: 68ch; }   /* body measure, per the craft floor */
 
 /* Pinned, and never taller than what is left of the viewport — a bench that
@@ -468,6 +467,14 @@ button { font: inherit; color: inherit; }
 .vp__cap { padding: 11px 14px; border-top: var(--w-hair) solid var(--rule); }
 .vp__cap b { display: block; font-size: 15px; font-weight: 600; }
 .vp__cap span { display: block; font-size: 14px; color: var(--ink-2); margin-top: 4px; }
+
+/* The sandbox borrows the plate whole. Two differences: it is wider, because a
+   horizon and four arrows want the room a 16:9 clip does not, and it has no
+   fixed aspect — the canvas sizes itself off the host, and the panel and HUD
+   take what they take. The plate's own bar already closes with a hairline, so
+   the sandbox drops the heavy top rule it wears when it sits on the page. */
+.vp--sim { width: min(1180px, 96vw); }
+.vp--sim .sandbox { border-top: 0; }
 
 /* Shown when the clip ends — the moment YouTube would offer three more. */
 .vp__end { position: absolute; inset: 0; display: flex; flex-direction: column;
@@ -657,7 +664,14 @@ button { font: inherit; color: inherit; }
 .launch {
   /* Label and arrow travel together. Pushed to opposite ends of a 700px strip
      they stop reading as one control and the click target goes ambiguous. */
-  display: flex; width: 100%; align-items: center; gap: 9px;
+  /* Stops where the reading column stops. A control stretched across two
+     thousand pixels reads as a banner rather than something you click — but
+     "half the page" is a number, not an edge: it lands past the column line and
+     54px inside the bench, aligned with nothing. This is column 1 of .lesson's
+     46/54 grid, so the strip's right edge is one gutter left of the bench, the
+     same relationship every other row in the page already has. */
+  display: flex; width: 100%; max-width: calc((100% - var(--gutter)) * .46);
+  align-items: center; gap: 9px;
   padding: 9px 12px; cursor: pointer; text-align: left;
   background: none; color: var(--ink);
   border: 0; border-top: var(--w-hair) solid var(--rule); border-radius: 0;
@@ -676,9 +690,15 @@ button { font: inherit; color: inherit; }
 .mk-h { fill: currentColor; stroke: none; }
 
 /* footer nav */
-/* Full width now that it sits below the grid rather than inside the reading
-   column, and after the sandbox: read the chapter, fly it, then leave. */
-.foot { display: flex; justify-content: space-between; gap: 16px;
+/* Below the grid rather than inside the reading column, and after the sandbox:
+   read the chapter, fly it, then leave. Held to the reading column like the
+   launch strip above it, so the two share a right edge — left full width, the
+   dashed index box inflates to fill a whole screen and the three links drift so
+   far apart they stop reading as one row. It wraps rather than taking a minimum
+   width: a floor would push it back past the column line on middling screens,
+   which is the misalignment being fixed. */
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px;
+        max-width: calc((100% - var(--gutter)) * .46);
         padding-top: 22px; border-top: var(--w-rule) solid var(--ink); }
 .foot a { display: inline-flex; align-items: center; gap: 9px;
           text-decoration: none; padding: 13px 16px; border: var(--w-hair) solid var(--rule);
@@ -778,6 +798,8 @@ button { font: inherit; color: inherit; }
   .figref__plate .fig-host svg.figure { display: block; width: 100%; height: auto; }
   .figref__plate .sheets { border-top: var(--w-hair) solid var(--rule); }
   .apply { padding-bottom: 30px; }
+  /* One column here, so there is no column-1 edge left to align to. */
+  .apply .launch, .foot { max-width: none; }
   .home__lede { grid-template-columns: minmax(0, 1fr); gap: 18px; }
 
   /* The plate is the only navigation, so it may not shrink into illegibility.

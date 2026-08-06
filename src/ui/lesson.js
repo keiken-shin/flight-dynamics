@@ -292,19 +292,55 @@ export function renderLesson(root, id) {
       launch.firstChild.textContent = "Loading…";
       // Dynamic import: Three.js is fetched here and nowhere else.
       const { mountSandbox } = await import("../sim/sandbox.js");
-      launch.remove();
       launch.disabled = false;
       launch.firstChild.textContent = "Fly it yourself";
+
+      /* The same <dialog> takeover the clip gets, for the same reason: flying is
+         a different mode from reading. Grown in place it pushed the footer a
+         screen down and left the reader scrolling between a sim and a chapter
+         that were both live; here the page behind goes inert, Escape works
+         without us, and closing puts the reader back exactly where they were.
+         Modal also gets the sim off the half-width column it was inheriting —
+         it wants the widest box on the screen, and the reading column is the
+         narrowest thing on the page. */
+      const dlg = el("dialog", "vp vp--sim");
+      dlg.setAttribute("aria-label", `Sandbox: ${les.title}`);
+      dlg.innerHTML =
+        `<div class="vp__bar">` +
+          `<span class="vp__ch">Fly it yourself</span>` +
+          `<span class="vp__dur">${les.title}</span>` +
+          `<button class="vp__x" type="button" aria-label="Close sandbox">` +
+            `<span>Close</span>` +
+            `<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 1 L11 11 M11 1 L1 11"/></svg>` +
+          `</button>` +
+        `</div>`;
       const host = el("div", "sandbox");
-      apply.appendChild(host);
-      const stop = mountSandbox(host, () => {
-        stop();
-        host.remove();
-        apply.appendChild(launch);
-      }, les.id);
+      dlg.appendChild(host);
+      document.body.appendChild(dlg);
+      document.documentElement.style.overflow = "hidden";
+      /* Shown before mounting: a closed dialog is display:none, so the canvas
+         would size itself against a zero-width host and start out wrong. */
+      dlg.showModal();
+
+      let stop = null, shut = false;
+      const close = () => {
+        if (shut) return;          // dlg.close() re-enters this through "close"
+        shut = true;
+        stop?.();
+        dlg.close();
+        dlg.remove();
+        document.documentElement.style.overflow = "";
+        launch.focus();
+      };
+      dlg.querySelector(".vp__x").onclick = close;
+      dlg.addEventListener("close", close);            // Escape
+      /* No backdrop-click close, unlike the clip. The sim is dragged, not
+         watched, and a slider drag that ends outside the plate would dismiss a
+         flight in progress. Escape, Close, and the HUD's own exit are enough. */
+      stop = mountSandbox(host, close, les.id);
+
       const prev = teardown;
-      teardown = () => { stop(); prev?.(); };
-      host.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      teardown = () => { close(); prev?.(); };
     };
     apply.appendChild(launch);
   }
