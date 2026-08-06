@@ -33,15 +33,53 @@ export function renderLesson(root, id) {
   const bench = el("div", "bench");
   benchWrap.appendChild(bench);
 
-  /* ── the bench: one figure at a time, swapped by what you are reading ── */
-  const figHost = el("div", "bench__fig");
-  const sheets = el("div", "sheets");
-  bench.append(figHost, sheets);
+  /* ── the bench: one figure at a time, swapped by what you are reading.
+     Only on wide screens — a narrow one gets a plate per reference instead. ── */
 
   const figIds = les.flow.filter((b) => b.t === "fig").map((b) => b.id);
   let activeFig = null;
-  let cur = null;      // { svg, total, label, btns, plate }
+  let cur = null;      // the bench's controller, on wide screens
   let pinned = false;  // a manual tab click holds until the figure changes
+
+  /* One figure, its step strip, and the controls over both. The bench uses one
+     of these; on a narrow screen every figure reference gets its own, because a
+     single bench above the reading has scrolled 300px out of sight by the time
+     you reach the paragraph that refers to it. */
+  function mountFigure(host, figId, plateName) {
+    host.innerHTML = `<div class="fig-host">${DIAGRAMS[figId]()}</div><div class="sheets"></div>`;
+    const svg = host.querySelector("svg");
+    const strip = host.querySelector(".sheets");
+    const total = svg.querySelectorAll('g[class^="s"]').length;
+    const label = el("span", "sheets__lab", "");
+    strip.appendChild(label);
+    const btns = [];
+    const c = { svg, total, label, btns, plate: plateName, at: 0, pinned: false };
+    if (total > 1) {
+      for (let n = 1; n <= total; n++) {
+        const b = el("button", "", String(n));
+        b.type = "button";
+        b.setAttribute("aria-label", `${plateName}, step ${n} of ${total}`);
+        b.onclick = () => { c.pinned = true; pinned = true; setStepOn(c, n); };
+        btns.push(b);
+        strip.appendChild(b);
+      }
+    }
+    setStepOn(c, 1);
+    return c;
+  }
+
+  function setStepOn(c, n) {
+    const v = Math.max(1, Math.min(c.total, n));
+    if (v === c.at) return;
+    c.at = v;
+    c.svg.setAttribute("data-state", String(v));
+    c.label.textContent = `${c.plate} · Step ${v} of ${c.total}`;
+    c.btns.forEach((x, j) => {
+      const n1 = j + 1;
+      x.setAttribute("aria-pressed", n1 === v ? "true" : "false");
+      x.dataset.at = n1 < v ? "done" : n1 === v ? "now" : "todo";
+    });
+  }
 
   /* Setting the step is separate from swapping the figure, because reading
      scroll drives the first and the figure references drive the second.
@@ -51,54 +89,20 @@ export function renderLesson(root, id) {
      of its own assembly, each keeping everything before it and adding one thing.
      The word promised pagination and delivered a build, and readers reasonably
      concluded they were missing three other figures. */
-  function setStep(n) {
-    if (!cur) return;
-    const v = Math.max(1, Math.min(cur.total, n));
-    if (v === cur.at) return;
-    cur.at = v;
-    cur.svg.setAttribute("data-state", String(v));
-    cur.label.textContent = `${cur.plate} · Step ${v} of ${cur.total}`;
-    // Passed / current / ahead, so the strip reads as a build rather than as
-    // four interchangeable pages.
-    cur.btns.forEach((x, j) => {
-      const n1 = j + 1;
-      x.setAttribute("aria-pressed", n1 === v ? "true" : "false");
-      x.dataset.at = n1 < v ? "done" : n1 === v ? "now" : "todo";
-    });
-  }
+  const setStep = (n) => cur && setStepOn(cur, n);
+
+  /* The strip names the PLATE, not just the step. Seven of the twelve lessons
+     give every figure the same step count, so a strip that only ever read
+     "Step 4 of 4" looked frozen while scrolling swapped the drawing beneath it.
+     The plate number is also what ties a figure back to its "Fig. 2–1"
+     reference in the reading. */
+  const plateName = (figId) => `Fig. ${i + 1}–${figIds.indexOf(figId) + 1}`;
 
   function showFigure(figId) {
     if (figId === activeFig || !DIAGRAMS[figId]) return;
     activeFig = figId;
     pinned = false;
-    figHost.innerHTML = DIAGRAMS[figId]();
-    const svg = figHost.querySelector("svg");
-    const total = svg.querySelectorAll('g[class^="s"]').length;
-
-    /* The strip names the PLATE, not just the step. Seven of the twelve lessons
-       give every figure the same step count, so a strip that only ever read
-       "Step 4 of 4" looked frozen while scrolling swapped the drawing beneath
-       it. The plate number is also what ties the bench back to the "Fig. 2–1"
-       reference in the reading. */
-    const plate = `Fig. ${i + 1}–${figIds.indexOf(figId) + 1}`;
-    sheets.innerHTML = "";
-    const label = el("span", "sheets__lab", "");
-    sheets.appendChild(label);
-    const btns = [];
-    if (total > 1) {
-      for (let n = 1; n <= total; n++) {
-        const b = el("button", "", String(n));
-        b.type = "button";
-        b.setAttribute("aria-label", `${plate}, step ${n} of ${total}`);
-        b.onclick = () => { pinned = true; setStep(n); };
-        btns.push(b);
-        sheets.appendChild(b);
-      }
-    }
-    /* Open on step 1 — the drawing has not been explained yet, so it has not
-       been drawn yet. `track` builds it from here. */
-    cur = { svg, total, label, btns, plate, at: 0 };
-    setStep(1);
+    cur = mountFigure(bench, figId, plateName(figId));
   }
 
   /* ── title block ──
@@ -114,6 +118,7 @@ export function renderLesson(root, id) {
   head.append(title, sub);
 
   let figSeen = 0;
+  let target = col;          // flow blocks land here until a figure opens a section
   les.flow.forEach((b) => {
     let node = null;
     switch (b.t) {
@@ -133,17 +138,19 @@ export function renderLesson(root, id) {
           `<p class="myth__truth">${b.truth}</p></div>`;
         break;
 
-      /* A figure in the text is a REFERENCE, not the figure — the plate itself
-         lives on the bench and stays on screen. This is the mechanic that makes
-         the lesson feel like working at a bench rather than reading a page. */
+      /* On a wide screen a figure in the text is a REFERENCE and the plate lives
+         on the bench beside it. On a narrow one there is no beside, so the plate
+         is rendered here — see the section wrapper below. */
       case "fig": {
         figSeen++;
         node = el("div", "figref");
         node.dataset.fig = b.id;
         node.innerHTML =
-          `<span class="t-label">Fig. ${i + 1}–${figSeen}</span>` +
-          `<span class="figref__rule"></span>` +
-          `<span class="figref__hint">shown on the bench ${mark()}</span>`;
+          `<div class="figref__line">` +
+            `<span class="t-label">Fig. ${i + 1}–${figSeen}</span>` +
+            `<span class="figref__rule"></span>` +
+            `<span class="figref__hint">shown on the bench ${mark()}</span>` +
+          `</div>`;
         break;
       }
 
@@ -217,7 +224,21 @@ export function renderLesson(root, id) {
         break;
       }
     }
-    if (node) col.appendChild(node);
+    /* A figure opens a SECTION that runs until the next figure. It exists so the
+       inline plate has something to stick inside: `position: sticky` is bounded
+       by its parent, and a plate whose parent is only as tall as itself has no
+       range at all — it read as sticky and behaved as static, sliding straight
+       off the top. The section is that range, and it ends exactly where the
+       figure stops being what you are reading about. */
+    if (b.t === "fig") {
+      target = el("div", "fig-section");
+      target.dataset.fig = b.id;
+      col.appendChild(target);
+      target.appendChild(node);
+      target.appendChild(el("div", "figref__plate"));
+      return;
+    }
+    if (node) target.appendChild(node);
   });
 
   // footer
@@ -253,16 +274,16 @@ export function renderLesson(root, id) {
       launch.firstChild.textContent = "Fly it yourself";
       // The sandbox REPLACES the plate on the bench rather than stacking under
       // it — two aircraft on one bench is twice the height and half the point.
-      figHost.hidden = true;
-      sheets.hidden = true;
+      bench.querySelector(".fig-host").hidden = true;
+      bench.querySelector(".sheets").hidden = true;
       const host = el("div", "sandbox");
       bench.appendChild(host);
       const stop = mountSandbox(host, () => {
         // Returning to the plate restores the reading bench.
         stop();
         host.remove();
-        figHost.hidden = false;
-        sheets.hidden = false;
+        bench.querySelector(".fig-host").hidden = false;
+        bench.querySelector(".sheets").hidden = false;
         bench.appendChild(launch);
       }, les.id);
       const prev = teardown;
@@ -295,7 +316,47 @@ export function renderLesson(root, id) {
        forward, and the prose that describes a finished figure is read in front
        of a finished figure. */
     const BASE = () => Math.max(320, innerHeight * 0.72);
+
+    /* Narrow screens have no bench, so each reference carries its own plate.
+       Mounted once, up front — building them lazily would mean measuring a
+       figure that is not in the DOM yet. */
+    const NARROW = matchMedia("(max-width: 1020px)");
+    const sections = [...col.querySelectorAll(".fig-section")];
+    /* Mounted on first narrow use, not up front: on a wide screen these plates
+       are display:none, and rendering two or three SVGs nobody will see is work
+       for nothing. A resize into the narrow layout calls track(), which mounts
+       them then. */
+    const inline = [];
+    const mountInline = () => {
+      if (inline.length) return;
+      sections.forEach((s) => inline.push(
+        mountFigure(s.querySelector(".figref__plate"), s.dataset.fig, plateName(s.dataset.fig))));
+    };
+
+    /* An inline plate assembles as it rises into view and is finished by the
+       time it locks under the header — the same rule as the bench, expressed in
+       the only geometry a single column has. */
+    const trackInline = () => {
+      mountInline();
+      const stick = stickTop();
+      sections.forEach((s, n) => {
+        const c = inline[n];
+        if (c.pinned) return;
+        const top = s.querySelector(".figref__plate").getBoundingClientRect().top + scrollY;
+        const span = Math.max(1, innerHeight - stick);
+        const p = Math.min(1, Math.max(0, (scrollY - (top - innerHeight)) / span));
+        setStepOn(c, 1 + Math.floor(p * (c.total - 0.001)));
+      });
+    };
+    const stickTop = () => {
+      const bar = document.querySelector(".bar");
+      const rail = parseFloat(getComputedStyle(document.documentElement)
+        .getPropertyValue("--margin-rail")) || 20;
+      return rail + (bar ? bar.getBoundingClientRect().height : 40);
+    };
+
     const track = () => {
+      if (NARROW.matches) return trackInline();
       const line = scrollY + innerHeight * 0.28;    // the reading line
       const tops = refs.map((r) => r.getBoundingClientRect().top + scrollY);
 

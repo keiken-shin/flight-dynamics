@@ -372,11 +372,14 @@ button { font: inherit; color: inherit; }
 
 /* A figure reference, not the figure. The plate lives on the bench; this is the
    manual's own way of pointing at it, and it is what drives the swap on scroll. */
-.figref {
-  display: flex; align-items: center; gap: 12px;
-  margin: 2em 0; padding-bottom: 5px;
+.figref { margin: 2em 0; }
+.figref__line {
+  display: flex; align-items: center; gap: 12px; padding-bottom: 5px;
   border-bottom: var(--w-hair) solid var(--rule);
 }
+/* Wide screens keep the plate on the bench; the inline copy is the narrow-screen
+   half of the same mechanic and never shows here. */
+.figref__plate { display: none; }
 .figref__rule { flex: 1; height: var(--w-hair); background: var(--rule-soft); }
 .figref__hint {
   display: inline-flex; align-items: center; gap: 7px;
@@ -526,8 +529,8 @@ button { font: inherit; color: inherit; }
 /* ── the bench ─────────────────────────────────────────────────────────── */
 
 .bench { border: var(--w-rule) solid var(--ink); }
-.bench__fig { position: relative; }
-.bench__fig svg.figure { display: block; width: 100%; height: auto; }
+.bench .fig-host { position: relative; }
+.fig-host svg.figure { display: block; width: 100%; height: auto; }
 
 .sheets {
   display: flex; align-items: center; gap: 8px; padding: 9px 12px;
@@ -541,6 +544,10 @@ button { font: inherit; color: inherit; }
   font-family: var(--f-mono); font-size: 11px; color: var(--ink-2);
 }
 .sheets button:hover { border-color: var(--ink); color: var(--ink); }
+/* A 26px square is a mouse target. On a finger it is a miss. */
+@media (pointer: coarse) {
+  .sheets button { width: 44px; height: 44px; font-size: 12.5px; }
+}
 /* The strip is a BUILD, not four interchangeable pages, so the steps you have
    already passed have to look passed. Ink, not accent: this sits in the lesson's
    first viewport, and a filled magenta block there is the same
@@ -728,17 +735,31 @@ button { font: inherit; color: inherit; }
      the top and bottom rails remain, so the frame still reserves their height. */
   :root { --margin-rail: 20px; --gutter: 28px; --rail-gap: 8px; }
   .zone--left, .zone--right { display: none; }
-  /* One column, and the bench goes above the reading rather than below the
-     footer — a "shown on the bench →" reference must not point 4,000px down.
-     But it goes BELOW the title: opening straight onto the plate left the first
-     viewport with no lesson name on it at all. */
+  /* One column — and NO bench. A single plate above the reading has scrolled
+     278px out of sight by the time you reach the paragraph that refers to it,
+     so the whole progressive build happened where nobody could see it. Each
+     reference carries its own plate instead, and that plate sticks under the
+     header for exactly as long as its own prose is being read. The screen gives
+     up space only while a figure is relevant, which on a chapter with two or
+     three figures is most of the reading returned. */
   .lesson { grid-template-columns: minmax(0, 1fr); }
-  .lesson__head, .col, .bench-wrap { grid-column: 1; grid-row: auto; }
+  .lesson__head, .col { grid-column: 1; grid-row: auto; }
   .lesson__head { order: 0; padding-top: 24px; }
-  .bench-wrap { order: 1; position: static; max-height: none; overflow: visible;
-                padding-top: 0; margin-bottom: 32px; }
+  .bench-wrap { display: none; }
   .col { order: 2; }
   .lesson__sub { margin-bottom: 1.4em; }
+
+  .figref__plate {
+    display: block;
+    position: sticky; top: calc(var(--margin-rail) + 44px); z-index: 3;
+    margin-top: 10px;
+    background: var(--paper);          /* opaque, so the next plate covers it */
+    border: var(--w-rule) solid var(--ink);
+  }
+  /* A plate may not eat the screen. Capped, and the drawing scales inside it. */
+  .figref__plate .fig-host { max-height: 38vh; overflow: hidden; }
+  .figref__plate .fig-host svg.figure { display: block; width: 100%; height: auto; }
+  .figref__plate .sheets { border-top: var(--w-hair) solid var(--rule); }
   .home__lede { grid-template-columns: minmax(0, 1fr); gap: 18px; }
 
   /* The plate is the only navigation, so it may not shrink into illegibility.
