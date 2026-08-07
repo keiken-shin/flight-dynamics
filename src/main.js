@@ -58,6 +58,14 @@ function route({ meta, index }) {
   const id = location.hash.replace(/^#/, "");
   const i = LESSONS.findIndex((l) => l.id === id);
   index.hidden = id === "";           // nothing to go back to from the index itself
+  /* A new plate starts at its top. The hashes here name routes, not anchors, so
+     the browser finds no element to jump to and simply leaves the scroll where
+     it was — which dropped you into the middle of the Sources page if you
+     happened to be down the index when you left it.
+     Instant, not smooth: `html` carries scroll-behavior: smooth for in-page
+     jumps, and inherited here it would animate the whole length of the document
+     you are leaving before the one you asked for appears. */
+  scrollTo({ top: 0, behavior: "instant" });
   stopCheckride();                    // never leave a checkride running offscreen
   stopLesson();                       // nor a sandbox, which would sit over the next page
   if (id === "cards") {
@@ -78,11 +86,56 @@ function route({ meta, index }) {
   }
 }
 
+/* Turning to another plate, rather than the old one being replaced under you.
+   The browser does the crossfade from two snapshots it takes either side of the
+   render, so there is no second copy of the page in the DOM and nothing to
+   clean up if it is interrupted. Skipped outright when the reader asked for
+   less motion — the global reduced-motion rule cannot reach ::view-transition
+   pseudo-elements, so this has to be a decision rather than a duration. */
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+function navigate() {
+  if (!document.startViewTransition || still.matches) return route(h);
+  const t = document.startViewTransition(() => route(h));
+  /* A skipped transition rejects `ready`: the document is not being rendered,
+     or a second navigation arrived before this one settled — which a reader
+     clicking through chapters quickly will do. The page has already changed by
+     then and there is nothing to recover, so this only keeps a routine outcome
+     from being reported as an unhandled rejection. */
+  t.ready.catch(() => {});
+}
+
 applyPlate(currentPlate());
 // The mark doubles as the favicon; one geometry, no extra request, no raster.
 document.querySelector('link[rel="icon"]')?.setAttribute("href", faviconDataUri());
+/* The browser restores the old scroll offset on reload, but this document is
+   empty at that moment and grows under it, so the offset it restores belongs to
+   nothing. route() puts every page at its top instead. */
+history.scrollRestoration = "manual";
 zoneRails();
 const h = header();
 document.querySelector(".plate-frame").prepend(h.bar);
-addEventListener("hashchange", () => route(h));
+addEventListener("hashchange", navigate);
 route(h);
+
+/* Uncover once the type is real AND the plate has been up long enough to have
+   been seen. fonts.ready settles either way — loaded or failed — so it cannot
+   strand the page behind the cover; the floor is what makes the loader a moment
+   rather than a flicker, since on a warm cache the fonts land in a handful of
+   milliseconds and an uncovering that fast reads as a glitch. It costs a held
+   beat on a fast load, which is the trade being asked for.
+   Only a full page load raises the cover at all. Route changes have their own
+   transition and never see it. */
+const COVER_FLOOR = 900;
+Promise.all([
+  document.fonts.ready,
+  new Promise((done) => setTimeout(done, COVER_FLOOR)),
+]).then(() => {
+  const boot = document.getElementById("boot");
+  if (!boot) return;
+  boot.classList.add("gone");
+  /* Removed on a timer rather than on transitionend, which is not guaranteed to
+     arrive: a page whose transitions are not advancing — loaded in a background
+     tab, or anywhere frames are not being produced — never fires it, and the one
+     thing an opaque full-screen cover may not do is outlive its reason. */
+  setTimeout(() => boot.remove(), 300);
+});

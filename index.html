@@ -9,6 +9,52 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cstyle%3E.m{fill:%2314171c;stroke:%2314171c}@media(prefers-color-scheme:dark){.m{fill:%23eceae5;stroke:%23eceae5}}%3C/style%3E%3Cline%20class='m'%20x1='12'%20y1='2'%20x2='12'%20y2='22'%20stroke-width='1.3'%20opacity='.55'/%3E%3Crect%20class='m'%20stroke='none'%20x='2'%20y='7'%20width='20'%20height='3'/%3E%3Crect%20class='m'%20stroke='none'%20x='10.1'%20y='12.4'%20width='3.8'%20height='4.4'/%3E%3Crect%20class='m'%20stroke='none'%20x='6.4'%20y='19'%20width='11.2'%20height='2.4'/%3E%3C/svg%3E">
 <meta name="description" content="Flight dynamics taken apart — twelve ideas in the order they make sense, each one naming the thing you probably believe that isn't true.">
 <meta name="color-scheme" content="light dark">
+<style>
+/* The plate is drawn before it is shown.
+   Every page here renders from script and letters itself with web fonts, so
+   uncovered the reader gets three states in a row: an empty frame, then the
+   whole document in fallback type, then every line of it reflowing as the real
+   faces land. The cover holds until both the first render and the fonts are
+   done, which turns three jumps into one appearance.
+   Inline, literal, and font-free on purpose — the stylesheet it would otherwise
+   borrow tokens from is loaded by the very module this is covering for, and any
+   lettering here would itself be a thing that reflows. The mark is the same
+   geometry as the favicon, drawn rather than set. */
+#boot {
+  position: fixed; inset: 0; z-index: 99;
+  display: grid; place-content: center; justify-items: center; gap: 20px;
+  background: #f4f4f1;
+  transition: opacity 240ms cubic-bezier(.16, 1, .3, 1);
+}
+#boot.gone { opacity: 0; pointer-events: none; }
+#boot svg { fill: #14171c; stroke: #14171c; }
+/* Drawn opaque, with no fade-in. main.js holds the cover for a floor of 900ms on
+   a full page load, so there is no longer a blink to protect against — and an
+   opacity that starts at 0 and is raised by an animation is invisible wherever
+   animations are not advancing, which includes a page loaded in a background
+   tab. Nothing here may depend on motion having run in order to be seen. */
+/* An indeterminate rule, in the accent, sweeping the width of the mark. It says
+   "working" without claiming a percentage it cannot know. One pass is shorter
+   than the cover's floor, so a fast load still shows a whole one rather than
+   cutting the sweep off halfway. */
+#boot i { position: relative; display: block; width: 92px; height: 2px; background: #dedcd5; overflow: hidden; }
+#boot i::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 40%;
+  background: #d6006e; animation: boot-sweep 820ms cubic-bezier(.4, 0, .6, 1) infinite;
+}
+@keyframes boot-sweep { from { transform: translateX(-110%); } to { transform: translateX(360%); } }
+@media (prefers-color-scheme: dark) {
+  #boot { background: #101318; }
+  #boot svg { fill: #eceae5; stroke: #eceae5; }
+  #boot i { background: #232830; }
+  #boot i::after { background: #ff2d8e; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* The sweep becomes the whole rule, drawn and still: the loader is a state
+     that has to be legible without any motion at all. */
+  #boot i::after { animation: none; width: 100%; }
+}
+</style>
 </head>
 <body>
 <!--
@@ -30,6 +76,15 @@ is the balloon itself. A twelve-row index table sits under the plate.
 FORM: Illustrated Parts Catalogue, candidate 4 of the grounded list, seed key 367d4bdc.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
+<div id="boot" aria-hidden="true">
+  <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true">
+    <line x1="12" y1="2" x2="12" y2="22" stroke-width="1.3" opacity=".55"/>
+    <rect stroke="none" x="2" y="7" width="20" height="3"/>
+    <rect stroke="none" x="10.1" y="12.4" width="3.8" height="4.4"/>
+    <rect stroke="none" x="6.4" y="19" width="11.2" height="2.4"/>
+  </svg>
+  <i></i>
+</div>
 <div class="plate-frame">
   <main id="app"></main>
 </div>

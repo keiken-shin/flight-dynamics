@@ -874,9 +874,26 @@ button { font: inherit; color: inherit; }
   .ctl { grid-template-columns: 72px 1fr 52px; gap: 8px; }
   .scale span { display: none; }
 }
+/* ── turning to another plate ──────────────────────────────────────────────
+   A crossfade, and nothing else. The rails, the bar and the paper are identical
+   either side of a route change, so only the drawing inside them appears to
+   change — and a transform here would slide the drafting margin, which is the
+   one thing on this page that may never move. Out quickly, in slower, so the
+   new plate reads as being laid down rather than swapped.
+
+   The browser makes both frames from snapshots it takes either side of the
+   render, so there is never a second copy of the document in the DOM. */
+::view-transition-old(root) { animation: plate-out 120ms var(--ease) both; }
+::view-transition-new(root) { animation: plate-in 240ms var(--ease) both; }
+@keyframes plate-out { to { opacity: 0; } }
+@keyframes plate-in { from { opacity: 0; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  /* The rule above cannot reach these — they are not descendants of anything.
+     main.js also skips the transition entirely; this is the belt to that brace. */
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }
 
 /* ── sources ───────────────────────────────────────────────────────────── */
