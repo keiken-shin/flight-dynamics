@@ -12,6 +12,7 @@
  */
 
 import { el, mark } from "./util.js";
+import { markStep } from "./steps.js";
 
 const API = "https://www.youtube.com/iframe_api";
 let apiState = null;   // null | Promise<YT>
@@ -64,8 +65,9 @@ export function closePlayer() {
 /**
  * @param {{id:string,title:string,channel:string,duration:string,note?:string}} video
  * @param {Array} list  the lesson's full video list, for "next" on the end card
+ * @param {string} lessonId  whose "watch a clip" step this clip satisfies, on ENDED
  */
-export function openPlayer(video, list = []) {
+export function openPlayer(video, list = [], lessonId = null) {
   closePlayer();
   const restoreFocus = document.activeElement;
 
@@ -112,13 +114,17 @@ export function openPlayer(video, list = []) {
       `</div>`;
     stage.appendChild(end);
     end.querySelector('[data-a="back"]').onclick = closePlayer;
-    end.querySelector('[data-a="next"]')?.addEventListener("click", () => openPlayer(next, list));
+    end.querySelector('[data-a="next"]')?.addEventListener("click", () => openPlayer(next, list, lessonId));
     end.querySelector("button").focus();
   }
 
   loadAPI().then((YT) => {
     if (!open || open.dlg !== dlg) return;          // closed while loading
     if (!YT?.Player) {                              // degraded: plain embed
+      /* A plain iframe cannot report ENDED, so the step is credited on open.
+         Better to be generous than to leave a reader whose network blocks the
+         API with a chapter they can never finish. */
+      if (lessonId) markStep(lessonId, "video");
       mount.outerHTML =
         `<iframe class="vp__frame" src="https://www.youtube-nocookie.com/embed/${video.id}?${qs(VARS)}"` +
         ` title="${video.title}" allow="accelerometer; autoplay; encrypted-media; picture-in-picture"` +
@@ -132,7 +138,14 @@ export function openPlayer(video, list = []) {
       events: {
         onReady: (e) => { e.target.getIframe()?.classList.add("vp__frame"); e.target.playVideo(); },
         onStateChange: (e) => {
-          if (e.data === YT.PlayerState.ENDED) { try { e.target.stopVideo(); } catch {} showEnd(); }
+          if (e.data === YT.PlayerState.ENDED) {
+            try { e.target.stopVideo(); } catch {}
+            /* ENDED, not "opened" — the chapter asks you to watch one, and this
+               is the only honest signal of that we get. Any one clip in the
+               chapter satisfies it; the strict rule is stated on the list. */
+            if (lessonId) markStep(lessonId, "video");
+            showEnd();
+          }
         },
         onError: showEnd,
       },

@@ -352,6 +352,47 @@ button { font: inherit; color: inherit; }
    with, so full width is honest rather than a fight. */
 .after { padding-bottom: 20px; }
 .apply { margin-bottom: 34px; }
+
+/* ── what the chapter still wants ─────────────────────────────────────────
+   Built as an inspection block, like the stage check: a caption strip with a
+   count, then ruled rows with a keyed cell down the left carrying a drawn tick.
+   Same furniture as the answer key, because it is the same kind of object — a
+   list of things checked off, not a progress bar. Rows are buttons: each one
+   is the way back to the thing it is asking for. */
+/* Held to the reading column, same as the launch strip and the footer below it —
+   the three of them share a right edge or the after-block reads as three
+   unrelated boxes. */
+.steps { border: var(--w-rule) solid var(--ink); margin-bottom: 26px;
+         max-width: calc((100% - var(--gutter)) * .46); }
+.steps__cap {
+  display: flex; justify-content: space-between; gap: 14px;
+  padding: 8px 12px; background: var(--paper-sunk);
+  border-bottom: var(--w-rule) solid var(--ink);
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--ink-2);
+}
+.steps__row {
+  display: flex; width: 100%; align-items: center; gap: 12px; cursor: pointer;
+  padding: 11px 12px; text-align: left; background: none; color: inherit;
+  border: 0; border-top: var(--w-hair) solid var(--rule); border-radius: 0; font: inherit;
+}
+.steps__row:first-of-type { border-top: 0; }
+.steps__row:hover { background: var(--paper-sunk); }
+.steps__k {
+  flex: none; display: flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border: var(--w-hair) solid var(--rule);
+}
+.steps__k svg { width: 13px; height: 11px; stroke: var(--f-thrust); stroke-width: 2; fill: none; }
+.steps__l { flex: 1; min-width: 0; font-size: 15px; }
+.steps__h {
+  display: block; font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-top: 3px;
+}
+/* Done rows step back: the eye should land on what is left, and a ticked row
+   that still shouts is just noise once it stops being actionable. */
+.steps__row.done { color: var(--ink-3); }
+.steps__row.done .steps__k { border-color: var(--f-thrust); }
+.steps__row .mk { color: var(--accent); }
 .apply .launch { border: var(--w-rule) solid var(--ink); border-top-width: var(--w-rule); }
 .col > *, .lesson__head > * { max-width: 68ch; }   /* body measure, per the craft floor */
 
@@ -799,7 +840,7 @@ button { font: inherit; color: inherit; }
   .figref__plate .sheets { border-top: var(--w-hair) solid var(--rule); }
   .apply { padding-bottom: 30px; }
   /* One column here, so there is no column-1 edge left to align to. */
-  .apply .launch, .foot { max-width: none; }
+  .apply .launch, .foot, .steps { max-width: none; }
   .home__lede { grid-template-columns: minmax(0, 1fr); gap: 18px; }
 
   /* The plate is the only navigation, so it may not shrink into illegibility.

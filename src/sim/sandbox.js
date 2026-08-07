@@ -403,12 +403,20 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
           ? `<span>Finish the checkride</span>`
           : `<span>Pass — next item</span>`;
         go.onclick = () => {
-          if (last) return onDone?.(passed);
+          if (last) return onDone?.(passed, true);
           stage += 1;
           loadTask(sequence[stage]);
         };
         goalEl.after(go);
       }
+      /* Banked the moment it is met, in both modes, and after the push so the
+         count includes this item. On a lesson it marks the chapter's flying
+         step; on a checkride it means quitting at item four of seven keeps the
+         four — this used to be written only from the finish button, so anyone
+         who left partway through scored nothing. The second argument says
+         whether the ride is over, which is the only thing the caller cannot
+         work out for itself. */
+      onDone?.(passed, false);
     }
     $("sb-state").textContent = s.onGround
       ? (f.L > f.W * 0.9 ? "about to fly" : "on the ground")

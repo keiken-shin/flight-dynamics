@@ -7,9 +7,19 @@
  * ending here instead of on another page of multiple choice.
  */
 
-import { el, mark, progress } from "./util.js";
+import { el, mark } from "./util.js";
+import { chapterDone } from "./steps.js";
 import { LESSONS } from "../data/lessons.js";
 import { CHECKRIDE } from "../sim/tasks.js";
+
+const BEST = "fd.checkride";
+const best = () => { try { return Number(localStorage.getItem(BEST)) || 0; } catch { return 0; } };
+/* Your best run, not your last — a second attempt that goes worse should not
+   erase the first. Written on every pass, so leaving partway through still
+   counts for what you actually flew. */
+const bank = (n) => {
+  try { if (n > best()) localStorage.setItem(BEST, String(n)); } catch {}
+};
 
 let teardown = null;
 
@@ -42,11 +52,10 @@ export function renderCheckride(root) {
     stopCheckride();
     body.innerHTML = "";
 
-    const done = progress();
-    const unread = LESSONS.filter((l) => !done[l.id]).length;
+    const unread = LESSONS.filter((l) => !chapterDone(l.id)).length;
     if (unread) {
       const warn = el("p", "cards__note",
-        `${unread} of the twelve chapters are still unread. Nothing stops you flying it now, ` +
+        `${unread} of the twelve chapters are not complete yet. Nothing stops you flying it now, ` +
         `but every item below is drawn from one of them.`);
       body.appendChild(warn);
     }
@@ -82,7 +91,9 @@ export function renderCheckride(root) {
 
     const host = el("div", "sandbox sandbox--exam");
     body.appendChild(host);
-    const stop = mountSandbox(host, () => { stop(); brief(); }, null, CHECKRIDE, (passed) => {
+    const stop = mountSandbox(host, () => { stop(); brief(); }, null, CHECKRIDE, (passed, finished) => {
+      bank(passed.length);            // every pass, not just a finished ride
+      if (!finished) return;
       stop();
       report(passed);
     });
@@ -91,7 +102,6 @@ export function renderCheckride(root) {
 
   function report(passed) {
     body.innerHTML = "";
-    try { localStorage.setItem("fd.checkride", String(passed.length)); } catch {}
     const d = el("div", "card card--done");
     d.innerHTML =
       `<div class="card__cap"><span>Result</span><span>${passed.length} of ${CHECKRIDE.length}</span></div>` +
@@ -114,14 +124,15 @@ export function renderCheckride(root) {
 /* The way in, at the foot of the index — after the twelve chapters, where the
    end of a course belongs. */
 export function checkrideStrip() {
-  let best = 0;
-  try { best = Number(localStorage.getItem("fd.checkride")) || 0; } catch {}
-  const done = progress();
-  const read = LESSONS.filter((l) => done[l.id]).length;
+  /* One slot, one meaning. This used to fall back to the chapters-read count
+     whenever no score was stored, so a reader who had just passed an item and
+     quit read "0 of 12 chapters" as their checkride result. A score slot now
+     only ever holds a score, and says plainly when there isn't one. */
+  const n = best();
   const a = el("a", "catalogue catalogue--exam",
     `<span class="catalogue__t">The checkride</span>` +
     `<span class="catalogue__n">${CHECKRIDE.length} items, flown · ` +
-    (best ? `best ${best} of ${CHECKRIDE.length}` : `${read} of 12 chapters read`) + `</span>` +
+    (n ? `best ${n} of ${CHECKRIDE.length}` : "not yet flown") + `</span>` +
     mark());
   a.href = "#checkride";
   return a;

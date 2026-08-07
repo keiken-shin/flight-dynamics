@@ -1,7 +1,8 @@
 import { LESSONS } from "../data/lessons.js";
 import { VIDEOS } from "../data/videos.js";
 import DIAGRAMS from "../data/diagrams.js";
-import { el, markDone, mark } from "./util.js";
+import { el, mark } from "./util.js";
+import { stepsFor, doneSteps, markStep } from "./steps.js";
 import { openPlayer, closePlayer } from "./player.js";
 
 /* `tasks.js` is pure data with no Three.js in it, so asking whether a chapter
@@ -16,6 +17,12 @@ const TICK = `<svg viewBox="0 0 15 13" aria-hidden="true"><path d="M1 7 L5.5 11.
 const CROSS = `<svg viewBox="0 0 15 13" aria-hidden="true"><path d="M2.5 1.5 L12.5 11.5 M12.5 1.5 L2.5 11.5"/></svg>`;
 
 let teardown = null;
+
+/* The counterpart to stopCheckride(). Rendering another lesson tears the last
+   one down, but leaving for the index or the revision cards never did — so a
+   sandbox opened and then escaped with the browser's Back button stayed live,
+   and once it became a modal it stayed live ON TOP of wherever you went. */
+export function stopLesson() { teardown?.(); teardown = null; }
 
 export function renderLesson(root, id) {
   teardown?.();
@@ -126,6 +133,8 @@ export function renderLesson(root, id) {
   head.append(title, sub);
 
   let figSeen = 0;
+  // Kept so the completion list can send the reader to the thing it is asking for.
+  let vidsNode = null, checkNode = null;
   let target = col;          // flow blocks land here until a figure opens a section
   les.flow.forEach((b) => {
     let node = null;
@@ -188,9 +197,10 @@ export function renderLesson(root, id) {
             `<span class="vid__t"><b>${v.title}</b>` +
             `<span class="m">${v.channel} · ${v.duration}</span>` +
             (v.note ? `<span class="n">${v.note}</span>` : "") + `</span>`;
-          b.onclick = () => openPlayer(v, list);
+          b.onclick = () => openPlayer(v, list, les.id);
           node.appendChild(b);
         });
+        vidsNode = node;
         break;
       }
 
@@ -210,25 +220,42 @@ export function renderLesson(root, id) {
         const why = el("p", "check__why", `<strong>Why:</strong> ${b.why}`);
         why.hidden = true;
         const btns = [];
+        /* Settling the check — the tick on the answer, the cross on what was
+           picked, the reasoning shown, every option spent. Its own function
+           because a chapter you have already passed opens in this state rather
+           than pretending to be unanswered. */
+        const settle = (chosen) => {
+          btns.forEach((x, j) => {
+            x.disabled = true;
+            const key = x.querySelector(".check__k");
+            if (j === b.answer) { x.classList.add("right"); key.innerHTML = TICK; }
+            else if (j === chosen) { x.classList.add("wrong"); key.innerHTML = CROSS; }
+          });
+          why.hidden = false;
+        };
         b.options.forEach((opt, oi) => {
           const btn = el("button", "",
             `<span class="check__k" aria-hidden="true">${String.fromCharCode(65 + oi)}</span>` +
             `<span class="check__o">${opt}</span>`);
           btn.type = "button";
           btn.onclick = () => {
-            btns.forEach((x, j) => {
-              x.disabled = true;
-              const key = x.querySelector(".check__k");
-              if (j === b.answer) { x.classList.add("right"); key.innerHTML = TICK; }
-              else if (j === oi) { x.classList.add("wrong"); key.innerHTML = CROSS; }
-            });
-            why.hidden = false;
-            markDone(les.id);
+            settle(oi);
+            /* Only a correct answer counts. Getting it wrong still reveals the
+               answer and the reasoning — that is what the check is for — but the
+               chapter stays open until you come back and know it. */
+            if (oi === b.answer) markStep(les.id, "check");
           };
           btns.push(btn);
           node.appendChild(btn);
         });
         node.appendChild(why);
+        /* Already answered correctly, so restore it. Nothing extra is stored to
+           do this: the check step is only ever marked by picking the right
+           option, so "answered" and "answered with b.answer" are the same fact.
+           A wrong attempt is deliberately not remembered — that one is worth
+           coming back to, and the reasoning is right there once you try again. */
+        if (doneSteps(les.id).check) settle(b.answer);
+        checkNode = node;
         break;
       }
     }
@@ -278,6 +305,45 @@ export function renderLesson(root, id) {
      before the thing the chapter was building toward. */
   const apply = el("div", "apply");
   const after = el("div", "after");
+
+  /* ── what this chapter still wants ──
+     The rule used to be invisible and, worse, wrong: one click on any stage-check
+     option — right or wrong — silently marked the whole chapter complete, while
+     watching the clip and flying the sandbox counted for nothing at all. A reader
+     who did the work and watched the index stay empty had no way to find out why.
+
+     So the requirements are stated where the chapter ends, they tick over as they
+     are met, and each row is a way back to the thing it is asking for. It is
+     derived from the chapter's own content in steps.js, not declared here. */
+  const steps = stepsFor(les.id);
+  const stepsBox = el("div", "steps");
+  let launchBtn = null;
+  const jump = { video: () => vidsNode, check: () => checkNode, fly: () => launchBtn };
+  function paintSteps() {
+    const done = doneSteps(les.id);
+    const n = steps.filter((s) => done[s.key]).length;
+    const all = n === steps.length;
+    stepsBox.innerHTML =
+      `<div class="steps__cap"><span>${all ? "Chapter complete" : "To complete this chapter"}</span>` +
+      `<span>${n} of ${steps.length}</span></div>`;
+    steps.forEach((s) => {
+      const row = el("button", "steps__row" + (done[s.key] ? " done" : ""));
+      row.type = "button";
+      row.innerHTML =
+        `<span class="steps__k" aria-hidden="true">${done[s.key] ? TICK : ""}</span>` +
+        `<span class="steps__l">${s.label}<span class="steps__h">${s.hint}</span></span>` +
+        (done[s.key] ? "" : mark());
+      row.setAttribute("aria-label", `${s.label} — ${done[s.key] ? "done" : "not yet"}`);
+      row.onclick = () => jump[s.key]?.()?.scrollIntoView({ block: "center", behavior: "smooth" });
+      stepsBox.appendChild(row);
+    });
+  }
+  /* Two of the three steps are marked from inside a modal that covers this page,
+     so the list cannot repaint itself on click — it listens for the store instead. */
+  document.addEventListener("fd:progress", paintSteps);
+  teardown = () => document.removeEventListener("fd:progress", paintSteps);
+
+  if (steps.length) { paintSteps(); after.appendChild(stepsBox); }
   after.append(apply, foot);
   wrap.append(head, col, benchWrap);
   root.append(wrap, after);
@@ -287,6 +353,7 @@ export function renderLesson(root, id) {
   if (hasTask(les.id)) {
     const launch = el("button", "launch", `<span>Fly it yourself</span>${mark()}`);
     launch.type = "button";
+    launchBtn = launch;
     launch.onclick = async () => {
       launch.disabled = true;
       launch.firstChild.textContent = "Loading…";
@@ -337,7 +404,9 @@ export function renderLesson(root, id) {
       /* No backdrop-click close, unlike the clip. The sim is dragged, not
          watched, and a slider drag that ends outside the plate would dismiss a
          flight in progress. Escape, Close, and the HUD's own exit are enough. */
-      stop = mountSandbox(host, close, les.id);
+      /* The goal latching is what marks the chapter's flying step — not opening
+         the sandbox, and not closing it. onDone fires once, when the task is met. */
+      stop = mountSandbox(host, close, les.id, null, () => markStep(les.id, "fly"));
 
       const prev = teardown;
       teardown = () => { close(); prev?.(); };

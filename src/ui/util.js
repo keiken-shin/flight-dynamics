@@ -14,13 +14,14 @@ export const mark = (dir = "right") =>
     ? `<svg class="mk" viewBox="0 0 18 10" aria-hidden="true"><path class="mk-s" d="M18 5 H6"/><path class="mk-h" d="M7 1 L0 5 L7 9 Z"/></svg>`
     : `<svg class="mk" viewBox="0 0 18 10" aria-hidden="true"><path class="mk-s" d="M0 5 H12"/><path class="mk-h" d="M11 1 L18 5 L11 9 Z"/></svg>`;
 
+/* The raw store, and only the raw store. What an entry means — which steps a
+   chapter asks for, which of them are done — is steps.js's business, so this
+   file stays free of content data. */
 const KEY = "fd.progress";
 export const progress = () => {
   try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; }
 };
-export const markDone = (id) => {
-  const p = progress();
-  p[id] = true;
+export const saveProgress = (p) => {
   try { localStorage.setItem(KEY, JSON.stringify(p)); } catch {}
 };
 

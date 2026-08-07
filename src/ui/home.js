@@ -1,6 +1,7 @@
 import { LESSONS } from "../data/lessons.js";
 import plateUrl from "../../assets/generated/plate-aircraft.png";
-import { el, progress } from "./util.js";
+import { el } from "./util.js";
+import { chapterDone, doneCount, stepsFor } from "./steps.js";
 import { catalogueStrip } from "./cards.js";
 import { checkrideStrip } from "./checkride.js";
 import { creditsStrip } from "./credits.js";
@@ -31,7 +32,6 @@ const STATIONS = [
 const R = 21;
 
 export function renderHome(root) {
-  const done = progress();
   root.innerHTML = "";
 
   const lede = el("div", "home__lede");
@@ -64,7 +64,7 @@ export function renderHome(root) {
     const [bx, by] = st.b, [tx, ty] = st.t;
 
     const g = document.createElementNS(NS, "g");
-    g.setAttribute("class", "balloon" + (done[les.id] ? " done" : ""));
+    g.setAttribute("class", "balloon" + (chapterDone(les.id) ? " done" : ""));
     g.setAttribute("tabindex", "0");
     g.setAttribute("role", "link");
     g.setAttribute("aria-label", `${i + 1}. ${les.title}`);
@@ -126,12 +126,17 @@ export function renderHome(root) {
     "<thead><tr><th>Item</th><th>Lesson</th><th>Remarks</th><th></th></tr></thead>";
   const tb = el("tbody");
   LESSONS.forEach((les, i) => {
-    const tr = el("tr", done[les.id] ? "done" : "");
+    /* Partial progress is shown, not hidden. A chapter takes three specific
+       things; "2 of 3" tells a reader there is something left and is worth
+       coming back for, where a blank cell reads as "you did nothing". */
+    const complete = chapterDone(les.id);
+    const n = doneCount(les.id), of = stepsFor(les.id).length;
+    const tr = el("tr", complete ? "done" : "");
     tr.innerHTML =
       `<td class="c-item">${String(i + 1).padStart(2, "0")}</td>` +
       `<td><a href="#${les.id}">${les.title}</a></td>` +
       `<td class="c-rem">${les.oneLiner}</td>` +
-      `<td class="c-st">${done[les.id] ? "complete" : ""}</td>`;
+      `<td class="c-st">${complete ? "complete" : n ? `${n} of ${of}` : ""}</td>`;
     tb.appendChild(tr);
   });
   table.appendChild(tb);

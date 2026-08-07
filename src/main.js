@@ -1,7 +1,7 @@
 import "./styles/app.css";
 import { LESSONS } from "./data/lessons.js";
 import { renderHome } from "./ui/home.js";
-import { renderLesson } from "./ui/lesson.js";
+import { renderLesson, stopLesson } from "./ui/lesson.js";
 import { renderCards } from "./ui/cards.js";
 import { renderCheckride, stopCheckride } from "./ui/checkride.js";
 import { renderCredits } from "./ui/credits.js";
@@ -59,6 +59,7 @@ function route({ meta, index }) {
   const i = LESSONS.findIndex((l) => l.id === id);
   index.hidden = id === "";           // nothing to go back to from the index itself
   stopCheckride();                    // never leave a checkride running offscreen
+  stopLesson();                       // nor a sandbox, which would sit over the next page
   if (id === "cards") {
     meta.textContent = "Revision";
     renderCards(app);
