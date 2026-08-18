@@ -18,13 +18,16 @@ dist/
 .impeccable/questions/
 .impeccable/hook.cache.json
 
-# Generated imagery. plate-aircraft.png is imported by src/ui/home.js, so the
-# build fails without it — it is tracked. The twelve hero images are not
-# referenced by any page; they stay on disk and out of history, because adding
-# 24 MB to a repo later is one commit while removing it later is a rewrite.
-# Track them with `git add -f` if they should be versioned.
+# Generated imagery. The PLATES are imported by src/ui/home.js, so the build
+# fails without them — they are tracked, and the exception is a glob rather than
+# a filename because the rule is "a plate is imported, therefore a plate is
+# tracked". Naming one file meant the second plate was ignored, built fine
+# locally where it existed on disk, and broke the deploy.
+# The hero images are not referenced by any page; they stay on disk and out of
+# history, because adding 40 MB to a repo later is one commit while removing it
+# later is a rewrite. Track them with `git add -f` if they should be versioned.
 assets/generated/*.png
-!assets/generated/plate-aircraft.png
+!assets/generated/plate-*.png
 
 # Editor / OS noise
 .DS_Store

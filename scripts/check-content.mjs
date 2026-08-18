@@ -15,6 +15,8 @@ import { VIDEOS } from "../src/data/videos.js";
 import { TASKS, MISSING } from "../src/sim/tasks.js";
 import { buildDeck } from "../src/data/deck.js";
 import { readFileSync } from "node:fs";
+import { execSync } from "node:child_process";
+import { dirname, join } from "node:path/posix";
 
 let failed = 0;
 const fail = (m) => { console.log(`  FAIL  ${m}`); failed++; };
@@ -97,6 +99,35 @@ const noPart = LESSONS.filter((l) => !PARTS.some((p) => p.n === l.part));
 noPart.length
   ? fail(`chapters in no declared part: ${noPart.map((l) => l.id).join(", ")}`)
   : pass(`every chapter belongs to one of ${PARTS.length} parts`);
+
+/* ── an imported asset that is not in the repo ────────────────────────────
+   The one failure mode a local build cannot see. An asset sitting on the disk
+   of the machine that made it resolves perfectly there and is simply absent on
+   a clean checkout, so the build passes for its author and fails for everyone
+   else — which is exactly how plate-combat.png reached a deploy. The ignore
+   rule that caused it even carried a comment saying plates are tracked BECAUSE
+   the build needs them; it just named one file instead of the class. */
+{
+  const list = (args) => execSync(`git ls-files ${args}`, { encoding: "utf8" })
+    .split(/\r?\n/).filter(Boolean);
+  const tracked = new Set(list(""));
+  const ASSET = /\.(png|jpe?g|gif|svg|webp|avif|woff2?|mp[34])$/i;
+  const missing = [];
+  for (const f of list("src content")) {
+    if (!/\.(js|mjs|css)$/.test(f)) continue;
+    const dir = dirname(f);
+    for (const m of readFileSync(f, "utf8")
+      .matchAll(/from\s+["']([^"']+)["']|url\(\s*["']?([^"')]+)["']?\s*\)/g)) {
+      const spec = m[1] ?? m[2];
+      if (!spec?.startsWith(".") || !ASSET.test(spec)) continue;
+      const rel = join(dir, spec);
+      if (!tracked.has(rel)) missing.push(`${f} imports ${rel}`);
+    }
+  }
+  missing.length
+    ? fail(`imported but not tracked by git: ${missing.join("; ")}`)
+    : pass("every asset imported by source is tracked, so a clean checkout builds");
+}
 
 /* A chapter with no clips is allowed — some subjects have no honest source —
    but it should be a decision rather than an oversight, so it is reported. */
