@@ -7,7 +7,7 @@
  * step with the lessons, for no learning that spacing does not already give.
  */
 
-import { LESSONS } from "../data/lessons.js";
+import { LESSONS, COURSE } from "../data/lessons.js";
 import { buildDeck, deckState, due, grade, endSession, summary, INTERVALS } from "../data/deck.js";
 import { el, mark } from "./util.js";
 
@@ -22,7 +22,7 @@ const shuffle = (a) => {
 
 export function renderCards(root) {
   root.innerHTML = "";
-  document.title = "Card Catalogue · Flight Dynamics";
+  document.title = `Card Catalogue · ${COURSE}`;
   const deck = buildDeck();
 
   const wrap = el("div", "cards");

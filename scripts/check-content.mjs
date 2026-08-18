@@ -1,0 +1,107 @@
+#!/usr/bin/env node
+/* The content audit: the rules that are about what the course SAYS rather than
+ * about whether it runs.
+ *
+ * These are the ones a build cannot catch and a reader cannot check. A term
+ * badged as standard without naming the edition it came from, a chapter that
+ * quietly lost its stage check, a cross-reference pointing at the wrong chapter
+ * because someone inserted a lesson in the middle of the array — each of those
+ * ships looking completely fine.
+ */
+
+import { LESSONS, PARTS } from "../src/data/lessons.js";
+import DIAGRAMS from "../src/data/diagrams.js";
+import { VIDEOS } from "../src/data/videos.js";
+import { TASKS, MISSING } from "../src/sim/tasks.js";
+import { buildDeck } from "../src/data/deck.js";
+import { readFileSync } from "node:fs";
+
+let failed = 0;
+const fail = (m) => { console.log(`  FAIL  ${m}`); failed++; };
+const pass = (m) => console.log(`  pass  ${m}`);
+
+/* ── every chapter has the spine ─────────────────────────────────────────── */
+const spineless = [];
+for (const les of LESSONS) {
+  const t = (k) => les.flow.some((b) => b.t === k);
+  const missing = ["concrete", "fig", "myth", "check"].filter((k) => !t(k));
+  if (missing.length) spineless.push(`${les.id} (no ${missing.join(", ")})`);
+}
+spineless.length
+  ? fail(`chapters missing a spine block: ${spineless.join("; ")}`)
+  : pass(`all ${LESSONS.length} chapters carry concrete, figure, myth and check`);
+
+/* ── provenance: the rule the term block exists to enforce ───────────────── */
+const STATUS = ["multi-service", "service", "historical", "sim"];
+const badTerms = [];
+for (const les of LESSONS)
+  for (const b of les.flow.filter((x) => x.t === "term")) {
+    if (!STATUS.includes(b.status)) badTerms.push(`${les.id}: "${b.word}" status "${b.status}"`);
+    else if ((b.status === "multi-service" || b.status === "service") && !b.src)
+      badTerms.push(`${les.id}: "${b.word}" claims standing with no publication`);
+  }
+const termCount = LESSONS.flatMap((l) => l.flow).filter((b) => b.t === "term").length;
+badTerms.length
+  ? fail(`terms without honest provenance: ${badTerms.join("; ")}`)
+  : pass(`all ${termCount} badged terms carry a valid status, and an edition where they claim one`);
+
+/* ── the same rule over the appendix ─────────────────────────────────────── */
+const tax = JSON.parse(readFileSync(new URL("../content/taxonomy.json", import.meta.url), "utf8"));
+const badRows = tax.terms.filter(
+  (t) => !STATUS.includes(t.status) ||
+    ((t.status === "multi-service" || t.status === "service") && !t.src));
+const orphan = tax.terms.filter((t) => !tax.categories.some((c) => c.id === t.category));
+badRows.length || orphan.length
+  ? fail(`glossary: ${badRows.length} rows without provenance, ${orphan.length} orphaned`)
+  : pass(`all ${tax.terms.length} glossary rows statused, sourced and in a real category`);
+
+/* ── cross-references point where they claim to ──────────────────────────── */
+const badRefs = [];
+for (const les of LESSONS)
+  for (const b of les.flow.filter((x) => x.t === "ref")) {
+    const dest = LESSONS[b.ch - 1];
+    if (!dest) badRefs.push(`${les.id} → chapter ${b.ch}, which does not exist`);
+    else if (dest.id === les.id) badRefs.push(`${les.id} → itself`);
+    else if (LESSONS.indexOf(les) < b.ch - 1)
+      badRefs.push(`${les.id} → chapter ${b.ch} (${dest.id}), which comes AFTER it`);
+  }
+const refCount = LESSONS.flatMap((l) => l.flow).filter((b) => b.t === "ref").length;
+badRefs.length
+  ? fail(`cross-references: ${badRefs.join("; ")}`)
+  : pass(`all ${refCount} cross-references resolve to an earlier chapter`);
+
+/* ── every figure a chapter asks for actually exists ─────────────────────── */
+const missingFigs = [];
+for (const les of LESSONS)
+  for (const b of les.flow.filter((x) => x.t === "fig"))
+    if (!DIAGRAMS[b.id]) missingFigs.push(`${les.id} → ${b.id}`);
+missingFigs.length
+  ? fail(`figures referenced but not built: ${missingFigs.join(", ")}`)
+  : pass(`all ${Object.keys(DIAGRAMS).length} figure builders resolve`);
+
+/* ── a chapter without a sandbox says why ────────────────────────────────── */
+const unexplained = LESSONS.filter((l) => !Object.hasOwn(TASKS, l.id) && !MISSING[l.id]);
+unexplained.length
+  ? fail(`no sandbox and no reason: ${unexplained.map((l) => l.id).join(", ")}`)
+  : pass(`${Object.keys(TASKS).length} sandboxes, ${Object.keys(MISSING).length} documented absences, ${LESSONS.length} chapters`);
+
+/* ── the appendix must never become homework ─────────────────────────────── */
+const deck = buildDeck();
+const leaked = deck.filter((c) => !LESSONS.some((l) => l.id === c.lesson));
+leaked.length
+  ? fail(`${leaked.length} deck cards come from something that is not a chapter`)
+  : pass(`all ${deck.length} deck cards derive from chapters, none from the glossary`);
+
+/* ── parts are coherent ──────────────────────────────────────────────────── */
+const noPart = LESSONS.filter((l) => !PARTS.some((p) => p.n === l.part));
+noPart.length
+  ? fail(`chapters in no declared part: ${noPart.map((l) => l.id).join(", ")}`)
+  : pass(`every chapter belongs to one of ${PARTS.length} parts`);
+
+/* A chapter with no clips is allowed — some subjects have no honest source —
+   but it should be a decision rather than an oversight, so it is reported. */
+const silent = LESSONS.filter((l) => !(VIDEOS[l.id] || []).length).map((l) => l.id);
+console.log(`  note  ${silent.length ? `no clips: ${silent.join(", ")}` : "every chapter has clips"}`);
+
+console.log(failed ? `\n${failed} content check(s) FAILED` : "\ncontent is coherent");
+process.exit(failed ? 1 : 0);

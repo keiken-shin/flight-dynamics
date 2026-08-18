@@ -20,7 +20,7 @@ watch is computed, not animated.
 
 <img src="assets/demo-plate.gif" width="760" alt="The index plate assembling itself: twelve numbered leader lines drawing out from the exploded aircraft drawing to name each chapter.">
 
-*The index is the drawing. Twelve callouts, twelve chapters.*
+*The index is the drawing. Two plates, twenty callouts, twenty chapters.*
 
 </div>
 

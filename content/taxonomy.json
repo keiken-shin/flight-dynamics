@@ -1,0 +1,1330 @@
+{
+  "$comment": "The Part II lookup appendix. NOT a lesson and NOT part of the progression — it is reference, it is not numbered, and it must never be fed to buildDeck. Every row carries a provenance status; anything whose standing could not be established was dropped rather than guessed, which is why this is shorter than the source.",
+  "$provenance": "These rows were transcribed from a secondary source that cites the January 2025 multi-service brevity publication. Nobody on this project has opened the primary publication — it is not reachable from here — so every 'multi-service' row should be read as 'a transcription says so', not as first-hand. Brevity definitions move between editions, which is why the edition is named at all.",
+  "categories": [
+    {
+      "id": "regimes",
+      "title": "Engagement regimes",
+      "note": "Where a fight is happening and which skill set is being exercised there."
+    },
+    {
+      "id": "intercept-phases",
+      "title": "Intercept phases",
+      "note": "The five-phase public model of how an intercept unfolds, from building the picture to what happens after the merge."
+    },
+    {
+      "id": "bvr-timeline",
+      "title": "BVR timeline and decisions",
+      "note": "The calls that mark points on a beyond-visual-range timeline: who owns which target, when a weapon is away, and when to leave."
+    },
+    {
+      "id": "bvr-manoeuvres",
+      "title": "Individual BVR manoeuvres",
+      "note": "Single-aircraft manoeuvres and geometry flown before the merge, each one a way of trading closure, angles or radar support."
+    },
+    {
+      "id": "engagement-flows",
+      "title": "BVR engagement flows",
+      "note": "Prebriefed whole-engagement plans that settle what happens after the missile comes off the rail."
+    },
+    {
+      "id": "formations",
+      "title": "Friendly formations",
+      "note": "How friendly fighters arrange themselves relative to one another."
+    },
+    {
+      "id": "tactical-pictures",
+      "title": "Tactical picture labels",
+      "note": "Labels describing how detected groups are arranged on the scope, not how friendlies are flying."
+    },
+    {
+      "id": "multi-ship",
+      "title": "Multi-ship tactics",
+      "note": "Tactics and roles for two or more friendly fighters working the same problem."
+    },
+    {
+      "id": "bfm-concepts",
+      "title": "BFM concepts",
+      "note": "The geometry, pursuit and energy ideas that explain why close-in manoeuvres work."
+    },
+    {
+      "id": "bfm-manoeuvres",
+      "title": "Named BFM manoeuvres",
+      "note": "Manoeuvres flown to solve a range, angles or closure problem in a visual fight."
+    },
+    {
+      "id": "counter-missile",
+      "title": "Counter-missile calls",
+      "note": "Calls and considerations for when a radar-guided weapon is the problem."
+    },
+    {
+      "id": "brevity",
+      "title": "Air-to-air brevity words",
+      "note": "Standard radio words for identifying, describing and reporting what is out there."
+    }
+  ],
+  "terms": [
+    {
+      "term": "BVR",
+      "alsoKnownAs": [
+        "Beyond Visual Range"
+      ],
+      "category": "regimes",
+      "means": "The part of an engagement fought before the aircraft can see each other, so it names a range regime rather than a tactic.",
+      "confusedWith": "ACT, which is a kind of tactical employment usually carried out in BVR, not the regime it happens in",
+      "status": "service",
+      "src": "F-22 training manual, 2025"
+    },
+    {
+      "term": "WVR",
+      "alsoKnownAs": [
+        "Within Visual Range"
+      ],
+      "category": "regimes",
+      "means": "The part of an engagement fought once the aircraft can see each other and visual manoeuvring decides the outcome.",
+      "confusedWith": "BFM, which is a skill set exercised inside this regime rather than the regime itself",
+      "status": "service",
+      "src": "F-22 training manual, 2025"
+    },
+    {
+      "term": "Merge",
+      "alsoKnownAs": [
+        "MERGED"
+      ],
+      "category": "regimes",
+      "means": "The point at which friendly and target aircraft have arrived in the visual arena.",
+      "confusedWith": "WVR, which is the whole regime, whereas the merge is the single moment of entry into it",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Visual arena",
+      "alsoKnownAs": [
+        "visual fight"
+      ],
+      "category": "regimes",
+      "means": "The piece of sky the fight has arrived in after the merge, which does not by itself mean everyone has seen everyone.",
+      "confusedWith": "WVR, which names the regime as a category, whereas the visual arena is the specific environment the aircraft are now in",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "BFM",
+      "alsoKnownAs": [
+        "Basic Fighter Manoeuvres"
+      ],
+      "category": "regimes",
+      "means": "The one-versus-one skill set of geometry, energy management and weapons positioning, solved live against range, angles and closure rather than run off a list of set-piece moves.",
+      "confusedWith": "ACM, which sets the same geometry problems inside a formation where mutual support also has to be solved",
+      "status": "service",
+      "src": "AETC fighter training TTP, December 2024"
+    },
+    {
+      "term": "ACM",
+      "alsoKnownAs": [
+        "Air Combat Manoeuvring"
+      ],
+      "category": "regimes",
+      "means": "Element-level air-to-air manoeuvring, which adds a second friendly aircraft and the problem of staying mutually supporting to the BFM skill set.",
+      "confusedWith": "BFM, which is the same problem one-versus-one with no wingman to deconflict from",
+      "status": "service",
+      "src": "F-22 training manual, 2025"
+    },
+    {
+      "term": "ACT",
+      "alsoKnownAs": [
+        "Air Combat Tactics"
+      ],
+      "category": "regimes",
+      "means": "Element-level air-to-air employment carried out primarily beyond visual range.",
+      "confusedWith": "ACM, which is the manoeuvring itself rather than the employment plan the element is flying",
+      "status": "service",
+      "src": "F-22 training manual, 2025"
+    },
+    {
+      "term": "Pre-commit",
+      "alsoKnownAs": [
+        "MARSHAL"
+      ],
+      "category": "intercept-phases",
+      "means": "The phase spent building the picture and holding position while deciding whether the situation meets the briefed criteria to start an intercept.",
+      "confusedWith": "the idea that nothing tactical has begun, when the information gathering that drives the commit decision happens here",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Post-commit",
+      "alsoKnownAs": [
+        "PUSH"
+      ],
+      "category": "intercept-phases",
+      "means": "The phase after the fighters have committed, while the intercept develops towards a firing solution.",
+      "confusedWith": "weapons employment, which is the later phase in which the missile actually comes off the rail",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Targeting and weapons employment",
+      "alsoKnownAs": [
+        "weapons employment phase"
+      ],
+      "category": "intercept-phases",
+      "means": "The phase in which targeting and sort responsibilities are settled and missiles are fired.",
+      "confusedWith": "the merge, which is a separate later phase and only happens if the engagement continues that far",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Merge phase",
+      "alsoKnownAs": [
+        "MERGE"
+      ],
+      "category": "intercept-phases",
+      "means": "The phase in which friendly and threat aircraft enter the visual arena.",
+      "confusedWith": "becoming offensive or defensive, which the merge settles nothing about on its own",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Post-merge",
+      "alsoKnownAs": [],
+      "category": "intercept-phases",
+      "means": "The phase after the merge, in which fighters clear, continue, support, separate or transition into visual manoeuvring.",
+      "confusedWith": "BFM, which is only one of the ways this phase can go, since the engagement may simply end",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "COMMIT",
+      "alsoKnownAs": [
+        "commit decision"
+      ],
+      "category": "bvr-timeline",
+      "means": "Begin an intercept against the group of interest according to the criteria briefed beforehand.",
+      "confusedWith": "PRESS, which approves continuing an action already under way rather than starting the intercept",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "TARGET",
+      "alsoKnownAs": [
+        "targeting responsibility"
+      ],
+      "category": "bvr-timeline",
+      "means": "Assign responsibility for a group to a particular fighter.",
+      "confusedWith": "SORT, which divides responsibility among contacts inside one group rather than handing out whole groups",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "TARGETED",
+      "alsoKnownAs": [],
+      "category": "bvr-timeline",
+      "means": "The fighter has acquired its assigned group and taken responsibility for it.",
+      "confusedWith": "a radar lock, which is a sensor state and not the assumption of responsibility that TARGETED reports",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "SORT",
+      "alsoKnownAs": [
+        "sorting"
+      ],
+      "category": "bvr-timeline",
+      "means": "Allocate responsibility for the individual contacts within a single group.",
+      "confusedWith": "TARGET, which allocates responsibility at the level of whole groups rather than inside one",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "SORTED",
+      "alsoKnownAs": [],
+      "category": "bvr-timeline",
+      "means": "The sort responsibilities have been satisfied.",
+      "confusedWith": "TARGETED, which reports responsibility for a whole group rather than the division of contacts inside it",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "FOX",
+      "alsoKnownAs": [
+        "FOX ONE",
+        "FOX TWO",
+        "FOX THREE"
+      ],
+      "category": "bvr-timeline",
+      "means": "An air-to-air weapon has been launched, actually or in simulation.",
+      "confusedWith": "a hit, which is reported separately, and the missile going active, which is a later call in the timeline",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "HUSKY",
+      "alsoKnownAs": [],
+      "category": "bvr-timeline",
+      "means": "The active-radar missile has reached its high pulse repetition frequency active range.",
+      "confusedWith": "PITBULL, which is the later medium PRF active range point on the same missile's timeline",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "PITBULL",
+      "alsoKnownAs": [
+        "missile active"
+      ],
+      "category": "bvr-timeline",
+      "means": "The active-radar missile has reached its medium pulse repetition frequency active range.",
+      "confusedWith": "the blanket claim that the shooter is now free to leave, which depends on the weapon and the geometry rather than on the call itself",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "OUT",
+      "alsoKnownAs": [
+        "turn cold"
+      ],
+      "category": "bvr-timeline",
+      "means": "Turn to a cold aspect relative to the known threat, as launch-and-leave tactics require.",
+      "confusedWith": "BUGOUT, which ends the engagement outright, whereas OUT is a turn within a plan that may still continue",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "PRESS",
+      "alsoKnownAs": [],
+      "category": "bvr-timeline",
+      "means": "The requested action is approved and mutual support will be maintained; the air-to-air meaning assumes visual.",
+      "confusedWith": "BANZAI, which is a launch-and-decide flow the shooter executes rather than an approval granted to someone else",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "BUGOUT",
+      "alsoKnownAs": [
+        "disengage"
+      ],
+      "category": "bvr-timeline",
+      "means": "Separate from the engagement with no intention of returning or re-engaging.",
+      "confusedWith": "EXTEND, which buys distance and energy with the intention of coming back",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "RESET",
+      "alsoKnownAs": [
+        "recycle"
+      ],
+      "category": "bvr-timeline",
+      "means": "Return and reorganise according to the tactical plan so another engagement opportunity can be set up.",
+      "confusedWith": "BUGOUT, which abandons the engagement rather than reorganising for a second attempt",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Crank",
+      "alsoKnownAs": [
+        "offset while supporting"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Turn laterally while holding the target near the radar gimbal limits, which cuts closure without giving up radar support.",
+      "confusedWith": "F-pole, which is a distance metric and not a manoeuvre, though cranking is often flown to improve it",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Beam",
+      "alsoKnownAs": [
+        "beaming",
+        "broadside",
+        "3-9 line geometry"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Put the threat roughly on the 3-9 line, which brevity uses as a contact aspect and pilots use as geometry to fly.",
+      "confusedWith": "notch, since beam names an aspect and not the doppler rejection that beam geometry is usually flown to achieve",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Notch",
+      "alsoKnownAs": [
+        "notching",
+        "doppler notch",
+        "velocity notch"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Manoeuvre defensively with reference to a threat, in practice arranging low radial velocity so a doppler radar rejects the return, often helped by ground clutter, altitude change and chaff.",
+      "confusedWith": "beam, since every successful doppler notch uses beam-like geometry but beaming alone does not guarantee the rejection",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Drag",
+      "alsoKnownAs": [
+        "dragging",
+        "cold aspect"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "In brevity, a contact pointing generally away; in tactical conversation, deliberately drawing a threat away.",
+      "confusedWith": "OUT, which directs a turn to cold, whereas drag describes the aspect a contact already presents",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Offset",
+      "alsoKnownAs": [
+        "offset intercept"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Manoeuvre in a specified direction relative to the target.",
+      "confusedWith": "crank, which is the narrower case of displacing while pinning the target at the radar gimbal limit",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Cutoff",
+      "alsoKnownAs": [
+        "cutoff geometry"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Fly geometry that cuts across where the target is going instead of chasing where it has been.",
+      "confusedWith": "lead pursuit, which is a pursuit curve inside a turning fight rather than an intercept geometry flown at range",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Pump",
+      "alsoKnownAs": [
+        "pump away"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Fly the briefed manoeuvre that minimises closure with the threat or a boundary, with the intention of turning back in.",
+      "confusedWith": "BUGOUT, which leaves for good; the multi-service meaning also differs from the NATO one",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Extend",
+      "alsoKnownAs": [
+        "extension"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Temporarily gain energy, distance or separation with the intention of re-engaging.",
+      "confusedWith": "BUGOUT, which separates with no intention of returning",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Break",
+      "alsoKnownAs": [
+        "break turn"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Turn immediately at maximum performance in the direction commanded.",
+      "confusedWith": "an ordinary defensive turn, which is not the maximum-performance response a break demands",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Pitchback",
+      "alsoKnownAs": [
+        "pitch",
+        "nose-high reversal"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Reverse heading with the nose high.",
+      "confusedWith": "a slice, which reverses nose-low and descending rather than over the top",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Slice",
+      "alsoKnownAs": [
+        "sliceback"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Reverse with a high-G descending turn.",
+      "confusedWith": "a split-S, which is a half-roll pulled through the vertical rather than a descending turn",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Jink",
+      "alsoKnownAs": [
+        "jinking"
+      ],
+      "category": "bvr-manoeuvres",
+      "means": "Manoeuvre unpredictably to spoil an opponent's tracking solution.",
+      "confusedWith": "a break, which is one maximum-performance turn rather than a sequence whose value is its unpredictability",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Stiff arm",
+      "alsoKnownAs": [],
+      "category": "bvr-manoeuvres",
+      "means": "Alter the intercept flow so that interaction with a separate tactical group is avoided or managed.",
+      "confusedWith": "a crank, which is flown to hold radar support on the group being engaged rather than to hold a different group off",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Skate",
+      "alsoKnownAs": [
+        "launch-and-leave"
+      ],
+      "category": "engagement-flows",
+      "means": "Execute the prebriefed launch-and-leave tactic at the briefed range: shoot, then separate instead of pressing to the merge.",
+      "confusedWith": "crank, which is a single manoeuvre inside an engagement rather than a whole prebriefed flow",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Short Skate",
+      "alsoKnownAs": [
+        "SKATE SHORT"
+      ],
+      "category": "engagement-flows",
+      "means": "A modifier of SKATE rather than a manoeuvre of its own, setting a closer briefed range and timeline for the launch-and-leave.",
+      "confusedWith": "a closer crank, which it is not, since the range and timeline come from the brief attached to the SKATE call",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Long Skate",
+      "alsoKnownAs": [
+        "SKATE LONG"
+      ],
+      "category": "engagement-flows",
+      "means": "A modifier of SKATE setting a longer briefed launch-and-leave range and timeline.",
+      "confusedWith": "the idea that SKATE has one fixed range, when the range is exactly what the modifier sets",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Quick Skate",
+      "alsoKnownAs": [
+        "SKATE QUICK"
+      ],
+      "category": "engagement-flows",
+      "means": "A third recognised modifier of SKATE, whose execution is defined by the mission brief or TTP.",
+      "confusedWith": "Short Skate, which is a different modifier of the same call with its own briefed range",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Banzai",
+      "alsoKnownAs": [
+        "launch-and-decide"
+      ],
+      "category": "engagement-flows",
+      "means": "Execute the launch-and-decide tactic: shoot, then keep manoeuvring towards the visual arena if the briefed criteria support it.",
+      "confusedWith": "pressing regardless of the situation, when the whole point is a decision measured against briefed criteria after the shot",
+      "status": "multi-service",
+      "src": "Multi-service brevity codes, January 2025"
+    },
+    {
+      "term": "Line abreast",
+      "alsoKnownAs": [
+        "LAB",
+        "tactical line abreast"
+      ],
+      "category": "formations",
+      "means": "Two fighters fly roughly side by side so each can look through the other's blind areas and cover the other's tail.",
+      "confusedWith": "WALL, which is a picture label for three or more detected groups spread in azimuth and says nothing about how anyone is flying",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Wedge",
+      "alsoKnownAs": [
+        "wedge formation"
+      ],
+      "category": "formations",
+      "means": "Wingmen sit aft of and offset from the lead, giving the lead room to manoeuvre while the wingman holds position.",
+      "confusedWith": "the same word used as a picture label, where it describes detected contacts rather than your own flight",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Fighting wing",
+      "alsoKnownAs": [
+        "fighting wing position"
+      ],
+      "category": "formations",
+      "means": "The wingman holds a manoeuvring cone behind and to the side of the lead, following through hard turns instead of holding one fixed line.",
+      "confusedWith": "parade or route position, which is a close non-manoeuvring formation flown for transit rather than for fighting",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Fluid formation",
+      "alsoKnownAs": [
+        "fluid two",
+        "fluid"
+      ],
+      "category": "formations",
+      "means": "A loose two-ship formation in which the wingman has wide latitude in position so both aircraft can manoeuvre freely.",
+      "confusedWith": "Loose Deuce, which is a historical mutual-support tactic about who may become the attacker rather than a formation geometry",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Trail",
+      "alsoKnownAs": [
+        "combat trail"
+      ],
+      "category": "formations",
+      "means": "Aircraft fly one behind the other, separated mainly in range rather than across the sky.",
+      "confusedWith": "LEAD-TRAIL, which describes two detected groups separated in range and is a picture term, not a friendly formation",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Azimuth",
+      "alsoKnownAs": [
+        "azimuth picture"
+      ],
+      "category": "tactical-pictures",
+      "means": "Two detected groups separated mainly side to side across your nose.",
+      "confusedWith": "line abreast, which is a friendly formation rather than a description of how contacts are arranged",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Range",
+      "alsoKnownAs": [
+        "range picture"
+      ],
+      "category": "tactical-pictures",
+      "means": "Two detected groups separated mainly in depth, one behind the other.",
+      "confusedWith": "trail formation, which is how friendly aircraft are flying rather than how contacts are arranged",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Wall",
+      "alsoKnownAs": [
+        "wall picture"
+      ],
+      "category": "tactical-pictures",
+      "means": "Three or more detected groups spread mainly in azimuth.",
+      "confusedWith": "a friendly line-abreast formation; WALL says how the groups appear in the tactical picture, not that those aircraft are flying any particular formation",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Ladder",
+      "alsoKnownAs": [
+        "ladder picture"
+      ],
+      "category": "tactical-pictures",
+      "means": "Three or more detected groups stacked in range, one behind the other.",
+      "confusedWith": "trail formation, which describes friendly aircraft rather than detected groups",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Champagne",
+      "alsoKnownAs": [
+        "champagne picture"
+      ],
+      "category": "tactical-pictures",
+      "means": "Three detected groups arranged so that azimuth and range separation combine in a defined relationship.",
+      "confusedWith": "VIC, the other three-group picture, which places the single group at the opposite end of the arrangement",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Vic",
+      "alsoKnownAs": [
+        "vic picture"
+      ],
+      "category": "tactical-pictures",
+      "means": "Three detected groups with one group leading and two groups trailing it in range and separated in azimuth.",
+      "confusedWith": "CHAMPAGNE, which is also a three-group picture but with the single group at the other end",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Box",
+      "alsoKnownAs": [
+        "box picture"
+      ],
+      "category": "tactical-pictures",
+      "means": "Four detected groups arranged as two lead groups and two trail groups.",
+      "confusedWith": "a four-ship box formation, which describes your own aircraft rather than the contacts on the scope",
+      "status": "multi-service",
+      "src": "Multi-service Air Control Communication TTP, October 2024"
+    },
+    {
+      "term": "Stack",
+      "alsoKnownAs": [
+        "vertical stack"
+      ],
+      "category": "tactical-pictures",
+      "means": "Vertical separation between the contacts held inside a single group.",
+      "confusedWith": "a friendly high/low split, which is friendlies deliberately separating in altitude rather than a description of contacts",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Bracket",
+      "alsoKnownAs": [
+        "bracket attack"
+      ],
+      "category": "multi-ship",
+      "means": "Friendly fighters manoeuvre to opposite sides of the target, laterally or vertically, so the target cannot solve both at once.",
+      "confusedWith": "PINCE, which describes a threat manoeuvring to bracket YOU rather than your own attack",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Pince",
+      "alsoKnownAs": [
+        "pinced"
+      ],
+      "category": "multi-ship",
+      "means": "A call that the threat is manoeuvring to bracket you.",
+      "confusedWith": "BRACKET, which is the same geometry flown by friendlies against the target rather than flown against you",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Pincer",
+      "alsoKnownAs": [
+        "pincer attack"
+      ],
+      "category": "multi-ship",
+      "means": "A loose general description of converging pressure applied from opposed axes.",
+      "confusedWith": "BRACKET and PINCE, which are precise brevity words with assigned meanings, whereas pincer gets used loosely for either and should not be treated as equivalent to either",
+      "status": "historical"
+    },
+    {
+      "term": "Defensive split",
+      "alsoKnownAs": [
+        "split the formation"
+      ],
+      "category": "multi-ship",
+      "means": "Formation members deliberately separate when attacked so the attacker must choose one, opening a chance for the other to come back on him.",
+      "confusedWith": "the brevity word SPLIT, which means a flight member leaving to press a separate attack, not a reaction to being attacked",
+      "status": "sim"
+    },
+    {
+      "term": "Split",
+      "alsoKnownAs": [],
+      "category": "multi-ship",
+      "means": "A flight member is leaving the formation to pursue a separate attack, and visual contact may not be maintained.",
+      "confusedWith": "a defensive split, which is an informal label for a defensive reaction rather than this offensive departure from formation",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Engaged fighter",
+      "alsoKnownAs": [
+        "engaged"
+      ],
+      "category": "multi-ship",
+      "means": "The fighter actively manoeuvring against the threat, who relinquishes normal deconfliction responsibility to do it.",
+      "confusedWith": "the flight lead, since either aircraft can be the engaged fighter regardless of who leads the formation",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Supporting fighter",
+      "alsoKnownAs": [
+        "supporting"
+      ],
+      "category": "multi-ship",
+      "means": "The fighter holding a position from which it can influence the outcome, and which carries the deconfliction responsibility.",
+      "confusedWith": "merely being nearby, whereas SUPPORTING asserts a position that can actually change the fight",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Loose Deuce",
+      "alsoKnownAs": [
+        "fluid two",
+        "double attack"
+      ],
+      "category": "multi-ship",
+      "means": "A two-aircraft mutual-support scheme from the Vietnam era in which either fighter may take over as the attacker as the fight develops.",
+      "confusedWith": "the modern engaged and supporting contract, which assigns those roles explicitly rather than letting them pass back and forth by opportunity",
+      "status": "historical"
+    },
+    {
+      "term": "Drag-and-bag",
+      "alsoKnownAs": [
+        "bait-and-shooter",
+        "decoy-and-shooter"
+      ],
+      "category": "multi-ship",
+      "means": "One aircraft draws an opponent into a chase while another exploits the geometry that creates.",
+      "confusedWith": "the brevity word DRAG, which describes a contact pointing away from you and carries no implication of a two-ship plan",
+      "status": "sim"
+    },
+    {
+      "term": "Grinder",
+      "alsoKnownAs": [
+        "rotation",
+        "cycle"
+      ],
+      "category": "multi-ship",
+      "means": "Fighters take turns pressing and then falling back to reset while others take over the pressure.",
+      "confusedWith": "SKATE, which is a briefed launch-and-leave call rather than a repeating cycle shared between aircraft",
+      "status": "sim"
+    },
+    {
+      "term": "Sandwiched",
+      "alsoKnownAs": [],
+      "category": "multi-ship",
+      "means": "Opposing aircraft have ended up on both sides of you.",
+      "confusedWith": "BRACKET, which is the same shape but flown deliberately by friendlies against a target rather than suffered",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Offensive BFM",
+      "alsoKnownAs": [
+        "OBFM"
+      ],
+      "category": "bfm-concepts",
+      "means": "You start with the positional advantage and work to keep it long enough to turn it into a shot.",
+      "confusedWith": "having the energy advantage, since the attacker often has less energy and is managing an overshoot problem instead",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Defensive BFM",
+      "alsoKnownAs": [
+        "DBFM"
+      ],
+      "category": "bfm-concepts",
+      "means": "You start at a positional disadvantage and deny the attacker a solution while looking for an escape or a reversal.",
+      "confusedWith": "missile defence, which is about defeating one specific weapon rather than solving the whole positional problem",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "High-aspect BFM",
+      "alsoKnownAs": [
+        "HABFM",
+        "neutral BFM"
+      ],
+      "category": "bfm-concepts",
+      "means": "Both fighters arrive at large aspect with neither holding a rear-quarter advantage.",
+      "confusedWith": "the word neutral, which suggests the two are exactly equal when in practice one usually holds some edge in energy or nose position",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Aspect angle",
+      "alsoKnownAs": [
+        "aspect"
+      ],
+      "category": "bfm-concepts",
+      "means": "How the target is oriented relative to you, measured from its tail round to your position.",
+      "confusedWith": "heading crossing angle, which measures the difference between the two headings rather than the target's orientation to you",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Heading crossing angle",
+      "alsoKnownAs": [
+        "HCA"
+      ],
+      "category": "bfm-concepts",
+      "means": "The angular difference between your heading and the target's heading.",
+      "confusedWith": "aspect angle, which is measured from the target's tail to you and can be very different from the heading difference",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Lead pursuit",
+      "alsoKnownAs": [
+        "lead"
+      ],
+      "category": "bfm-concepts",
+      "means": "You point ahead of where the target is now, which cuts across its path and builds closure.",
+      "confusedWith": "a lead turn, which is a manoeuvre begun before the pass rather than one of the three pursuit curves",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Pure pursuit",
+      "alsoKnownAs": [
+        "pure"
+      ],
+      "category": "bfm-concepts",
+      "means": "You point your nose directly at the target.",
+      "confusedWith": "a collision-course lead, which points ahead of the target to meet it rather than at where it currently is",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Lag pursuit",
+      "alsoKnownAs": [
+        "lag"
+      ],
+      "category": "bfm-concepts",
+      "means": "You point behind the target, which bleeds off closure and buys room to solve the angles.",
+      "confusedWith": "an extension, which is separating from the fight entirely with intent to return, whereas lag stays inside the turn",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Turn rate",
+      "alsoKnownAs": [
+        "degrees per second"
+      ],
+      "category": "bfm-concepts",
+      "means": "How quickly you change heading.",
+      "confusedWith": "turn radius, which is how much sky the turn consumes rather than how fast the nose comes round",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Turn radius",
+      "alsoKnownAs": [],
+      "category": "bfm-concepts",
+      "means": "How much sky your turn takes up.",
+      "confusedWith": "turn rate, since a fast turn is not automatically a tight one and the two trade against each other with speed",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Corner velocity",
+      "alsoKnownAs": [
+        "corner speed"
+      ],
+      "category": "bfm-concepts",
+      "means": "The speed region where the G limit and the lift limit meet, giving the best available turn performance for that aircraft and configuration.",
+      "confusedWith": "best sustained-rate speed, which is about holding a turn indefinitely rather than peaking it, and is usually a different number",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Energy state",
+      "alsoKnownAs": [
+        "specific energy"
+      ],
+      "category": "bfm-concepts",
+      "means": "Your combined speed and altitude, which is what you actually have to spend on manoeuvring.",
+      "confusedWith": "airspeed alone, which ignores the altitude you can trade back into speed",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Turning room",
+      "alsoKnownAs": [
+        "TR"
+      ],
+      "category": "bfm-concepts",
+      "means": "The displacement available for you to turn in before your flightpath conflicts with the opponent's.",
+      "confusedWith": "raw separation, since range directly behind an opponent with no lateral or vertical offset gives you nothing to turn in",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Control zone",
+      "alsoKnownAs": [
+        "CZ"
+      ],
+      "category": "bfm-concepts",
+      "means": "The region behind an opponent from which you can hold an offensive position rather than sliding out of it.",
+      "confusedWith": "a weapon envelope, which is where a shot is valid rather than where sustained control is possible; the exact definition also varies by syllabus and platform",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "One-circle fight",
+      "alsoKnownAs": [
+        "1C"
+      ],
+      "category": "bfm-concepts",
+      "means": "The fighters turn in opposite directions after the pass and share one common turning circle.",
+      "confusedWith": "the rule that it is always a radius fight, when radius tends to dominate but does not decide the outcome by itself",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Two-circle fight",
+      "alsoKnownAs": [
+        "2C"
+      ],
+      "category": "bfm-concepts",
+      "means": "The fighters turn in the same relative direction after the pass, each on its own circle.",
+      "confusedWith": "the rule that it is always a rate fight, when rate tends to dominate but does not decide the outcome by itself",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Flightpath overshoot",
+      "alsoKnownAs": [
+        "FPO"
+      ],
+      "category": "bfm-concepts",
+      "means": "The attacker's flightpath crosses the defender's flightpath.",
+      "confusedWith": "a 3/9-line overshoot, which is about passing forward of the defender's wingline and can cost you the advantage outright",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "3/9-line overshoot",
+      "alsoKnownAs": [
+        "positional overshoot"
+      ],
+      "category": "bfm-concepts",
+      "means": "The attacker slides forward of the defender's wingline, which can hand the positional advantage over.",
+      "confusedWith": "a flightpath overshoot, which crosses the defender's path without necessarily giving up position",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Lead turn",
+      "alsoKnownAs": [
+        "pre-turn"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "You begin turning before passing the opponent so the available turning room gets used instead of wasted.",
+      "confusedWith": "lead pursuit, which is where your nose points during a chase rather than when you start the turn",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Break turn",
+      "alsoKnownAs": [
+        "break"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "An immediate maximum-performance turn in the direction called.",
+      "confusedWith": "any hard defensive turn, whereas BREAK directs everything the aircraft has, right now",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "High yo-yo",
+      "alsoKnownAs": [],
+      "category": "bfm-manoeuvres",
+      "means": "You trade speed for height and pull the nose across, killing excess closure while holding onto the angles.",
+      "confusedWith": "a pure vertical manoeuvre, since a high yo-yo mostly stays in the plane of the fight and comes straight back down into position",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Low yo-yo",
+      "alsoKnownAs": [],
+      "category": "bfm-manoeuvres",
+      "means": "You drop below the opponent's plane to trade height for speed and cut the corner back into position.",
+      "confusedWith": "simply diving for speed, which gains energy but does nothing about the geometry",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Barrel-roll attack",
+      "alsoKnownAs": [
+        "barrel-roll manoeuvre"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "A three-dimensional roll flown around the opponent's flightpath to burn off closure without surrendering the position.",
+      "confusedWith": "the aerobatic barrel roll, which is a display manoeuvre with no opponent to reference",
+      "status": "historical"
+    },
+    {
+      "term": "Displacement roll",
+      "alsoKnownAs": [
+        "roll-away"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "An out-of-plane roll that moves you sideways off the opponent's flightpath to create turning room.",
+      "confusedWith": "the barrel-roll attack, which is flown around the opponent rather than to displace away from his path, and with a plain roll about the longitudinal axis",
+      "status": "historical"
+    },
+    {
+      "term": "Quarter-plane manoeuvre",
+      "alsoKnownAs": [
+        "QP"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "An out-of-plane lag manoeuvre used to handle a flightpath overshoot that a simple lag pull cannot fix.",
+      "confusedWith": "a high yo-yo, which attacks the same closure problem but stays largely in the plane of the turn",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Flat scissors",
+      "alsoKnownAs": [
+        "scissors"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "Both fighters reverse back and forth in the horizontal, each trying to force the other out in front.",
+      "confusedWith": "rolling scissors, which fights the same battle through the vertical rather than flat on the deck",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Rolling scissors",
+      "alsoKnownAs": [
+        "vertical scissors"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "Both fighters roll over and around each other through the vertical, trading who is ahead as they go.",
+      "confusedWith": "flat scissors, which is the horizontal version and rewards different aircraft qualities",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Reversal",
+      "alsoKnownAs": [
+        "reverse"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "You change the direction of your turn, usually to exploit an overshoot or a change in geometry.",
+      "confusedWith": "a scissors, which is a repeated series of reversals by both aircraft rather than one change of direction",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Extension",
+      "alsoKnownAs": [
+        "extend"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "You separate to buy back distance and energy, meaning to come back into the fight.",
+      "confusedWith": "BUGOUT, which is leaving with no intention of returning at all",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Unload",
+      "alsoKnownAs": [
+        "unloading"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "You push off the G so the aircraft stops bleeding energy and accelerates.",
+      "confusedWith": "diving, which trades height for speed, whereas unloading simply stops paying the drag bill",
+      "status": "service",
+      "src": "AETC fighter-training TTP, December 2024"
+    },
+    {
+      "term": "Blow through",
+      "alsoKnownAs": [
+        "blow-through"
+      ],
+      "category": "bfm-manoeuvres",
+      "means": "You carry on through the merge rather than staying to fight the same opponent.",
+      "confusedWith": "an extension, which is a temporary separation flown with the intent to re-engage the same fight",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Defending",
+      "alsoKnownAs": [],
+      "category": "counter-missile",
+      "means": "You are manoeuvring defensively with reference to a radar threat.",
+      "confusedWith": "DEFENSIVE, which says the further thing that you can no longer assure deconfliction or mutual support",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Defensive",
+      "alsoKnownAs": [],
+      "category": "counter-missile",
+      "means": "You are under attack, manoeuvring defensively, and cannot assure normal deconfliction or mutual support.",
+      "confusedWith": "DEFENDING, which is the lesser state where you are still holding up your side of the formation contract",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Throttles",
+      "alsoKnownAs": [],
+      "category": "counter-missile",
+      "means": "A reminder to set the throttles with the infrared threat and your energy state in mind.",
+      "confusedWith": "flare deployment, which releases a countermeasure rather than changing your own signature and energy",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Pump-and-notch",
+      "alsoKnownAs": [
+        "beam-notch"
+      ],
+      "category": "counter-missile",
+      "means": "A described sequence of separating from the threat and then setting beam-like geometry against its radar.",
+      "confusedWith": "a formally named manoeuvre, when this is descriptive shorthand rather than anything briefed or published",
+      "status": "sim"
+    },
+    {
+      "term": "Bogey",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "An air contact whose identity is not known.",
+      "confusedWith": "BANDIT, which is a contact positively identified as an enemy; a bogey has not been identified at all",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Bandit",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "An aircraft positively identified as an enemy under the theatre identification criteria.",
+      "confusedWith": "clearance to shoot, which BANDIT does not grant on its own",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Hostile",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "A track that meets the applicable criteria for hostile identification and engagement.",
+      "confusedWith": "BANDIT, which identifies an enemy aircraft without the engagement criteria having been satisfied",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Group",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "Contacts held close enough together that the grouping criteria treat them as one entity.",
+      "confusedWith": "a flight of aircraft, since a group is what the sensors resolve and may contain a different number of jets than you assume",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Contact",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "A single sensor return, with the sensor and the context determining what it actually means.",
+      "confusedWith": "a visually acquired aircraft, which is reported as TALLY or VISUAL rather than as a sensor contact",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Picture",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "A request for the tactical situation laid out in group terms.",
+      "confusedWith": "asking what is on someone's radar, since PICTURE asks for the built tactical situation rather than raw returns",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "BRAA",
+      "alsoKnownAs": [
+        "bearing range altitude aspect"
+      ],
+      "category": "brevity",
+      "means": "A contact's bearing, range, altitude and aspect measured from a named friendly aircraft.",
+      "confusedWith": "a BULLSEYE call, which is measured from a fixed common reference point instead of from an aircraft",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Bullseye",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "An agreed reference point that everyone measures bearing and range from.",
+      "confusedWith": "BRAA, which is measured from one specific friendly aircraft and so means different things to different listeners",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Bogey dope",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "A request for information on the nearest or specified group, given in BRAA format.",
+      "confusedWith": "DECLARE, which asks who a track is rather than where it is",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Declare",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "A request for the identification of a specified track or group.",
+      "confusedWith": "a request to engage, which DECLARE is not; it only asks who that is",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Tally",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "You have the target, bandit or enemy position in sight.",
+      "confusedWith": "VISUAL, which is sighting a friendly aircraft rather than the enemy",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "No joy",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "You do not have the target or bandit in sight.",
+      "confusedWith": "BLIND, which is losing sight of a friendly rather than of the enemy",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Visual",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "You have a friendly aircraft or position in sight.",
+      "confusedWith": "TALLY, which is sighting the enemy rather than a friendly",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Blind",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "You have lost sight of the friendly aircraft or position.",
+      "confusedWith": "NO JOY, which is not seeing the enemy rather than not seeing your own side",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Spike",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "Your warning receiver shows an airborne interceptor radar tracking or launching on you.",
+      "confusedWith": "NAILS, which is the same kind of radar merely searching rather than holding you",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Nails",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "Your warning receiver shows an airborne interceptor radar in search, not tracking you.",
+      "confusedWith": "SPIKE, which means that radar has you in track or is launching",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Splashed",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "A valid weapons effect has been observed on the target.",
+      "confusedWith": "a FOX call, which announces a launch and says nothing about the result",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Winchester",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "You have no ordnance remaining at all.",
+      "confusedWith": "SKOSH, which is only about active-radar missiles and leaves your other weapons unaccounted for",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    },
+    {
+      "term": "Skosh",
+      "alsoKnownAs": [],
+      "category": "brevity",
+      "means": "You are out of, or unable to employ, active-radar missiles.",
+      "confusedWith": "WINCHESTER, which means no weapons of any kind remain",
+      "status": "multi-service",
+      "src": "Multi-service brevity, January 2025"
+    }
+  ]
+}

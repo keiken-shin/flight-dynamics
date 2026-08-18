@@ -296,5 +296,131 @@ export const VIDEOS = {
       "duration": "5:58",
       "note": "Where the loop actually lives in a real aircraft."
     }
+  ],
+  "three-numbers": [
+    {
+      "id": "zbyGOd6NwME",
+      "url": "https://www.youtube.com/watch?v=zbyGOd6NwME",
+      "title": "The Fighter Pilot Mindset",
+      "channel": "The Air Combat Tutorial Library",
+      "duration": "3:23",
+      "note": "Boyd's OODA loop, named and attributed, against the idea that a fight is a sequence of moves you picked in advance. The mindset rung rather than the geometry one — you observe the numbers, and they have changed by the time you act."
+    },
+    {
+      "id": "Pjg6kt3_U88",
+      "url": "https://www.youtube.com/watch?v=Pjg6kt3_U88",
+      "title": "BFM Lesson #2 - Introduction to Geometry",
+      "channel": "The Air Combat Tutorial Library",
+      "duration": "10:08",
+      "note": "The Air Combat Tutorial Library — a real flight instructor, with the sim as his drawing board rather than his source. Range, aspect angle, HCA and closure named in the published vocabulary, plus the 3/9 line."
+    }
+  ],
+  "pursuit-curves": [
+    {
+      "id": "zwZSjagV8SI",
+      "url": "https://www.youtube.com/watch?v=zwZSjagV8SI",
+      "title": "BFM Lesson #4 - Lead Turns",
+      "channel": "The Air Combat Tutorial Library",
+      "duration": "5:02",
+      "note": "The chapter's concrete rung: you meet someone by walking at where they will be. Lead pursuit with and without turning room, and the errors named rather than implied."
+    },
+    {
+      "id": "2gqgqrT2a-8",
+      "url": "https://www.youtube.com/watch?v=2gqgqrT2a-8",
+      "title": "How to Dogfight!  Basic Fighter Maneuvers (BFM) & Air Combat Maneuvering (ACM) Part 1",
+      "channel": "Taking Flight With Rocket",
+      "duration": "16:47",
+      "note": "Mike “Rocket” Blackstone teaching guns-only 1v1 from a real SF-260, no simulator involved. Lead, pure and lag put to work on closure — the chapter's argument, flown."
+    }
+  ],
+  "rate-and-radius": [
+    {
+      "id": "Fa7xViYutqg",
+      "url": "https://www.youtube.com/watch?v=Fa7xViYutqg",
+      "title": "STANDARD RATE TURN",
+      "channel": "flight-club",
+      "duration": "1:00",
+      "note": "One minute, no combat: hold the bank, add speed, and rate falls while radius grows. The misconception cornered in the civil syllabus before we take it to the doghouse."
+    },
+    {
+      "id": "Iz10ohvcNxs",
+      "url": "https://www.youtube.com/watch?v=Iz10ohvcNxs",
+      "title": "Week 9-Lecture 49",
+      "channel": "NPTEL IIT Bombay",
+      "duration": "14:41",
+      "note": "NPTEL, IIT Bombay. Titled by week number, but Lecture 49 is instantaneous against sustained turn — the rigorous rung, and the only academic treatment in the pool."
+    }
+  ],
+  "one-or-two-circle": [
+    {
+      "id": "At3qlnd_Ugo",
+      "url": "https://www.youtube.com/watch?v=At3qlnd_Ugo",
+      "title": "BFM Lesson #5 - One and Two Circle Fights",
+      "channel": "The Air Combat Tutorial Library",
+      "duration": "5:04",
+      "note": "Defines the two by geometry — nose-to-nose against nose-to-tail — rather than by the rate/radius shorthand this chapter exists to qualify."
+    },
+    {
+      "id": "rCLywusR3fo",
+      "url": "https://www.youtube.com/watch?v=rCLywusR3fo",
+      "title": "BFM Lesson #3 - Turn Circles & Turning Room (Revised)",
+      "channel": "The Air Combat Tutorial Library",
+      "duration": "14:50",
+      "note": "The geometry the merge decision is actually made on: whose turn circle, entered where, with how much turning room. Fourteen minutes on the substrate, so that one-circle and two-circle arrive as two ways of sharing a circle rather than as a rate/radius slogan."
+    }
+  ],
+  "energy-rate": [
+    {
+      "id": "dVKy8WpAw2s",
+      "url": "https://www.youtube.com/watch?v=dVKy8WpAw2s",
+      "title": "BFM Lesson #8 - High Yo Yo and Defense",
+      "channel": "The Air Combat Tutorial Library",
+      "duration": "4:13",
+      "note": "The trade applied: speed into height, height back into position. Pairs directly with our authored yo-yo figure."
+    },
+    {
+      "id": "MqxKJLQdcxM",
+      "url": "https://www.youtube.com/watch?v=MqxKJLQdcxM",
+      "title": "Should I Use PITCH or POWER?",
+      "channel": "Free Pilot Training",
+      "duration": "13:58",
+      "note": "Pitch or power, argued properly: trading energy, thrust against drag. The mechanism rung, taken from real-world instruction rather than from a fight."
+    },
+    {
+      "id": "5WwGjR7AKf0",
+      "url": "https://www.youtube.com/watch?v=5WwGjR7AKf0",
+      "title": "Energy Management:  Speed vs. Altitude and everywhere in between",
+      "channel": "Friendly Skies Film",
+      "duration": "5:11",
+      "note": "The concrete rung — speed and height as one account in two currencies, with the glider paying once on the tow and living off it for hours."
+    }
+  ],
+  "overshoots": [
+    {
+      "id": "D4wxj-Wd9jg",
+      "url": "https://www.youtube.com/watch?v=D4wxj-Wd9jg",
+      "title": "BFM Lesson #7 Rolling Scissors",
+      "channel": "The Air Combat Tutorial Library",
+      "duration": "6:02",
+      "note": "The same event rolled into the vertical, and the moment defensive becomes offensive. Our second authored figure, flown."
+    },
+    {
+      "id": "Au6PWID_10k",
+      "url": "https://www.youtube.com/watch?v=Au6PWID_10k",
+      "title": "BFM Lesson #6 Flat Scissors",
+      "channel": "The Air Combat Tutorial Library",
+      "duration": "5:26",
+      "note": "How you end up in one, unloading, and when to reverse — the overshoot as a geometry problem you can still correct."
+    }
+  ],
+  "bvr-geometry": [
+    {
+      "id": "NtyU6aKZ-cY",
+      "url": "https://www.youtube.com/watch?v=NtyU6aKZ-cY",
+      "title": "Pulse-Doppler Radar | Understanding Radar Principles",
+      "channel": "MATLAB",
+      "duration": "18:39",
+      "note": "MATLAB. Why the radar measures radial velocity at all — which is the entire reason beaming works. The mechanism, with no tactic and no doctrine attached."
+    }
   ]
 };

@@ -1,12 +1,15 @@
 /* The apply-it surface. The same four arrows the lesson drew as a figure, now
  * attached to an aircraft you fly, sized every frame by src/sim/flight-model.js.
  *
- * Only lesson 1 ships one this pass — deliberately, so the pattern's real cost
- * is known before it is committed to twelve times. */
+ * Which aeroplane it flies is the task's to say. Anything that describes the
+ * airframe rather than the exercise — the silhouette, the arrow scale, the stall
+ * speed, the control throws, the stall warning — is read off `task.ac`, which
+ * defaults to the Cessna, so every Part I chapter is untouched by the second
+ * aircraft existing. */
 
 import * as THREE from "three";
-import { AIRCRAFT, G, initialState, step, forces, stallSpeed } from "./flight-model.js";
-import { TASKS } from "./tasks.js";
+import { AIRCRAFT, FIGHTER, G, initialState, step, stallSpeed } from "./flight-model.js";
+import { TASKS, relative } from "./tasks.js";
 import { mark } from "../ui/util.js";
 
 const css = (name, fallback) =>
@@ -24,10 +27,15 @@ const css = (name, fallback) =>
  * The body fills to paper-sunk rather than paper: filling it with the scene
  * background gave the aircraft a contrast of 1.00 against the sky, so it read
  * as a hole punched in the picture instead of a solid that occludes the ground.
+ *
+ * `edge` is the outline ink, and the only thing that separates us from them: the
+ * bandit is the same drawing in `--r-threat`, the token the figures already use
+ * for the other aeroplane. The default is the receding ink the aircraft you fly
+ * has always had, so nothing in Part I moves.
  */
-function buildAircraft() {
+function airframe(edge = css("--ink-2", "#454b55")) {
   const g = new THREE.Group();
-  const mat = new THREE.LineBasicMaterial({ color: css("--ink-2", "#454b55") });
+  const mat = new THREE.LineBasicMaterial({ color: edge });
   const solid = new THREE.MeshBasicMaterial({ color: css("--paper-sunk", "#eceae5") });
 
   const add = (geo, x = 0, y = 0, z = 0, rx = 0, ry = 0, rz = 0) => {
@@ -37,7 +45,11 @@ function buildAircraft() {
     edges.position.copy(mesh.position); edges.rotation.copy(mesh.rotation);
     g.add(mesh, edges);
   };
+  return { g, add };
+}
 
+function buildCessna(edge) {
+  const { g, add } = airframe(edge);
   add(new THREE.CylinderGeometry(0.42, 0.30, 6.2, 10), 0, 0, 0, 0, 0, Math.PI / 2);
   add(new THREE.BoxGeometry(1.5, 0.14, 10.4), 0.2, 0.46, 0);        // high wing
   add(new THREE.BoxGeometry(1.0, 0.10, 3.6), -2.7, 0.30, 0);        // tailplane
@@ -46,6 +58,76 @@ function buildAircraft() {
   add(new THREE.CylinderGeometry(0.20, 0.20, 0.12, 8), 0.5, -0.72, 1.0, 0, 0, Math.PI / 2);
   add(new THREE.CylinderGeometry(0.20, 0.20, 0.12, 8), 0.5, -0.72, -1.0, 0, 0, Math.PI / 2);
   return g;
+}
+
+/* A swept planform given thickness, rather than a box: the sweep IS the
+   difference between the two silhouettes, and a box cannot hold one. Drawn in
+   the aircraft's own x (aft-negative) and span, then laid flat by the caller.
+   Same helper for the wing and the stabilators — one is the other, smaller. */
+function delta(rootLE, rootChord, halfSpan, sweepDeg, tipChord, thickness) {
+  const tipLE = rootLE - halfSpan * Math.tan((sweepDeg * Math.PI) / 180);
+  const s = new THREE.Shape();
+  s.moveTo(rootLE, 0);
+  s.lineTo(tipLE, halfSpan);
+  s.lineTo(tipLE - tipChord, halfSpan);
+  s.lineTo(rootLE - rootChord, 0);
+  s.lineTo(tipLE - tipChord, -halfSpan);
+  s.lineTo(tipLE, -halfSpan);
+  return new THREE.ExtrudeGeometry(s, { depth: thickness, bevelEnabled: false });
+}
+
+/* The second silhouette, and the reason it exists: Part II is about a fighter at
+ * nine g, and flying those chapters behind a high-wing strutted single would be
+ * a confidently wrong picture — the one thing this project may not ship.
+ *
+ * Same materials, same edge treatment, same receding ink as the Cessna: it is
+ * the same KIND of drawing, not a model. Everything that reads as "not a light
+ * single" is here and nothing else is — cropped-delta wing low on the body,
+ * bubble canopy, chin intake, one fin, all-moving stabilators, a nozzle instead
+ * of a propeller, no struts, no fixed gear.
+ *
+ * Drawn at roughly the Cessna's overall size rather than at the F-16's true 15 m
+ * against a 172's 8 m. The camera stand-off and the arrow lengths are fixed in
+ * scene units, so a to-scale fighter would arrive twice as big with the same
+ * arrows on it. Proportions within the airframe are the real aeroplane's; the
+ * overall size is a drawing decision, exactly as the Cessna's already is.
+ */
+function buildFighter(edge) {
+  const { g, add } = airframe(edge);
+  const D = Math.PI / 2;
+
+  add(new THREE.CylinderGeometry(0.55, 0.38, 5.2, 10), -0.2, 0, 0, 0, 0, D);   // body
+  add(new THREE.ConeGeometry(0.38, 1.1, 10), 2.95, 0, 0, 0, 0, -D);            // radome
+  add(new THREE.CylinderGeometry(0.50, 0.42, 0.45, 10), -3.0, 0, 0, 0, 0, D);  // nozzle
+  add(new THREE.BoxGeometry(1.5, 0.55, 0.78), 1.45, -0.5, 0);                  // chin intake
+
+  // Bubble canopy: a dome, squashed along its three axes into a canopy.
+  const canopy = new THREE.SphereGeometry(0.6, 10, 3, 0, Math.PI * 2, 0, D);
+  canopy.scale(2.0, 0.9, 0.78);
+  add(canopy, 1.2, 0.40, 0);
+
+  // Low-mounted cropped delta, 40° on the leading edge.
+  add(delta(1.4, 3.75, 3.2, 40, 0.9, 0.14), 0, -0.26, 0, -D);
+  // All-moving stabilators, on the body centreline.
+  add(delta(-2.2, 1.05, 1.9, 30, 0.42, 0.10), 0, -0.05, 0, -D);
+
+  // One fin, swept. Drawn in x/height and extruded across, so no rotation.
+  const f = new THREE.Shape();
+  f.moveTo(-1.5, 0.35); f.lineTo(-2.62, 2.05); f.lineTo(-3.2, 2.05); f.lineTo(-3.3, 0.35);
+  add(new THREE.ExtrudeGeometry(f, { depth: 0.10, bevelEnabled: false }), 0, 0, -0.05);
+  return g;
+}
+
+/* Frees a subtree's geometries, materials and sprite textures. Used both when a
+   checkride item changes aeroplane and at teardown; the swap used to have no
+   counterpart at all, which leaked a whole airframe per item. */
+function dispose(root) {
+  root.traverse((o) => {
+    o.geometry?.dispose?.();
+    const mats = Array.isArray(o.material) ? o.material : o.material ? [o.material] : [];
+    // Sprite labels carry a CanvasTexture, which the material does not free.
+    mats.forEach((m) => { m.map?.dispose?.(); m.dispose(); });
+  });
 }
 
 function arrow(color) {
@@ -83,6 +165,10 @@ function label(text, color) {
 export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = null, onDone = null) {
   let stage = 0;
   let task = sequence ? sequence[0] : (TASKS[lessonId] || TASKS["four-forces"]);
+  /* The aeroplane rides on the task rather than on this signature: a checkride
+     item already carries its own start, controls and arrows, and the airframe is
+     one more of those. Omitted means the Cessna, which is every Part I entry. */
+  let ac = task.ac ?? AIRCRAFT;
   const passed = [];
   const ink = css("--ink", "#14171c");
   const paper = css("--paper", "#f4f4f1");
@@ -146,8 +232,12 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
   }
   scene.add(rw);
 
-  const plane = buildAircraft();
+  /* A container rather than the airframe itself. The arrows are its children —
+     they are drawn in the body frame — so the silhouette underneath can be
+     swapped when the aeroplane changes without disturbing them. */
+  const plane = new THREE.Group();
   scene.add(plane);
+  let body = null;
 
   const C = {
     lift: css("--f-lift", "#1971c2"), weight: css("--f-weight", "#14171c"),
@@ -175,9 +265,18 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
      thing to fiddle with, not a thing to learn from. */
   const AXES = {
     throttle: { id: "thr", label: "Throttle", min: 0, lo: "0%", hi: "100%" },
-    elevator: { id: "ele", label: "Elevator", min: -100, lo: "−23°", hi: "+23°" },
-    aileron: { id: "ail", label: "Aileron", min: -100, lo: "−20°", hi: "+20°" },
-    rudder: { id: "rud", label: "Rudder", min: -100, lo: "−16°", hi: "+16°" },
+    elevator: { id: "ele", label: "Elevator", min: -100, travel: "dEmax" },
+    aileron: { id: "ail", label: "Aileron", min: -100, travel: "dAmax" },
+    rudder: { id: "rud", label: "Rudder", min: -100, travel: "dRmax" },
+  };
+  /* The ends of each scale are this aeroplane's own travel, off the same field
+     the readout converts with — they used to be the literals "±23°", "±20°" and
+     "±16°", which are a 172's surfaces and would sit under a fighter's
+     stabilator claiming it moves 23°. Throttle is a percentage of itself. */
+  const ends = (a) => {
+    if (!a.travel) return [a.lo, a.hi];
+    const d = (ac[a.travel] * 57.2958).toFixed(0);
+    return [`−${d}°`, `+${d}°`];
   };
   /* Rebuilt whenever the task changes, which on a checkride is after every
      item. The controls, the readout rows and the brief are all per-task. */
@@ -194,11 +293,12 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
       `<p class="brief">${task.brief}</p>` +
       axes.map((k) => {
         const a = AXES[k];
+        const [lo, hi] = ends(a);
         return `<div class="ctl">
           <label for="sb-${a.id}">${a.label}</label>
-          <div class="scale"><span>${a.lo}</span>
+          <div class="scale"><span>${lo}</span>
             <div class="track"><input id="sb-${a.id}" type="range" min="${a.min}" max="100" value="0"></div>
-            <span>${a.hi}</span></div>
+            <span>${hi}</span></div>
           <output id="sb-${a.id}-o">0</output>
         </div>`;
       }).join("") +
@@ -221,7 +321,7 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
   hud.className = "sandbox__hud";
   hud.innerHTML =
     `<span>IAS <b id="sb-v">0</b> kt</span><span>ALT <b id="sb-h">0</b> ft</span>` +
-    `<span>Vs <b>${(stallSpeed() * 1.944).toFixed(0)}</b> kt</span>` +
+    `<span>Vs <b id="sb-vs">—</b> kt</span>` +
     `<span id="sb-state">on the ground</span>` +
     `<span style="margin-left:auto"><button id="sb-exit" type="button">` +
     `${mark("left")}<span>back to the plate</span></button></span>`;
@@ -244,6 +344,71 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
   }
   $("sb-exit").onclick = () => onExit?.();
 
+  /* ── the aeroplane ──
+     Everything here is a property of the airframe rather than of the exercise,
+     and a checkride item may change it mid-ride, so it is one function rather
+     than four constants written once at mount. */
+  let W = 0, SCALE = 0;
+  function useAircraft(next) {
+    ac = next;
+    W = ac.m * G;
+    /* Arrow lengths are scaled against THIS aeroplane's weight, so "longer than
+       weight" is literally what you see — the figure's whole point, made
+       physical. A weight arrow of 4.6 units against a 6-unit fuselage keeps the
+       pair legible together.
+
+       Per-aircraft, not per-scene: pinned to the Cessna's 9.8 kN the fighter
+       would draw its own 1 g weight at 44 units and a 9 g pull at nearly 400,
+       which is not a long arrow but a straight line off the top of the picture.
+       Divided by its own weight the pull still runs past the frame at the
+       limiter — that length IS the measurement, and the label stops at
+       LABEL_MAX so it keeps naming the arrow it has left behind. */
+    SCALE = 4.6 / W;
+    if (body) { plane.remove(body); dispose(body); }
+    body = ac === FIGHTER ? buildFighter() : buildCessna();
+    plane.add(body);
+    $("sb-vs").textContent = (stallSpeed(ac) * 1.944).toFixed(0);
+  }
+  useAircraft(ac);
+
+  /* ── the bandit ──
+     A second state, integrated by the same step() as the aeroplane you fly,
+     with the same aircraft data behind it and the same G limiter over it. The
+     task says where it starts and what law flies it; nothing here is a path, a
+     tween or a replayed table. A task with no `bandit` builds none of it, which
+     is every Part I chapter and every checkride item. */
+  let foe = null, foeBody = null, bs = null, bf = null, bac = null;
+  function useBandit() {
+    const b = task.bandit;
+    if (foeBody) { foe.remove(foeBody); dispose(foeBody); foeBody = null; }
+    bs = null; bf = null; bac = null;
+    if (foe) foe.visible = false;
+    /* Fog and the clip planes are Part I's, and Part I is a runway and a
+       circuit: haze closes at 190 m and the far plane at 900. Two aircraft
+       manoeuvring are routinely a mile apart, at which distance the bandit is
+       first pure fog colour and then clipped out of existence entirely. Both are
+       widened only while a bandit exists — and the near plane goes out with
+       them, so the depth buffer keeps roughly the near-to-far ratio it already
+       had rather than spending its precision on the first metre of a scene that
+       starts three thousand metres up. */
+    scene.fog.far = b ? 4000 : 190;
+    camera.near = b ? 1 : 0.1;
+    camera.far = b ? 12000 : 900;
+    camera.updateProjectionMatrix();
+    if (!b) return;
+    bac = b.ac ?? task.ac ?? AIRCRAFT;
+    bs = b.start();
+    if (!foe) { foe = new THREE.Group(); scene.add(foe); }
+    foe.visible = true;
+    /* Them, not us. Same drawing, same edge treatment, in the threat ink the
+       figures already use for the other aeroplane; the one you fly keeps the
+       receding ink it has always had, because it is the subject and recolouring
+       it would change every Part I scene to say something Part I never says. */
+    foeBody = (bac === FIGHTER ? buildFighter : buildCessna)(css("--r-threat", "#8f1d1d"));
+    foe.add(foeBody);
+  }
+  useBandit();
+
   /* ── loop ── */
   let s = task.start ? task.start() : initialState();
   const controls = { throttle: 0, elevator: 0 };
@@ -251,7 +416,7 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
 
   /* Context the readouts and the goal are allowed to see beyond the raw state:
      derived numbers, and whatever the chapter's own apparatus is tracking. */
-  let ctx = { vs: stallSpeed(), target: task.autopilot?.target ?? 0, elevator: 0, apHeld: 0 };
+  let ctx = { vs: stallSpeed(ac), target: task.autopilot?.target ?? 0, elevator: 0, apHeld: 0 };
   let apOn = false;
   let goalMet = false;
   buildPanel();
@@ -262,17 +427,12 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
   function loadTask(next) {
     task = next;
     goalMet = false;
-    ctx = { vs: stallSpeed(), target: task.autopilot?.target ?? 0, elevator: 0, apHeld: 0 };
+    if ((task.ac ?? AIRCRAFT) !== ac) useAircraft(task.ac ?? AIRCRAFT);
+    useBandit();
+    ctx = { vs: stallSpeed(ac), target: task.autopilot?.target ?? 0, elevator: 0, apHeld: 0 };
     s = task.start ? task.start() : initialState();
     buildPanel();
   }
-
-  const W = AIRCRAFT.m * G;
-  /* Arrow lengths are scaled against weight, so "longer than weight" is literally
-     what you see — the figure's whole point, made physical. A weight arrow of 4.6
-     units against a 6.2-unit fuselage keeps the pair legible together; longer and
-     the lift arrow and its label leave the top of the panel. */
-  const SCALE = 4.6 / W;
 
   /* Radius the airframe occupies in each arrow's own direction. Thrust and drag
      run along a 6.2-unit fuselage, so a 1.4-unit drag arrow is entirely inside
@@ -328,7 +488,7 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
     ctx.aileron = controls.aileron;
     ctx.rudder = controls.rudder;
 
-    const r = step(s, controls, dt);
+    const r = step(s, controls, dt, ac);
     s = r.state;
     const f = r.forces;
 
@@ -336,6 +496,20 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
     // Yaw, then pitch, then roll — the aerospace 3-2-1 sequence.
     plane.rotation.set(s.phi, -s.psi, s.theta, "YZX");
     plane.updateMatrixWorld();
+
+    /* The bandit: the same step(), the same dt, its own aircraft and its own
+       law. One aeroplane's physics run twice, not an animation played beside
+       one. The law sees the state before the step and the aircraft it is
+       flying — never a constant belonging to some other aeroplane. */
+    if (bs) {
+      const br = step(bs, task.bandit.law(bs, bac, dt), dt, bac);
+      bs = br.state; bf = br.forces;
+      foe.position.set(bs.x, bs.h + 0.95, bs.y);
+      foe.rotation.set(bs.phi, -bs.psi, bs.theta, "YZX");
+      // Range, aspect, closure and angle off, from the two states and nothing
+      // else. Set before track() and the readouts, both of which may read it.
+      ctx.bandit = bs; ctx.banditF = bf; ctx.geo = relative(s, bs);
+    }
 
     // Lift is perpendicular to the flight path; weight is always earth-down.
     const up = new THREE.Vector3(-Math.sin(s.gamma), Math.cos(s.gamma), 0);
@@ -365,22 +539,54 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
        runway in shot at the cost of pushing the lift arrow — the one force this
        sandbox exists to demonstrate — off the top of the panel. Once the runway
        has left the frame, altitude is the HUD's job. */
-    /* The camera rides in the aircraft's own heading frame, so it stays behind
-       and to the side through a turn instead of being left pointing down the
-       runway while the aeroplane flies off sideways. */
-    const cf = Math.cos(s.psi), sf = Math.sin(s.psi);
-    camera.position.set(
-      s.x - 7 * cf - 15 * sf,
-      s.h + 2.4,
-      s.y - 7 * sf + 15 * cf);
-    camera.lookAt(s.x, s.h + 1.1, s.y);
+    if (bs) {
+      /* Two aeroplanes will not both sit large in one frame and no camera can
+         make them: they are six metres long and they fight three hundred metres
+         apart, and the only ways to "fix" that are to draw the bandit bigger
+         than he is or to shrink the aeroplane you fly to a smudge. Both are
+         lies, and the first is the exact lie this project may not tell.
+
+         So the shot is taken from over your own shoulder, along the line of
+         sight to him: back off the aeroplane you fly by the same distance Part I
+         uses and a little above it, then look down the sightline. Your aircraft
+         sits low in the frame at the size it always is; the bandit sits near the
+         middle at whatever size his range gives him — an aeroplane at a hundred
+         metres, a mark at half a mile, and nothing at two. That last one is not
+         a failure of the camera. It is the reason the readout exists, and it is
+         what the chapter is teaching: past visual range you fly the numbers.
+
+         It also holds him in frame wherever he goes, which the Part I camera
+         cannot — that one watches the aeroplane from the side, so anything
+         ahead of the nose is already outside the cone. */
+      /* 30 back and 10 up, aiming 60 along. The three numbers are one choice:
+         they put your own aircraft about nine degrees below the sightline and
+         anything distant about nine above it, which is just enough to keep your
+         own wing off the bandit. At 17 m and 5 m — the Part I stand-off, tried
+         first — your own airframe subtends twenty degrees and sits squarely on
+         top of him. */
+      const L = new THREE.Vector3(bs.x - s.x, bs.h - s.h, bs.y - s.y);
+      if (L.lengthSq() < 1) L.set(1, 0, 0);
+      L.normalize();
+      camera.position.set(s.x - L.x * 30, s.h + 10 - L.y * 30, s.y - L.z * 30);
+      camera.lookAt(s.x + L.x * 60, s.h + 1.1 + L.y * 60, s.y + L.z * 60);
+    } else {
+      /* The camera rides in the aircraft's own heading frame, so it stays behind
+         and to the side through a turn instead of being left pointing down the
+         runway while the aeroplane flies off sideways. */
+      const cf = Math.cos(s.psi), sf = Math.sin(s.psi);
+      camera.position.set(
+        s.x - 7 * cf - 15 * sf,
+        s.h + 2.4,
+        s.y - 7 * sf + 15 * cf);
+      camera.lookAt(s.x, s.h + 1.1, s.y);
+    }
 
     const surf = (v, max) => `${v > 0 ? "+" : ""}${(v * max * 57.2958).toFixed(1)}°`;
     if (thr) $("sb-thr-o").textContent = `${thr.value}%`;
     // Control surfaces read in degrees of actual travel, with their unit.
-    if (ele) $("sb-ele-o").textContent = surf(ele.value / 100, AIRCRAFT.dEmax);
-    if (ail) $("sb-ail-o").textContent = surf(ail.value / 100, AIRCRAFT.dAmax);
-    if (rud) $("sb-rud-o").textContent = surf(rud.value / 100, AIRCRAFT.dRmax);
+    if (ele) $("sb-ele-o").textContent = surf(ele.value / 100, ac.dEmax);
+    if (ail) $("sb-ail-o").textContent = surf(ail.value / 100, ac.dAmax);
+    if (rud) $("sb-rud-o").textContent = surf(rud.value / 100, ac.dRmax);
     // track() runs after the step, so it sees the state the readouts report.
     task.track?.(s, f, ctx, dt);
     task.readout.forEach((r, n) => { $("sb-r" + n).textContent = r.get(s, f, ctx); });
@@ -420,7 +626,7 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
     }
     $("sb-state").textContent = s.onGround
       ? (f.L > f.W * 0.9 ? "about to fly" : "on the ground")
-      : f.alpha > AIRCRAFT.aStall ? "STALLED" : "flying";
+      : f.alpha > ac.aStall ? "STALLED" : "flying";
 
     renderer.render(scene, camera);
     raf = requestAnimationFrame(frame);
@@ -446,12 +652,7 @@ export function mountSandbox(host, onExit, lessonId = "four-forces", sequence = 
     alive = false;
     cancelAnimationFrame(raf);
     ro.disconnect();
-    scene.traverse((o) => {
-      o.geometry?.dispose?.();
-      const mats = Array.isArray(o.material) ? o.material : o.material ? [o.material] : [];
-      // Sprite labels carry a CanvasTexture, which the material does not free.
-      mats.forEach((m) => { m.map?.dispose?.(); m.dispose(); });
-    });
+    dispose(scene);
     renderer.dispose();
   };
 }

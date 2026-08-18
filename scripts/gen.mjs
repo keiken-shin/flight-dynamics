@@ -77,11 +77,32 @@ async function main() {
         console.log(`      recovered from codex cache (bridge copy-out failed)`);
       }
       await logAsset(spec, concept, prompt);
-      console.log(`ok    ${out}`);
+      const warn = await opacityWarning(out);
+      console.log(`ok    ${out}${warn}`);
     }
   }
 
   if (dry) console.log("\n(dry run — nothing generated, no quota spent)");
+}
+
+/* A hero with an alpha channel is a bug that hides until dark mode. One came
+   back 93% transparent: on the light plate it looked perfect, and on the dark
+   one it would have drawn its subject straight onto --paper's near-black.
+   The style contract says paper is "always the dominant field", so a
+   transparent hero is not a stylistic slip — it has no ground at all.
+
+   No image library needed. A PNG's IHDR is fixed-position, and byte 25 is the
+   colour type: 4 is greyscale+alpha and 6 is RGBA, both of which carry one. */
+async function opacityWarning(file) {
+  try {
+    const head = (await readFile(file)).subarray(0, 26);
+    if (head.subarray(12, 16).toString("latin1") !== "IHDR") return "";
+    return [4, 6].includes(head[25])
+      ? "\n      ⚠ HAS AN ALPHA CHANNEL — no paper ground. It will render on the plate\n" +
+        "        colour, which is near-black in dark mode. Regenerate it demanding an\n" +
+        "        opaque paper ground edge to edge."
+      : "";
+  } catch { return ""; }        // never let a warning break a generation run
 }
 
 function bridge(prompt, out, size) {

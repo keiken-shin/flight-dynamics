@@ -9,6 +9,11 @@ const KIND = {
   lift: "k-lift", weight: "k-weight", thrust: "k-thrust", drag: "k-drag",
   other: "k-other", moment: "k-moment", flow: "k-flow", angle: "k-angle",
   ref: "k-ref", ink: "k-ink", low: "k-low", high: "k-high",
+  /* Part II — relational, not aerodynamic. A fight is drawn in terms of who
+     somebody is and where they have been, which the force kinds cannot say.
+     `track` and `circle` are deliberately two kinds and not one: a track is
+     where an aircraft has been, a circle is where it is committed to going. */
+  friendly: "k-friendly", threat: "k-threat", track: "k-track", circle: "k-circle",
 };
 const k = (n) => KIND[n] || KIND.ink;
 
@@ -48,11 +53,14 @@ function moment(cx, cy, r, a0, a1, { kind = "moment" } = {}) {
     d="M ${n(x0)} ${n(y0)} A ${r} ${r} 0 ${large} ${sweep} ${n(x1)} ${n(y1)}"/>`;
 }
 
-function arc(cx, cy, r, a0, a1, kind = "angle") {
+/* `cls` exists so turnCircle can carry its dash through a partial sweep. Without
+   it the dash option would silently no-op on every arc that is not a full
+   circle, which is most of them in a fight figure. */
+function arc(cx, cy, r, a0, a1, kind = "angle", cls = "") {
   const p = (a) => [cx + r * Math.cos((a * Math.PI) / 180), cy + r * Math.sin((a * Math.PI) / 180)];
   const [x0, y0] = p(a0), [x1, y1] = p(a1);
   const large = Math.abs(a1 - a0) > 180 ? 1 : 0, sweep = a1 > a0 ? 1 : 0;
-  return `<path class="hair ${k(kind)}" fill="none"
+  return `<path class="hair ${k(kind)} ${cls}" fill="none"
     d="M ${n(x0)} ${n(y0)} A ${r} ${r} 0 ${large} ${sweep} ${n(x1)} ${n(y1)}"/>`;
 }
 
@@ -76,6 +84,27 @@ function blob(pts, kind) {
 
 function dot(cx, cy, kind = "angle", r = 5) {
   return `<circle class="dot ${k(kind)}" cx="${n(cx)}" cy="${n(cy)}" r="${r}"/>`;
+}
+
+/* A turn circle — the path an aircraft at a given speed and G is committed to.
+   Drawn as a real circle because it IS one; the radius comes from the flight
+   model, never from taste. `from`/`to` are screen degrees: 0 points right, the
+   sweep runs clockwise because y grows downward. The option is `dash`, not
+   `dashed` — `dashed` is already a function in this module. */
+function turnCircle(cx, cy, r, kind = "circle", { from = 0, to = 360, dash = true } = {}) {
+  const cls = dash ? "dash" : "";
+  if (to - from >= 360) {
+    return `<circle class="hair ${k(kind)} ${cls}" cx="${n(cx)}" cy="${n(cy)}" r="${n(r)}" fill="none"/>`;
+  }
+  return arc(cx, cy, r, from, to, kind, cls);
+}
+
+/* Where an aircraft has actually been. Distinct from a turn circle by
+   construction and not by discipline: a track is a solid drawn line at line
+   weight, a circle a dashed hairline locus. The past and the commitment can
+   never end up looking the same, whichever kind they are drawn in. */
+function trackPath(pts, kind = "track", { cls = "" } = {}) {
+  return poly(pts, kind, { cls: `track ${cls}` });
 }
 
 /* §3 — labels live in a chip on the figure, never in a legend. */
@@ -208,7 +237,12 @@ function curve(F, X, Y, kind, { from = 0, to = 1, steps = 80, cls = "" } = {}) {
 
 /* ── document wrapper ──────────────────────────────────────────────────── */
 
-const HEADS = ["lift", "weight", "thrust", "drag", "other", "moment", "flow", "angle", "ink", "ref"];
+/* Every kind that can carry an arrowhead needs a marker generated here, or
+   `marker-end` points at an id that does not exist and the head vanishes with
+   no error at all. The relational kinds carry velocity, closure and pursuit
+   arrows, so all four are listed. */
+const HEADS = ["lift", "weight", "thrust", "drag", "other", "moment", "flow", "angle", "ink", "ref",
+  "friendly", "threat", "track", "circle"];
 
 function defs() {
   return `<defs>${HEADS.map((h) => `<marker id="head-${h}" viewBox="0 0 10 10" refX="8.5" refY="5"
@@ -230,5 +264,6 @@ function figure({ title, desc, states = [], captions = [], vb = `0 0 ${VB_W} ${V
 
 export {
   line, arrow, component, moment, arc, path, dashed, poly, blob, dot, chip, note,
+  turnCircle, trackPath,
   aircraft, cgMark, airfoil, frame, curve, figure, n, esc,
 };

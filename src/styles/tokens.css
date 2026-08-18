@@ -38,6 +38,20 @@
   --p-low:    #1971c2;
   --p-high:   #e03131;
 
+  /* relational — Part II. The force palette names what acts on one aeroplane;
+     these name who somebody is and where they have been. Indigo/brick follows
+     the near-universal friendly/hostile convention, offset from --f-lift and
+     --f-drag so the two families read apart — and the relational kinds are
+     never drawn as force arrows, so the pairs do not meet on a plate.
+     friendly and threat are the one pair in the project that appears in the
+     same figure meaning "us" and "them": they carry a luminance gap as well as
+     a hue gap, and app.css gives them different stroke weight and dash so the
+     pair survives a greyscale print. Magenta stays out — that is chrome. */
+  --r-friendly: #4263eb;   /* indigo — us */
+  --r-threat:   #8f1d1d;   /* brick — them */
+  --r-track:    #4c5c6e;   /* slate — where somebody has been */
+  --r-circle:   #7e57a8;   /* grape — where somebody is committed to going */
+
   /* line weights — three, and only three */
   --w-hair: 0.5px;
   --w-rule: 1px;
@@ -82,6 +96,10 @@
     --f-weight: #eceae5; --f-other: #b197fc; --m-moment: #ff922b;
     --v-flow: #22b8cf; --a-angle: #ffd43b; --ref: #6c727c;
     --p-low: #4dabf7; --p-high: #ff6b6b;
+    /* friendly rises and threat stays low, so the luminance gap that carries
+       the pair in greyscale survives the plate flip instead of closing up. */
+    --r-friendly: #91a7ff; --r-threat: #e64545;
+    --r-track: #8fa8c4; --r-circle: #b18bd8;
   }
 }
 
@@ -97,4 +115,6 @@
   --f-weight: #eceae5; --f-other: #b197fc; --m-moment: #ff922b;
   --v-flow: #22b8cf; --a-angle: #ffd43b; --ref: #6c727c;
   --p-low: #4dabf7; --p-high: #ff6b6b;
+  --r-friendly: #91a7ff; --r-threat: #e64545;
+  --r-track: #8fa8c4; --r-circle: #b18bd8;
 }

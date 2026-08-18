@@ -1,4 +1,4 @@
-import { LESSONS } from "../data/lessons.js";
+import { LESSONS, PARTS, COURSE } from "../data/lessons.js";
 import { VIDEOS } from "../data/videos.js";
 import DIAGRAMS from "../data/diagrams.js";
 import { el, mark } from "./util.js";
@@ -180,6 +180,61 @@ export function renderLesson(root, id) {
             : "");
         break;
 
+      /* A word, and how much authority it carries. The course teaches doctrine
+         here, not physics: half this vocabulary is standardised, half is squadron
+         habit or something a simulator community agreed on, and a reader has no
+         way to tell them apart. Presenting them alike would be the same failure
+         as a confidently wrong figure. */
+      case "term": {
+        const STATUS = {
+          "multi-service": "multi-service standard",
+          service: "service training",
+          historical: "historical",
+          sim: "simulator usage",
+        };
+        /* An unlabelled term is the failure this block exists to prevent, so a
+           missing or unknown status fails LOUDLY rather than rendering the word
+           "undefined" into a badge nobody reads twice. */
+        if (!STATUS[b.status]) { console.error("term without a valid status:", b); break; }
+        /* `src` names the publication AND its edition, and it is required on
+           anything claiming to be standard. Brevity definitions move between
+           editions — SHORT SKATE was its own entry before it became a modifier
+           of SKATE, and NOTCH was doppler-specific before it was generic — so a
+           badge that says "multi-service standard" without saying WHICH pub is a
+           claim with a silent expiry date on it. The other two rungs are honest
+           about being unsourceable, and are allowed to be. */
+        if (!b.src && (b.status === "multi-service" || b.status === "service")) {
+          console.error("term claims standing but names no publication:", b); break;
+        }
+        node = el("div", `term term--${b.status}`);
+        node.innerHTML =
+          `<p class="term__w">${b.word}` +
+          `<span class="term__s">${STATUS[b.status]}</span></p>` +
+          `<p class="term__m">${b.means}</p>` +
+          (b.notThe ? `<p class="term__n">Not the same as ${b.notThe}.</p>` : "") +
+          (b.src ? `<p class="term__src">${b.src}</p>` : "");
+        break;
+      }
+
+      /* Points back into Part I. The chapter title is read from LESSONS rather
+         than written here, so renaming a chapter cannot leave a link describing
+         the old one — the same reason the deck derives its cards instead of
+         holding copies. */
+      case "ref": {
+        /* NOT `target` — the enclosing scope already has a `let target` that the
+           post-switch append uses. Shadowing it here is legal and works and is a
+           merge landmine. */
+        const dest = LESSONS[b.ch - 1];
+        if (!dest) break;
+        node = el("div", "xref");
+        node.innerHTML =
+          `<a href="#${dest.id}"><span class="xref__n">` +
+          `Chapter ${String(b.ch).padStart(2, "0")}</span>` +
+          `<span class="xref__t">${dest.title}</span></a>` +
+          `<p class="xref__y">${b.why}</p>`;
+        break;
+      }
+
       /* Videos play HERE, not on youtube.com. Sending a reader to the sidebar
          is how you lose them; the clip is part of the lesson, so it opens on a
          plate like everything else. Each card is a button, and nothing is
@@ -283,7 +338,11 @@ export function renderLesson(root, id) {
     : Object.assign(el("a", "", `${mark("left")}<span>Index</span>`), { href: "#" }));
   // The middle of the footer was an empty spacer. It is the natural place to
   // leave the chapter, so it carries the way back to the index.
-  const toIndex = Object.assign(el("a", "foot__ix", "<span>All 12 chapters</span>"), { href: "#" });
+  /* Counted, not typed. It said "All 12 chapters" for as long as there were
+     twelve, and the day a thirteenth shipped it became a small lie printed at
+     the foot of every page. */
+  const toIndex = Object.assign(
+    el("a", "foot__ix", `<span>All ${LESSONS.length} chapters</span>`), { href: "#" });
   foot.appendChild(toIndex);
   if (i < LESSONS.length - 1)
     foot.appendChild(Object.assign(el("a", "", `<span>${LESSONS[i + 1].title}</span>${mark()}`),
@@ -454,6 +513,6 @@ export function renderLesson(root, id) {
     };
   }
 
-  document.title = `${les.title} · Flight Dynamics`;
+  document.title = `${les.title} · ${PARTS.find((p) => p.n === (les.part ?? 1))?.title ?? COURSE}`;
   window.scrollTo(0, 0);
 }

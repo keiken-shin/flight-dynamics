@@ -303,6 +303,234 @@
         "The feedback loop as a block diagram — Mermaid is acceptable here, this is one of the few flowchart-shaped ideas.",
         "P, then PI, then PID response curves on a shared axis, 3 states."
       ]
+    },
+
+    {
+      "$comment": "── PART II — AIR COMBAT ─────────────────────────────────────────────\nChapters 13-20. See PART-II-SPEC.md. Two rules bind harder here than in Part I:\n(1) NO HERO MAY DEPICT A GEOMETRY. Not two aircraft in relative position, not a\nmerge, not an intercept, not a turn circle. A generated tactical relationship\nwill be wrong and a reader will read it as data. Heroes are weather, distance\nand light — nothing that could be mistaken for a claim. (2) Every doctrinal term\nin the lessons carries a provenance status; the vocabulary here is part\nstandardised, part squadron habit, part simulator folklore.",
+      "id": "three-numbers",
+      "title": "The Three Numbers",
+      "oneLiner": "Every fight is one question asked three ways: how far, how far off, and closing how fast.",
+      "misconception": "That a dogfight is a sequence of moves you choose, like a fighting game. It is not. Every named manoeuvre is one answer to a problem stated in range, angles and closure — and the same manoeuvre is right or wrong depending entirely on those three numbers.",
+      "secondMisconception": "That there is one thing called 'angle'. There are three, and they answer different questions. Aspect is WHERE YOU SIT, measured from the target's tail without any reference to where you are pointing. Angle-off is HOW YOUR HEADINGS COMPARE — the angle between the two aircraft's longitudinal axes. Antenna train angle is HOW FAR YOUR OWN NOSE MUST MOVE to point at them. Collapsing the first two is the specific error, because 'angle off' sounds positional and is not.",
+      "$terminologyWarning": "The services do not agree here and the lesson must say so rather than pick one. USAF (MCH 11-F16 Vol 5) defines angle-off as heading crossing angle; the Navy intercept syllabus (CNATRA P-825) uses 'angle off' for the nose-to-line-of-sight angle that the USAF calls antenna train angle. Navy work is done in Target Aspect, measured from the bandit's NOSE; USAF in Aspect Angle, from the TAIL — and TA + AA = 180. 'Angle to target' is NOT a published term and must not be used as though it were; the published term is antenna train angle.",
+      "concrete": "Following a car through traffic. You are tracking three things without naming them: how far ahead it is, how far off your nose it sits, and whether the gap is closing.",
+      "videoQueries": [
+        "BFM geometry explained range angles closure",
+        "aspect angle angle off tail explained fighter geometry",
+        "basic fighter maneuvers introduction geometry not memorized moves",
+        "Air Combat Tutorial Library BFM lesson geometry",
+        "fighter pilot explains angle off aspect and closure",
+        "dogfight geometry explained by real fighter pilot"
+      ],
+      "images": [
+        {
+          "id": "three-numbers-hero",
+          "kind": "hero",
+          "size": "1536x1024",
+          "prompt": "Subject: one aircraft, rendered so small it is barely more than a slate mark — a single hard-edged silhouette no larger than a grain of rice, seen from a great distance, level, nose to the right. Behind it a single hairline contrail in bone, straight and thin, dissolving into three or four separated flat fragments before it reaches the frame edge. Nothing else in the sky. No second aircraft anywhere in the frame.\nSetting: an enormous emptiness of high sky. One soft vertical wash from mid blue at the very top through pale to paper at the bottom. No horizon, no cloud, no ground.\nComposition: the aircraft sits high and far to the right, on the upper third, occupying well under 2% of the frame width. The whole left two-thirds and the entire lower half are completely bare. The emptiness is the subject — the picture is about how far away something is.\nColour: paper and pale wash overwhelmingly dominant, slate for the mark, bone for the contrail. One amber pixel of navigation light on the aircraft and nowhere else.\nMood: distant, patient, watchful — something noticed long before it matters."
+        }
+      ],
+      "authored": [
+        "The canonical figure of the track: one attacker, one defender, with range, angles and closure labelled on a single plan view, 3 states. Everything after this refers back to it.",
+        "Aspect angle vs angle off tail vs angle to target on one geometry, 3 states — the same pair of aircraft, three different measurements."
+      ]
+    },
+
+    {
+      "id": "pursuit-curves",
+      "title": "Three Ways to Point",
+      "oneLiner": "Lead, pure, lag. Where you put your nose decides what you gain and what you spend.",
+      "misconception": "That you point at the target. Close in and at similar speed, pure pursuit generates closure you cannot spend and drives you straight to an overshoot. It is the right answer in exactly two places — the moment you employ a weapon, and a long-range conversion into someone's rear quarter — and the wrong one in between.",
+      "secondMisconception": "That lead pursuit and a lead turn are the same thing. One is where your nose is pointing right now; the other is a decision to start turning before you have passed.",
+      "concrete": "Intercepting someone walking across a room. Walk at them and you arrive behind them. Walk at where they are going to be and you meet them.",
+      "videoQueries": [
+        "lead pure lag pursuit explained BFM",
+        "pursuit curves fighter aircraft explained lag pursuit",
+        "why pure pursuit causes overshoot BFM"
+      ],
+      "images": [
+        {
+          "id": "pursuit-hero",
+          "kind": "hero",
+          "size": "1536x1024",
+          "prompt": "Subject: a single long flat ribbon in deep blue, curving once through the frame in one smooth confident sweep — entering low on the left, bending gently upward, leaving high on the right. It tapers along its length, wide where it enters and fine where it leaves, and it breaks into three separated flat segments at each end rather than being cropped. Absolutely nothing else: no aircraft, no second ribbon, no arrow, no marker.\nSetting: plain bare paper. No sky, no ground, no horizon.\nComposition: the ribbon crosses the lower-middle third of the frame, occupying about 60% of the width and only a quarter of the height. The entire upper half of the frame is untouched paper.\nColour: paper overwhelmingly dominant, deep blue for the ribbon, one small flat bone shadow shape offset below and right of its widest part. One amber mark at the exact point of tightest curvature.\nMood: decisive, unhurried, committed — a single choice already made."
+        }
+      ],
+      "authored": [
+        "The three pursuit curves from one identical start on a shared viewBox, 3 states.",
+        "What each curve does to closure and to angles — the consequence table drawn rather than tabulated, 3 states."
+      ]
+    },
+
+    {
+      "id": "rate-and-radius",
+      "title": "Rate and Radius",
+      "oneLiner": "You can turn fast or you can turn tight. One speed gives you the most of both, and it is nowhere near your top speed.",
+      "misconception": "That faster is better in a turn. Past corner speed you are limited by the airframe rather than by the wing: the extra speed buys you radius you do not want and rate you cannot have.",
+      "concrete": "Swing a weight round on a string. Short string, and you are limited by your own arm — you cannot make the circle any tighter than your reach. Let it out and speed up, and eventually the string is at its breaking strain: from there, the only way to go faster is to let the circle get bigger. Below that speed your arm is the limit; above it, the string is. The tightest, quickest circle is at the speed where the two limits meet.",
+      "$anchorNote": "The bicycle was rejected after fact-checking. A bicycle is grip-limited — its maximum lateral acceleration is roughly the same at every speed, so turn rate rises and radius shrinks all the way down as you slow, and there is NO interior optimum. It would have taught the exact opposite intuition in the one chapter that turns on there being a best speed. The string works because the available turning force genuinely grows with speed, which is the mechanism corner velocity depends on.",
+      "videoQueries": [
+        "corner velocity explained fighter turn performance",
+        "turn rate versus turn radius explained doghouse plot",
+        "sustained turn rate instantaneous turn rate explained"
+      ],
+      "images": [
+        {
+          "id": "rate-radius-hero",
+          "kind": "hero",
+          "size": "1536x1024",
+          "prompt": "Subject: a wingtip vapour cone — one flat bone shape filled with exactly one colour value — every point inside it is the identical bone tone, edge to edge. No lighter side and no darker side, no falloff toward any edge, no lightening toward the wing and no darkening away from it. The only variation permitted inside the shape is the paper grain. Its edge is crisp, with no blur and no glow. It blooms from an implied wing edge — the condensation that appears over a wing pulling hard. The wing itself is suggested only by a small deep blue wedge at the lower right, cropped by nothing and carrying no detail: no aircraft, no fuselage, no canopy, no second wing. Three or four flat bone shapes of decreasing size trail away from the cone and dissolve.\nSetting: empty paper with one very soft vertical wash of mid blue confined to the upper quarter. No horizon, no ground, no cloud.\nComposition: the wedge and its cone sit in the lower right third, together occupying no more than 26% of the frame width. The upper left two-thirds is entirely bare paper.\nColour: paper dominant, bone for the vapour, deep blue for the wedge, one thin amber stripe along the wedge's leading edge.\nMood: strained, momentary, physical — air giving up its water under load."
+        }
+      ],
+      "authored": [
+        "THE HINGE FIGURE. The rate/radius doghouse built on the SAME frame() construction as the V-n diagram in chapter 9, 4 states: (1) the V-n boundary redrawn unchanged so the reader recognises it, (2) re-axed to turn rate against speed, (3) radius contours laid over, (4) the corner marked where the lift limit meets the G limit, with the speed computed from the model.",
+        "The same aircraft turning at three speeds, drawn as real turn circles, 3 states — rate and radius pulling opposite ways."
+      ],
+      "data": "Corner velocity, sustained and instantaneous turn rate computed from the FIGHTER entry in src/sim/flight-model.js. Never hand-placed.",
+      "interactive": "Sandbox: find the best INSTANTANEOUS rate — the goal latches at the corner the model itself computes, not at a number typed into the task. Best SUSTAINED rate is a different speed entirely (the model puts it around 262 kt at 4.6 g against a 328 kt, 9 g corner) and belongs to chapter 17. The chapter must not let a reader think they are the same thing."
+    },
+
+    {
+      "id": "one-or-two-circle",
+      "title": "One Circle or Two",
+      "oneLiner": "At the merge you choose which fight you are in, and you choose it before you arrive.",
+      "misconception": "That one-circle is a radius fight and two-circle is a rate fight. Those are tendencies, not rules. Which one favours you depends on your aircraft against theirs, not on the geometry by itself.",
+      "$serviceSplit": "Accuracy rule 3 applies here and the chapter must say so out loud. The Navy syllabus (CNATRA P-825) states it flatly as a rule: a one-circle fight IS a radius fight, a two-circle fight IS a rate fight. The USAF handbook (MCH 11-F16 Vol 5) treats it as matchup-driven — it shows fighting one-circle WITH a rate advantage, lists one-circle benefits that are about missile minimum range and unpredictability rather than radius, and says there may not be a single best way to fight any given bandit. Present both; do not pick one and let it read as universal.",
+      "concrete": "Two people meeting head-on in a narrow corridor. Both step the same way, or both step opposite ways — and those are completely different problems, decided in the same instant.",
+      "videoQueries": [
+        "one circle versus two circle fight explained BFM",
+        "merge decision one circle two circle rate radius",
+        "why one circle fight favors radius two circle favors rate",
+        "nose to nose versus nose to tail turn fighter merge",
+        "fighter pilot explains the merge decision BFM",
+        "Air Combat Tutorial Library one circle two circle fight"
+      ],
+      "images": [
+        {
+          "id": "merge-hero",
+          "kind": "hero",
+          "size": "1536x1024",
+          "prompt": "Subject: a single contrail, already old and beginning to disperse, that curves once into a broad open hook high in an empty sky — never closing, never touching itself, never crossing itself — drawn as one continuous flat bone ribbon of even width, fraying into four or five separated flat fragments at both open ends. The trail must never form a closed loop, a circle or an oval, and no part of it may touch or cross any other part. There is NO aircraft anywhere in the frame, and no second trail. Only the trace one machine left behind some time ago.\nSetting: high thin sky. One soft vertical wash from mid blue at the top to paper at the bottom. No horizon, no cloud, no ground, no sun.\nComposition: the curving trail sits in the upper-left third and occupies no more than 30% of the frame width. The entire lower half and right third are bare paper.\nColour: paper and pale wash dominant, bone for the trail, one small amber fragment part-way along the trail, away from the tightest part of the bend, and nowhere else.\nMood: aftermath, quiet, already over — evidence of a decision rather than the decision."
+        }
+      ],
+      "authored": [
+        "One-circle geometry from an identical start, seen from above, 4 states.",
+        "Two-circle geometry from the SAME start on the SAME viewBox, 4 states — the two figures must be directly comparable or the chapter does not work."
+      ],
+      "interactive": "Sandbox: the same merge, both choices, both outcomes."
+    },
+
+    {
+      "id": "energy-rate",
+      "title": "Energy Is a Rate, Not a Number",
+      "oneLiner": "Speed and height are one thing in two currencies, and every turn presents a bill. Whether you pay it is the fight.",
+      "misconception": "That energy fighting means going fast. Specific excess power is a rate: you can be fast and losing, or slow and gaining. The faster aircraft is frequently the poorer one.",
+      "concrete": "A bank balance against an income. The balance is what you have; the income is whether it is growing. Rich and haemorrhaging can be the worse position — but not always, because a big balance spent right now still buys something. What matters is that the balance alone never tells you who is winning.",
+      "videoQueries": [
+        "specific excess power energy maneuverability explained",
+        "energy management fighter aircraft explained",
+        "high yo yo low yo yo explained BFM energy"
+      ],
+      "images": [
+        {
+          "id": "energy-hero",
+          "kind": "hero",
+          "size": "1536x1024",
+          "prompt": "Subject: one aircraft, very small — a clean flat slate silhouette about 4% of the frame width — climbing steeply on a straight line from the lower left toward the upper right, nose up at roughly forty degrees. Behind it one long straight contrail in bone, perfectly aligned with its path, tapering and breaking into separated flat segments toward the lower left. No second aircraft, no manoeuvre, no curve.\nSetting: sky graded softly from deep blue at the very top of the frame through mid blue to paper at the bottom. One flat bone cloud bank sitting low and far below, small and unbroken.\nComposition: the aircraft sits on the upper-right third, its contrail running back down to the lower left across about 55% of the frame. The upper left corner and the lower right corner are both large areas of completely bare ground.\nColour: graded sky and paper dominant, slate for the aircraft, bone for the trail and cloud, a single amber mark at the aircraft's tail.\nMood: effortful, ascending, spending something — height being bought."
+        }
+      ],
+      "authored": [
+        "Ps contours laid over the rate/radius plot from chapter 15, 3 states — where you gain energy and where you burn it.",
+        "The energy trade around a high yo-yo, 4 states: speed into height, height back into position."
+      ],
+      "data": "Ps computed from the FIGHTER entry. The contours are model output, not draughtsmanship.",
+      "interactive": "Sandbox: complete a turn with more energy than you began it with."
+    },
+
+    {
+      "id": "overshoots",
+      "title": "When It Goes Wrong",
+      "oneLiner": "Overshoot and the fight can turn over. There are two kinds, and only one of them means you have traded places.",
+      "misconception": "That an overshoot means you have lost. A flightpath overshoot and a 3/9-line overshoot are different events. The first is usually a geometry problem you can correct — unless it happens close, fast and at high angle, when the defender can reverse on it. The second is you flying out in front, and that is a change in who is offensive.",
+      "concrete": "Overtaking on a motorway. Drifting a little wide of your lane is a correction, and you make it without much thought. Sailing past the car you were following is a different event entirely: it is now behind you, watching you, choosing when to move — and you cannot see it without turning your head.",
+      "videoQueries": [
+        "flight path overshoot versus 3/9 line overshoot explained",
+        "flat scissors rolling scissors explained BFM",
+        "overshoot and reversal BFM explained defensive"
+      ],
+      "images": [
+        {
+          "id": "overshoot-hero",
+          "kind": "hero",
+          "size": "1536x1024",
+          "prompt": "Subject: one flat ribbon in deep blue that crosses over itself a single time, at the crossing the far pass is cut cleanly by a narrow paper-coloured gap on both sides of the near pass, so the near pass runs unbroken across the top and the depth order is unmistakable. It enters from the lower left and leaves toward the upper left, having doubled back on itself once. Both open ends break into three separated flat segments. No aircraft, no second ribbon, no arrows, no labels.\nSetting: an opaque warm off-white paper ground painted edge to edge across the entire frame, carrying the same fine matte paper grain as every other image in this set. No transparency anywhere in the image. No sky, no horizon, no ground plane.\nComposition: the whole figure including its cast shadow occupies no more than 36% of the frame width and no more than 45% of its height, and no part of it — shadow included — crosses the vertical centre line. The entire right third of the frame is completely empty paper.\nColour: paper dominant, deep blue for the ribbon, one flat bone shadow shape — a separate silhouette of the ribbon, offset well down and to the right, clearly detached from it and lying on the paper. The ribbon itself is a flat shape with zero thickness: no edge face, no underside, no visible depth, no highlight along its length, nothing suggesting a solid strap, tube or cable. A single amber segment on the near pass only, right where it runs over the far pass. The amber must not fill the intersection square and must not cover the far pass. Every edge in the frame is hard. Nothing is blurred or soft.\nMood: a mistake caught mid-correction — awkward, recoverable, not yet resolved."
+        }
+      ],
+      "authored": [
+        "Flightpath overshoot and 3/9-line overshoot side by side on one viewBox, 3 states — the distinction is the whole chapter.",
+        "Flat scissors, then rolling scissors, 4 states."
+      ],
+      "interactive": "Sandbox: cause an overshoot, then defend against one."
+    },
+
+    {
+      "id": "bvr-geometry",
+      "title": "The Same Geometry, Fifty Miles Out",
+      "oneLiner": "Beyond visual range is the same three numbers, decided before you can see anyone.",
+      "misconception": "That BVR is a different skill from BFM. It is the same range, angles and closure problem with a radar instead of your eyes and a missile instead of a gun — a crank is lag pursuit flown for the missile's benefit as much as your own, because it shrinks the other side's engagement zone at the same time as it keeps your radar on them.",
+      "secondMisconception": "That crank and F-pole are the same thing, and that beaming and notching are the same thing. A manoeuvre is not a distance, and an aspect is not the doppler rejection that beam geometry is usually used to achieve.",
+      "concrete": "Turning your shoulder to someone across a crowded room. You have not left, you can still see them, and you are closing at a walk instead of a run.",
+      "videoQueries": [
+        "crank beam notch explained BVR",
+        "doppler notch explained radar velocity gate",
+        "F-pole A-pole explained BVR missile geometry",
+        "fighter pilot explains beaming and notching radar",
+        "how fighter radar works pulse doppler filter explained",
+        "airborne intercept radar explained aspect and closure"
+      ],
+      "images": [
+        {
+          "id": "bvr-hero",
+          "kind": "hero",
+          "size": "1536x1024",
+          "prompt": "Subject: nothing but an enormous empty high-altitude sky, and one single small amber point of light sitting alone in it — no aircraft, no silhouette, no trail, no shape of any kind attached to it. Far below, one flat unbroken bone cloud layer drawn as two or three overlapping soft-edged shapes, occupying only the bottom eighth of the frame.\nSetting: the top of the weather. Sky graded from deep blue at the very top through mid blue to pale paper just above the cloud layer.\nComposition: the amber point sits high and slightly right of centre, tiny — no more than a few pixels across. At least 85% of the frame is uninterrupted graded sky with absolutely nothing drawn on it.\nColour: graded blue and paper dominant to an extreme degree, bone for the distant cloud, amber for the single point and nowhere else.\nMood: cold, vast, unnerving — something is there, it matters, and you cannot see it."
+        }
+      ],
+      "authored": [
+        "Intercept geometry carrying the crank, the beam and the notch, 4 states, with the velocity-rejection region drawn as the physical volume it is rather than as a label.",
+        "Why a crank is lag pursuit: the same figure as chapter 14, redrawn at fifty times the scale."
+      ]
+    },
+
+    {
+      "id": "intercept-timeline",
+      "title": "Deciding Before You Arrive",
+      "oneLiner": "Commit, sort, shoot, crank, decide, merge. Every rung is a place to be wrong, and you climb most of them blind.",
+      "misconception": "That the fight starts at the merge. The published intercept timeline is a ladder of range-gated tasks — commit, label, sort, shoot, crank, decide — and almost all of it is done before anyone has seen anything at all.",
+      "secondMisconception": "That Short, Long and Quick Skate are three separate manoeuvres. In the current brevity publication they are modifiers of one call. Skate is launch-and-leave; Banzai is launch-and-decide; and what separates them is decided before the shot rather than improvised after it.",
+      "concrete": "A chess clock. The move you play is fast; everything that decided it happened while the clock was running and nothing appeared to be going on.",
+      "videoQueries": [
+        "BVR intercept phases explained commit targeting merge",
+        "skate banzai launch and leave launch and decide explained",
+        "minimum abort range explained BVR decision",
+        "fighter pilot explains BVR intercept step by step",
+        "radar intercept officer explains intercept geometry",
+        "air battle management commit criteria explained",
+        "fighter squadron intercept procedure explained interview",
+        "weapons school BVR intercept brief explained"
+      ],
+      "images": [
+        {
+          "id": "timeline-hero",
+          "kind": "hero",
+          "size": "1536x1024",
+          "prompt": "Subject: one long straight contrail in bone entering from the left of the frame at a shallow angle and simply stopping, unfinished, a little past the middle — its leading end simply stops, ragged and slightly uneven, not squared off and not capped, with no aircraft at its head and nothing beyond it. Toward the left, where it is oldest, the trail thins and comes apart into irregular soft wisps of clearly unequal length and unequal spacing — never a row of similar rectangles, never evenly spaced, never reading as dashes or ticks.\nSetting: a low level horizon at first light. A soft low horizon where the pale sky meets the paper, its edge slightly uneven and no darker than the mid tone — not a ruled line, not slate, not uniform in thickness. Above it a soft vertical wash from mid blue at the top down to warm paper at the horizon.\nComposition: the horizon sits about a quarter up from the bottom. The contrail runs across the upper-middle third and stops at roughly 58% of the frame width. The whole right third beyond its unfinished end is completely bare — that emptiness, the part not yet flown, is the subject.\nColour: paper and soft wash dominant, bone for the trail, one small amber wisp caught in the trail a little short of its unfinished end — never a cap, dot or terminator sitting on the end itself.\nMood: suspended, deliberate, mid-decision — a sentence stopped before its last word."
+        }
+      ],
+      "authored": [
+        "The five-phase intercept timeline as one horizontal figure with its decision points, 5 states, one per phase.",
+        "Skate against Banzai on the same timeline: where the two flows diverge, and what decides it."
+      ]
     }
   ]
 }

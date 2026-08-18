@@ -1,9 +1,10 @@
 import "./styles/app.css";
-import { LESSONS } from "./data/lessons.js";
+import { LESSONS, PARTS, partOf, COURSE } from "./data/lessons.js";
 import { renderHome } from "./ui/home.js";
 import { renderLesson, stopLesson } from "./ui/lesson.js";
 import { renderCards } from "./ui/cards.js";
 import { renderCheckride, stopCheckride } from "./ui/checkride.js";
+import { renderGlossary } from "./ui/glossary.js";
 import { renderCredits } from "./ui/credits.js";
 import { el, applyPlate, currentPlate, cyclePlate } from "./ui/util.js";
 import { logoSvg, faviconDataUri } from "./ui/logo.js";
@@ -29,7 +30,12 @@ function zoneRails() {
 
 function header() {
   const bar = el("header", "bar");
-  const home = el("a", "bar__title", logoSvg({ size: 20 }) + "<span>Flight Dynamics</span>");
+  /* The wordmark carries the whole course, not the first part of it. It was
+     "Flight Dynamics", which stopped being true the moment a chapter about
+     beyond-visual-range shipped under it — and a masthead that is wrong is worse
+     than a long one. Built from PARTS so it can never drift from what the course
+     actually contains. */
+  const home = el("a", "bar__title", logoSvg({ size: 20 }) + `<span>${COURSE}</span>`);
   home.href = "#";
   const meta = el("span", "bar__meta");
   const spacer = el("span", "bar__spacer");
@@ -71,9 +77,22 @@ function route({ meta, index }) {
   if (id === "cards") {
     meta.textContent = "Revision";
     renderCards(app);
-  } else if (id === "checkride") {
-    meta.textContent = "Final test";
-    renderCheckride(app);
+  } else if (id === "checkride" || id === "checkride-2") {
+    /* One renderer, two rides. The part is the route's to decide because it is
+       the only thing here that knows which one was asked for; everything else
+       about the test — its items, its chapters, its score — lives in
+       checkride.js, where it can only be got wrong once. */
+    const part = id === "checkride-2" ? 2 : 1;
+    meta.textContent = PARTS.length > 1 ? `Final test · Part ${part}` : "Final test";
+    renderCheckride(app, part);
+  } else if (id === "glossary") {
+    /* Reference, not a chapter — so it is a route with no number, and the meta
+       says which kind of page this is rather than where you are in a sequence.
+       "Lookup" and not "Reference" for a physical reason: the meta sits in a
+       flex bar that cannot break a word, so the longest unbreakable label in the
+       course sets the width the bar overflows a phone at. */
+    meta.textContent = "Lookup";
+    renderGlossary(app);
   } else if (id === "credits") {
     meta.textContent = "Sources";
     renderCredits(app);
@@ -81,7 +100,16 @@ function route({ meta, index }) {
     meta.textContent = `${LESSONS.length} chapters`;
     renderHome(app);
   } else {
-    meta.textContent = `Chapter ${String(i + 1).padStart(2, "0")} of ${LESSONS.length}`;
+    /* Chapter numbers run 01–20 straight through both parts rather than
+       restarting, because the cross-references are spoken as numbers — a
+       chapter that says "you drew this in 9" has to mean the ninth thing in
+       the course, not the ninth thing in some part. The part name is carried
+       alongside, so the number stays unambiguous without doing the work of
+       saying where you are. Named only when there is more than one part to
+       be in. */
+    const part = PARTS.find((p) => p.n === partOf(id));
+    const n = `Chapter ${String(i + 1).padStart(2, "0")} of ${LESSONS.length}`;
+    meta.textContent = PARTS.length > 1 && part ? `${part.title} · ${n}` : n;
     renderLesson(app, id);
   }
 }

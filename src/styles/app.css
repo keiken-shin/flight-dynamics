@@ -463,6 +463,105 @@ button { font: inherit; color: inherit; }
 .formula dt { font-family: var(--f-mono); color: var(--accent); text-align: right; }
 .formula dd { margin: 0; color: var(--ink-2); }
 
+/* ── term ──────────────────────────────────────────────────────────────────
+   A specimen card: the word, how much authority it carries, and what it means.
+   Part I could state a claim and stop — physics is true or it is not. Part II
+   teaches doctrine, where a published brevity code and something a simulator
+   community agreed on look identical on the page, and readers repeat what they
+   read here. So the status is never a tooltip and never a hover; it is set on
+   the word's own line and cannot be scrolled past.
+
+   The ladder is ACHROMATIC on purpose. Hue is nominal — four colours say "four
+   different things", not "this one outranks that one" — and the colour budget in
+   this world belongs to the forces, the same reason .myth refuses drag-red. Rank
+   is carried by the manual's own grammar of authority instead: a stamped block,
+   a boxed one, a faint one, and a dashed one that was never issued. That survives
+   a greyscale print, and it stacks: the badges align on the right edge, so a
+   reader skimming a chapter reads the ladder down the page without touching a
+   single definition. */
+.term { border: var(--w-hair) solid var(--rule); padding: 15px 19px 16px; margin: 0 0 2.4em; }
+.term__w {
+  display: flex; flex-wrap: wrap; gap: 5px 14px; align-items: baseline;
+  font-size: 18px; font-weight: 600; margin-bottom: .55em;
+}
+/* Mono, like every other identifier on the page. Right-aligned so that three
+   terms in a row form a column of badges rather than three ragged labels. */
+.term__s {
+  flex: none; margin-left: auto; padding: 3px 8px 2px; white-space: nowrap;
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase;
+}
+.term__m { margin: 0; color: var(--ink-2); }
+/* The line that stops an approximate synonym being read as an equivalent. */
+.term__n { margin: .85em 0 0; padding-top: .75em; font-size: 14px; color: var(--ink-3);
+           border-top: var(--w-hair) solid var(--rule-soft); }
+/* Which publication, and which edition of it. Set in mono at caption size —
+   the same furniture a drawing uses to cite its own issue — because it is a
+   reference rather than part of the definition, and it has to be checkable
+   without competing with the word it qualifies. */
+.term__src { margin: .7em 0 0; font-family: var(--f-mono); font-size: 10px;
+             letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ── the four rungs ──
+   Each drops a step from the one above on three axes at once: the card's top
+   rule, the badge, and the headword's own ink. Read top to bottom it is the
+   life of a piece of vocabulary — stamped, issued, superseded, never issued. */
+
+/* Standardised across the services. Stamped: the heaviest rule the system has,
+   over a solid block with the type knocked out of it. */
+.term--multi-service { border-top: var(--w-line) solid var(--ink); }
+.term--multi-service .term__s { background: var(--ink); color: var(--paper); }
+
+/* One service's training language. Issued, but by one authority — so it is
+   boxed at full weight rather than stamped. */
+.term--service { border-top: var(--w-rule) solid var(--ink); }
+.term--service .term__s { border: var(--w-rule) solid var(--ink); color: var(--ink-2); }
+
+/* It was the word once. Still a real term, no longer the current one, so the
+   whole card fades a step: hairline rule, hairline badge, headword in ink-2. */
+.term--historical { border-top: var(--w-hair) solid var(--rule); }
+.term--historical .term__w { color: var(--ink-2); }
+.term--historical .term__s { border: var(--w-hair) solid var(--rule); color: var(--ink-3); }
+
+/* Never doctrine at all — a simulator community's usage. Drawn the way a manual
+   draws a line that was never issued: dashed, and dashed on every side, not just
+   the top. This is the rung that has to be unmistakable, because it is the one a
+   reader would otherwise repeat as though it were the first — and it is the only
+   card in the stack whose outline is not a solid box, which is legible across a
+   whole page of them at a glance. (The top-rule ladder alone cannot carry this:
+   at fractional device pixel ratios --w-hair and --w-rule round to the same
+   physical line, so the rank must also live somewhere the renderer cannot
+   flatten.) */
+.term--sim { border: var(--w-hair) dashed var(--rule); }
+.term--sim .term__w { color: var(--ink-2); font-weight: 500; }
+.term--sim .term__s { border: var(--w-hair) dashed var(--rule); color: var(--ink-3); }
+
+/* ── cross-reference ───────────────────────────────────────────────────────
+   The manual pointing back at a plate it has already drawn. Built from the same
+   furniture as the figure reference and the inspection blocks — a recessed
+   caption strip carrying an identifier, then the content beneath — because it is
+   the same kind of object, and it stays quieter than .myth by having no heavy
+   rule anywhere on it.
+
+   The hierarchy is deliberately inverted. Chapter number and title sit in the
+   strip at caption size, the way a drawing cites another drawing; the REASON is
+   the sentence at reading size below. "Chapter 09" persuades nobody to make the
+   trip. What is waiting there does, and that is this block's whole job. */
+.xref { border: var(--w-hair) solid var(--rule); margin: 0 0 2.4em; }
+.xref a {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
+  padding: 7px 12px; text-decoration: none; background: var(--paper-sunk);
+  border-bottom: var(--w-hair) solid var(--rule);
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+}
+.xref__n { flex: none; color: var(--ink-3); }
+.xref__t { color: var(--ink); font-weight: 600; }
+/* The same hover the video card and the catalogue use: the block answers, not a
+   decoration on it. Instant, like the rest of them — nothing here moves. */
+.xref:hover { border-color: var(--ink); }
+.xref a:hover .xref__t { color: var(--accent); }
+.xref__y { margin: 0; padding: 13px 15px 14px; }
+
 /* videos — a stack of cards that open the in-app player, not links off-site */
 .vids { margin: 0 0 2.4em; }
 .vid { display: flex; gap: 14px; align-items: flex-start; width: 100%; text-align: left;
@@ -772,11 +871,35 @@ button { font: inherit; color: inherit; }
 .figure .k-low{stroke:var(--p-low)}        .figure .dot.k-low,.figure .area.k-low{fill:var(--p-low)}
 .figure .k-high{stroke:var(--p-high)}      .figure .dot.k-high,.figure .area.k-high{fill:var(--p-high)}
 
+/* Part II — relational kinds. */
+.figure .k-friendly{stroke:var(--r-friendly)} .figure .dot.k-friendly,.figure .area.k-friendly{fill:var(--r-friendly)}
+.figure .k-threat{stroke:var(--r-threat)}     .figure .area.k-threat{fill:var(--r-threat)}
+.figure .k-track{stroke:var(--r-track)}       .figure .dot.k-track,.figure .area.k-track{fill:var(--r-track)}
+.figure .k-circle{stroke:var(--r-circle)}     .figure .dot.k-circle,.figure .area.k-circle{fill:var(--r-circle)}
+
+/* friendly and threat are the only two kinds that appear in one figure meaning
+   "us" and "them", so hue alone will not carry them: friendly is the heavier
+   solid mark, threat the lighter dashed one, at every weight the grammar has.
+   Print the plate in greyscale and the pair still separates. The hair overrides
+   keep a construction line a construction line — a 2.4px turn circle would be
+   louder than the geometry it is there to explain. */
+.figure .k-friendly { stroke-width: 2.4; }
+.figure .k-threat   { stroke-width: 1.4; stroke-dasharray: 9 4; }
+.figure .hair.k-friendly { stroke-width: 1.6; }
+.figure .hair.k-threat   { stroke-width: var(--w-rule); }
+/* A friendly position is solid, a threat position is a ring. Two filled dots
+   differing only in hue is exactly the failure this pair may not have. */
+.figure .dot.k-threat { fill: none; stroke: var(--r-threat); stroke-width: 2; stroke-dasharray: none; }
+
 .figure .fill-lift{fill:var(--f-lift)}     .figure .fill-weight{fill:var(--f-weight)}
 .figure .fill-thrust{fill:var(--f-thrust)} .figure .fill-drag{fill:var(--f-drag)}
 .figure .fill-other{fill:var(--f-other)}   .figure .fill-moment{fill:var(--m-moment)}
 .figure .fill-flow{fill:var(--v-flow)}     .figure .fill-angle{fill:var(--a-angle)}
 .figure .fill-ink{fill:var(--ink)}         .figure .fill-ref{fill:var(--ref)}
+/* Arrowhead fills for the relational kinds. Miss these and the marker renders
+   black-by-default rather than in its kind's colour. */
+.figure .fill-friendly{fill:var(--r-friendly)} .figure .fill-threat{fill:var(--r-threat)}
+.figure .fill-track{fill:var(--r-track)}       .figure .fill-circle{fill:var(--r-circle)}
 
 /* The airframe recedes so the forces read as the brightest marks on the plate.
    Not decoration: on the negative plate `--f-weight` resolves to `--ink`, so a
@@ -796,6 +919,8 @@ button { font: inherit; color: inherit; }
 .figure .chip-t.k-flow{fill:var(--v-flow)}     .figure .chip-t.k-angle{fill:var(--a-angle)}
 .figure .chip-t.k-ref{fill:var(--ink-3)}       .figure .chip-t.k-ink{fill:var(--ink)}
 .figure .chip-t.k-low{fill:var(--p-low)}       .figure .chip-t.k-high{fill:var(--p-high)}
+.figure .chip-t.k-friendly{fill:var(--r-friendly)} .figure .chip-t.k-threat{fill:var(--r-threat)}
+.figure .chip-t.k-track{fill:var(--r-track)}       .figure .chip-t.k-circle{fill:var(--r-circle)}
 .figure .note { font-family: var(--f-mono); font-size: 12px; fill: var(--ink-3); stroke: none; }
 .figure .cap  { font-size: 15px; text-anchor: middle; fill: var(--ink-2); stroke: none; }
 
@@ -920,3 +1045,111 @@ button { font: inherit; color: inherit; }
 .credits__list .c-rem { font-size: 13.5px; }
 .credits__foot { margin-top: 22px; }
 .credits__foot code { font-family: var(--f-mono); font-size: 13px; color: var(--ink); }
+
+/* ── the vocabulary ────────────────────────────────────────────────────────
+   The appendix. It borrows the index table's furniture wholesale so it reads as
+   the back of the same manual rather than as a second document, and it borrows
+   the term card's four rungs wholesale so a word carries the same authority
+   whether you meet it in a chapter or look it up here. Nothing about rank is
+   re-invented below — only re-drawn for a row, which cannot take a card's
+   borders.
+   No motion is added anywhere on this page. That is the cheapest way to honour
+   a reduced-motion request: there is nothing to reduce. */
+.catalogue--gloss { margin-top: -1px; }   /* shares a rule with the strip above */
+/* Three columns of real sentences need more width than a column of prose wants
+   to be read at, so this page's body is wider than the rest of the back matter
+   — and the paragraphs inside it are capped back to a reading measure. */
+.gl__body { max-width: 88ch; }
+.gl__prov { max-width: 72ch; margin-bottom: 26px; }
+.gl__why { max-width: 72ch; margin-bottom: 14px; color: var(--ink-2); font-size: 15px; }
+
+/* The key to the ladder. Each rung is an <li> carrying term--<status>, so these
+   are four miniature specimen cards drawn by the chapter's own rules — the key
+   cannot say one thing while the rows below it say another. */
+.gl__rungs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 24px; padding: 0; list-style: none; }
+.gl__rungs li { display: flex; align-items: baseline; gap: 9px; padding: 9px 11px; }
+.gl__n { font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; color: var(--ink-3); }
+
+/* Two native controls, labelled the way every other identifier on the plate is
+   labelled. The select is the catalogue's own picker, unchanged. */
+.gl__filter { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-bottom: 12px; }
+.gl__lab { font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em;
+           text-transform: uppercase; color: var(--ink-3); }
+.gl__q {
+  flex: 1 1 250px; min-width: 0;
+  background: var(--paper); color: var(--ink); border-radius: 0;
+  border: var(--w-hair) solid var(--rule); padding: 12px 14px;
+  font-family: var(--f-mono); font-size: 12px;
+}
+.gl__q::placeholder { color: var(--ink-3); }
+.gl__q:hover, .gl__pick:hover { border-color: var(--ink); }
+.gl__tally { margin: 0 0 2px; font-family: var(--f-mono); font-size: 10px;
+             letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.gl__none { max-width: 72ch; margin-top: 14px; }
+
+.gl { margin-top: 10px; }
+.gl td { vertical-align: top; }
+.gl__t { width: 22%; }
+.gl__t b { font-size: 15.5px; }
+.gl__aka { display: block; margin-top: 3px; font-family: var(--f-mono);
+           font-size: 10.5px; letter-spacing: .04em; color: var(--ink-3); }
+.gl .term__m { font-size: 15px; }
+.gl .term__n { margin-top: .7em; font-size: 13.5px; }
+.gl__st { width: 192px; text-align: right; }
+/* A badge is a block of ink, not a run of text — inline, its padding would not
+   hold the box off the line above it. */
+.gl__st .term__s { display: inline-block; }
+
+/* Group headings as section breaks INSIDE the one table, the same decision the
+   index makes for a part: one table, so the columns line up the whole way down
+   and twelve groups read as one list rather than twelve small ones. */
+.gl__cat th { padding-top: 30px; border-bottom: var(--w-rule) solid var(--ink); }
+.gl__cat b { display: block; font-size: 11px; letter-spacing: .13em; color: var(--ink); }
+/* The note is prose, so it drops the header cell's mono, its tracking, its caps
+   and its weight — all four, or it reads as another label rather than a sentence. */
+.gl__cat span { display: block; margin-top: 4px; max-width: 72ch;
+                font-family: var(--f-body); font-size: 13.5px; font-weight: 400;
+                letter-spacing: 0; text-transform: none; color: var(--ink-2); }
+
+/* ── the four rungs, on a row instead of a card ──
+   The card states its rung three ways at once: the weight of its top rule, the
+   badge, and the headword's own ink. The badge needs no restating at all — each
+   row carries term--<status>, so .term--x .term__s applies here exactly as it
+   does in a chapter. The rule cannot be reused as-is: a border on a row of a
+   collapsed table fights the row rules either side of it, and a 0.5px dashed
+   line loses that fight outright, taking the sim rung's whole point with it. So
+   the weight step is drawn as a rail down the LEFT of each row, which stacks
+   into a column a reader reads the ladder off without touching a definition. */
+.gl tbody tr { border: 0; }
+.gl .term--multi-service { border-left: var(--w-line) solid var(--ink); }
+.gl .term--service       { border-left: var(--w-rule) solid var(--ink); }
+.gl .term--historical    { border-left: var(--w-hair) solid var(--rule); }
+/* Never issued: a dashed rail AND a dashed rule under the whole row. This is the
+   rung that has to be unmistakable — it is the one a reader would otherwise
+   repeat as though it were the first — so it is the only dashed thing on a page
+   of 120 rows, exactly as it is the only dashed card in a chapter. */
+.gl .term--sim           { border-left: var(--w-hair) dashed var(--rule); }
+.gl .term--sim td        { border-bottom-style: dashed; }
+.gl .term--historical b, .gl .term--sim b { color: var(--ink-2); }
+.gl .term--sim b { font-weight: 500; }
+
+@media (max-width: 620px) {
+  /* The index's phone grid puts the second cell beside a two-digit item number.
+     Nothing in this table is two digits wide: the cells are a headword, two
+     paragraphs and a badge that is twenty-two characters of tracked mono. Side
+     by side they all lose. So the row becomes one column and stacks in the order
+     that matters — the word, then what it is worth, then what it means — which
+     keeps the one pairing that must survive a narrow screen, since it is what
+     stops a piece of folklore being read as doctrine. Written at .gl.index
+     weight because it is overriding index rules of otherwise equal specificity. */
+  .gl.index tr { grid-template-columns: minmax(0, 1fr); }
+  /* Every cell is placed in the one column BY NAME. The index puts its second
+     cell in column two, and a cell sent to a column this template does not have
+     grows an implicit one — which quietly eats the width the words needed. */
+  .gl.index .gl__t  { grid-column: 1; grid-row: 1; width: auto; }
+  .gl.index .gl__st { grid-column: 1; grid-row: 2; width: auto; margin-top: 7px; text-align: left; }
+  .gl.index .gl__d  { grid-column: 1; grid-row: 3; margin-top: 9px; }
+  .gl.index .gl__cat th { grid-column: 1; }
+  .gl__filter { flex-direction: column; align-items: stretch; gap: 6px; }
+  .gl__q, .gl__pick { width: 100%; }
+}

@@ -29,6 +29,25 @@ Green-go / red-stop for thrust and drag is intentional: it is guessable before i
 
 > **Note:** this is the palette for **authored figures**. Generated imagery uses a separate, narrower palette (§6) because it is atmosphere, not information — it must never look like it is carrying semantic colour.
 
+### 1a. The relational kinds (Part II)
+
+Part I's kinds all name **forces on one aircraft**. Part II draws **relationships between two of them**, which those kinds cannot say. Four more, and they are a separate family:
+
+| Meaning | Token | Rendering |
+|---|---|---|
+| **Us** | `--r-friendly` | heavier solid line, filled dot |
+| **Them** | `--r-threat` | lighter dashed line, open ring |
+| **Where somebody has been** | `--r-track` | solid line at line weight — history |
+| **Where somebody is committed to going** | `--r-circle` | hairline locus — a turn circle |
+
+`friendly` and `threat` are the only pair in the project that mean opposed things **in the same drawing**, so they may never rely on hue: they differ in stroke weight, in dash, and in dot form as well, and a greyscale print must still read. `track` and `circle` are deliberately distinct — one is the past, the other is a commitment.
+
+**The rule that keeps the two families apart.** In dark plate `threat` sits close to drag, and `circle` close to `--f-other`; what actually separates them is line grammar rather than hue. So this is structural, not taste:
+
+> **A relational kind is never drawn as a force arrow, and never radiates from a centre of gravity.** Forces radiate from a CG with an arrowhead; relations are tracks, circles, and lines *between* two aircraft. A `threat`-coloured arrow springing from a CG would read as a sibling of drag, and nothing in the code prevents one being written — only this rule does.
+
+The two families should also not share a plate. A figure that needs both is almost always two figures.
+
 ---
 
 ## 2. Geometry

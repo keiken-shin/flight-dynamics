@@ -11,7 +11,7 @@
     "curate": "node scripts/yt.mjs curate",
     "verify:videos": "node scripts/yt.mjs verify",
     "gen": "node scripts/gen.mjs",
-    "check": "node scripts/check-model.mjs && node scripts/check-checkride.mjs",
+    "check": "node scripts/check-model.mjs && node scripts/check-checkride.mjs && node scripts/check-bandit.mjs && node scripts/check-figures.mjs && node scripts/check-content.mjs",
     "videos": "node scripts/yt.mjs emit",
     "check:exam": "node scripts/check-checkride.mjs"
   },
