@@ -57,6 +57,26 @@ badRows.length || orphan.length
   ? fail(`glossary: ${badRows.length} rows without provenance, ${orphan.length} orphaned`)
   : pass(`all ${tax.terms.length} glossary rows statused, sourced and in a real category`);
 
+/* A glossary row may name a figure, and a name that resolves to nothing is
+   invisible until somebody opens that one term. glossary.js already fails loudly
+   at open time, which is right, but "loud when opened" still means a broken row
+   can sit there unopened for months. This makes it loud at check time instead. */
+{
+  const named = tax.terms.filter((t) => t.figure);
+  const broken = named.filter((t) => !DIAGRAMS[t.figure]);
+  broken.length
+    ? fail(`glossary rows naming a figure that does not exist: ${broken.map((t) => `${t.term} → ${t.figure}`).join("; ")}`)
+    : pass(`all ${named.length} glossary rows that name a figure resolve to a real one`);
+
+  /* A link that cannot be checked from here is at least checked for SHAPE, so a
+     typo'd or relative URL cannot ship as an external reference. */
+  const badLinks = tax.terms.filter((t) => t.seeAlso &&
+    !(t.seeAlso.url?.startsWith("https://") && t.seeAlso.label));
+  badLinks.length
+    ? fail(`glossary rows with a malformed seeAlso: ${badLinks.map((t) => t.term).join(", ")}`)
+    : pass(`all ${tax.terms.filter((t) => t.seeAlso).length} external references are labelled https links`);
+}
+
 /* ── cross-references point where they claim to ──────────────────────────── */
 const badRefs = [];
 for (const les of LESSONS)

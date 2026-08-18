@@ -1133,6 +1133,49 @@ button { font: inherit; color: inherit; }
 .gl .term--historical b, .gl .term--sim b { color: var(--ink-2); }
 .gl .term--sim b { font-weight: 500; }
 
+/* ── a row opens ──
+   The headword is a real button so Enter, Space, the focus ring and the
+   announced role are the platform's, not ours. It is stripped back to the text
+   it was before, because the affordance a reader needs here is the row lifting
+   under the pointer, not a control drawn inside a table cell. */
+.gl tbody tr:not(.gl__cat) { cursor: pointer; }
+.gl__open {
+  display: block; width: 100%; text-align: left; padding: 0;
+  background: none; border: 0; border-radius: 0; font: inherit; color: inherit; cursor: pointer;
+}
+.gl tbody tr:not(.gl__cat):hover b { color: var(--accent); }
+
+/* The shortcut, set as keys. Same mono caption as the label it sits in — it is
+   an identifier like every other identifier on the plate, and the boxes are the
+   manual's own way of drawing a thing you press. */
+.gl__lab kbd {
+  display: inline-block; margin-left: 3px; padding: 2px 5px 1px;
+  border: var(--w-hair) solid var(--rule); font: inherit; color: var(--ink-2);
+}
+.gl__lab span { margin-left: 5px; color: var(--ink-3); }
+
+/* ── the term plate ──
+   The video plate's own furniture, narrowed. Only [open] carries the layout: a
+   bare `display` here would beat the user agent's `dialog:not([open])` rule and
+   leave a closed dialog on the page.
+   The one piece of motion on this page. It is an animation on the element
+   itself, which the global prefers-reduced-motion rule reaches — unlike a
+   ::backdrop, which is why the backdrop is left flat. */
+.vp--term { width: min(720px, 94vw); }
+.vp--term[open] { display: flex; flex-direction: column; animation: term-in 170ms var(--ease); }
+@keyframes term-in { from { opacity: 0; transform: translateY(8px); } }
+.vp--term .vp__bar span:first-child { font-weight: 600; color: var(--ink); }
+.gl__plate { min-height: 0; overflow-y: auto; padding: 18px 20px 20px; }
+.gl__plate > :last-child { margin-bottom: 0; }
+.gl__plate .term { margin-bottom: 20px; }
+.gl__plate .term__w { font-size: 20px; }
+/* The other names sit with the headword rather than under it, so the badge is
+   still the last thing on the line and the ladder still reads down the plate. */
+.gl__plate .gl__aka { flex: 1 1 auto; margin-top: 0; }
+.gl__plate .fig-host { border: var(--w-rule) solid var(--ink); margin-bottom: 20px; }
+.gl__plate .xref { margin-bottom: 14px; }
+.gl__see { margin-bottom: 0; }
+
 @media (max-width: 620px) {
   /* The index's phone grid puts the second cell beside a two-digit item number.
      Nothing in this table is two digits wide: the cells are a headword, two
@@ -1151,5 +1194,8 @@ button { font: inherit; color: inherit; }
   .gl.index .gl__d  { grid-column: 1; grid-row: 3; margin-top: 9px; }
   .gl.index .gl__cat th { grid-column: 1; }
   .gl__filter { flex-direction: column; align-items: stretch; gap: 6px; }
-  .gl__q, .gl__pick { width: 100%; }
+  /* `flex: none` and not just a width. The bar's main axis is now vertical, so
+     the search box's 250px flex-basis was being read as a HEIGHT and the field
+     opened a quarter of a phone screen tall. */
+  .gl__q, .gl__pick { width: 100%; flex: none; }
 }

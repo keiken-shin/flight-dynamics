@@ -2172,4 +2172,67 @@ D["intercept-timeline/skate-or-banzai"] = () => {
   });
 };
 
+/* ══ tactical-pictures ════════════════════════════════════════════════════
+
+   Seven labels, on one plate. A picture label IS its arrangement — there is no
+   physics here to get wrong, only a shape and the word for it — so the whole
+   subject is a drawing, and prose is the worst possible way to carry it.
+
+   One plate rather than seven, because the confusion these words cause is a
+   confusion BETWEEN them: VIC and CHAMPAGNE are the same three groups with the
+   single one at opposite ends, and nobody holds that from two sentences. Side
+   by side it is one glance.
+
+   Every mark is `threat`, and that is the argument as much as the drawing. WALL,
+   LADDER, BOX and VIC are all words for friendly formations too, and the source
+   warns about exactly that collision — so nothing friendly is drawn on this
+   plate at all, and the last state says so in as many words.
+
+   A group is drawn as the threat kind's bare open ring and NOT as an aeroplane
+   with a nose. Two reasons, and both are about not saying more than the label
+   does: a group is however many contacts the grouping criteria treat as one
+   thing, so it has no single heading to point; and a picture label carries no
+   claim about heading at all. A nose on these would be an invented fact, which
+   is the one thing a figure may not contain. §1a then holds for free — there is
+   nothing here that could be mistaken for an arrow. */
+D["tactical-pictures/labels"] = () => {
+  const R1 = 118, R2 = 282;            // the two rows of cells
+  const AZ = 46, RG = 30;              // px — the azimuth and the range split in a cell
+  const grp = (x, y) => dot(x, y, "threat", 7);
+  const cell = (cx, cy, label, at3) =>
+    at3.map(([dx, dy]) => grp(cx + dx, cy + dy)).join("") +
+    chip(cx, cy + 68, label, "threat", { small: true });
+  const says = (cx, cy, t) => chip(cx, cy - 56, t, "angle", { small: true });
+
+  return figure({
+    vb: "0 0 860 480",
+    title: "The seven picture labels, drawn",
+    desc: "Seven arrangements of detected groups, each group drawn as an open ring and each arrangement captioned with the label it earns. Range increases up the plate, so a lower ring is a nearer group; azimuth runs across it. Azimuth is two groups side by side at the same range. Range is two groups one behind the other. Wall is three groups abreast. Ladder is three groups in depth. Vic is one group leading with two trailing it side by side. Champagne is two groups leading side by side with one trailing behind them. Box is two leading and two trailing. Nothing friendly is drawn anywhere on the plate, because a picture label describes contacts and never a friendly formation.",
+    captions: [
+      "Two groups, and two ways for them to be apart: across your nose, or one behind the other.",
+      "Three or more of either, and each gets its own word — abreast is a wall, in depth is a ladder.",
+      "Three groups with one of them alone. VIC puts the single group in front; CHAMPAGNE puts it behind.",
+      "Four, two and two. And not one of these says how anybody is flying — every ring here is a contact.",
+    ],
+    states: [
+      /* The frame first, because every cell below is read against it, and the
+         connectors before their rings so the rings sit on top. */
+      note(430, 28, "Range increases up the plate, so the lower ring is the nearer group.") +
+        dashed(115 - AZ, R1, 115 + AZ, R1, "ref") +
+        dashed(325, R1 - RG, 325, R1 + RG, "ref") +
+        cell(115, R1, "AZIMUTH", [[-AZ, 0], [AZ, 0]]) + says(115, R1, "side by side") +
+        cell(325, R1, "RANGE", [[0, -RG], [0, RG]]) + says(325, R1, "one behind the other"),
+      cell(535, R1, "WALL", [[-58, 0], [0, 0], [58, 0]]) +
+        cell(745, R1, "LADDER", [[0, -42], [0, 0], [0, 42]]),
+      cell(220, R2, "VIC", [[0, RG], [-AZ, -RG], [AZ, -RG]]) +
+        says(220, R2, "the single group leads") +
+        cell(430, R2, "CHAMPAGNE", [[-AZ, RG], [AZ, RG], [0, -RG]]) +
+        says(430, R2, "the single group trails"),
+      cell(640, R2, "BOX", [[-AZ, -RG], [AZ, -RG], [-AZ, RG], [AZ, RG]]) +
+        note(430, 400, "These name how CONTACTS are arranged, and nothing about how anybody is flying.") +
+        note(430, 422, "WALL is not line abreast, RANGE is not a trail formation, BOX is not a four-ship box."),
+    ],
+  });
+};
+
 export default D;

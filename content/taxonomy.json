@@ -1,5 +1,6 @@
 {
   "$comment": "The Part II lookup appendix. NOT a lesson and NOT part of the progression — it is reference, it is not numbered, and it must never be fed to buildDeck. Every row carries a provenance status; anything whose standing could not be established was dropped rather than guessed, which is why this is shorter than the source.",
+  "$optionalKeys": "Two keys are optional on a row and both are hand-authored. 'figure' names a key in src/data/diagrams.js and is set ONLY where that figure's finished state actually shows the term — the lookup draws the complete plate, not a stepped build, and a figure that shows something adjacent is worse than no figure. 'seeAlso' is { label, url } and points outside the course; the label must say what kind of source it is, because a link presented without its standing is the same failure the status ladder exists to prevent. Which chapter teaches a word is NOT recorded here — glossary.js derives it from LESSONS so it cannot go stale.",
   "$provenance": "These rows were transcribed from a secondary source that cites the January 2025 multi-service brevity publication. Nobody on this project has opened the primary publication — it is not reachable from here — so every 'multi-service' row should be read as 'a transcription says so', not as first-hand. Brevity definitions move between editions, which is why the edition is named at all.",
   "categories": [
     {
@@ -203,7 +204,8 @@
       "means": "Begin an intercept against the group of interest according to the criteria briefed beforehand.",
       "confusedWith": "PRESS, which approves continuing an action already under way rather than starting the intercept",
       "status": "multi-service",
-      "src": "Multi-service brevity codes, January 2025"
+      "src": "Multi-service brevity codes, January 2025",
+      "figure": "intercept-timeline/timeline"
     },
     {
       "term": "TARGET",
@@ -234,7 +236,8 @@
       "means": "Allocate responsibility for the individual contacts within a single group.",
       "confusedWith": "TARGET, which allocates responsibility at the level of whole groups rather than inside one",
       "status": "multi-service",
-      "src": "Multi-service brevity codes, January 2025"
+      "src": "Multi-service brevity codes, January 2025",
+      "figure": "intercept-timeline/timeline"
     },
     {
       "term": "SORTED",
@@ -329,7 +332,12 @@
       "means": "Turn laterally while holding the target near the radar gimbal limits, which cuts closure without giving up radar support.",
       "confusedWith": "F-pole, which is a distance metric and not a manoeuvre, though cranking is often flown to improve it",
       "status": "multi-service",
-      "src": "Multi-service brevity codes, January 2025"
+      "src": "Multi-service brevity codes, January 2025",
+      "figure": "bvr-geometry/crank-beam-notch",
+      "seeAlso": {
+        "label": "Worked BVR examples — a flight-simulator community thread on the Mudspike forums, and where this taxonomy's list came from",
+        "url": "https://forums.mudspike.com/t/bvr-combat-maneuvering-examples-www-masterarms-se/9977"
+      }
     },
     {
       "term": "Beam",
@@ -342,7 +350,12 @@
       "means": "Put the threat roughly on the 3-9 line, which brevity uses as a contact aspect and pilots use as geometry to fly.",
       "confusedWith": "notch, since beam names an aspect and not the doppler rejection that beam geometry is usually flown to achieve",
       "status": "multi-service",
-      "src": "Multi-service brevity codes, January 2025"
+      "src": "Multi-service brevity codes, January 2025",
+      "figure": "bvr-geometry/crank-beam-notch",
+      "seeAlso": {
+        "label": "Worked BVR examples — a flight-simulator community thread on the Mudspike forums, and where this taxonomy's list came from",
+        "url": "https://forums.mudspike.com/t/bvr-combat-maneuvering-examples-www-masterarms-se/9977"
+      }
     },
     {
       "term": "Notch",
@@ -355,7 +368,12 @@
       "means": "Manoeuvre defensively with reference to a threat, in practice arranging low radial velocity so a doppler radar rejects the return, often helped by ground clutter, altitude change and chaff.",
       "confusedWith": "beam, since every successful doppler notch uses beam-like geometry but beaming alone does not guarantee the rejection",
       "status": "multi-service",
-      "src": "Multi-service brevity codes, January 2025"
+      "src": "Multi-service brevity codes, January 2025",
+      "figure": "bvr-geometry/crank-beam-notch",
+      "seeAlso": {
+        "label": "Worked BVR examples — a flight-simulator community thread on the Mudspike forums, and where this taxonomy's list came from",
+        "url": "https://forums.mudspike.com/t/bvr-combat-maneuvering-examples-www-masterarms-se/9977"
+      }
     },
     {
       "term": "Drag",
@@ -476,7 +494,12 @@
       "means": "Execute the prebriefed launch-and-leave tactic at the briefed range: shoot, then separate instead of pressing to the merge.",
       "confusedWith": "crank, which is a single manoeuvre inside an engagement rather than a whole prebriefed flow",
       "status": "multi-service",
-      "src": "Multi-service brevity codes, January 2025"
+      "src": "Multi-service brevity codes, January 2025",
+      "figure": "intercept-timeline/skate-or-banzai",
+      "seeAlso": {
+        "label": "Worked BVR examples — a flight-simulator community thread on the Mudspike forums, and where this taxonomy's list came from",
+        "url": "https://forums.mudspike.com/t/bvr-combat-maneuvering-examples-www-masterarms-se/9977"
+      }
     },
     {
       "term": "Short Skate",
@@ -487,7 +510,11 @@
       "means": "A modifier of SKATE rather than a manoeuvre of its own, setting a closer briefed range and timeline for the launch-and-leave.",
       "confusedWith": "a closer crank, which it is not, since the range and timeline come from the brief attached to the SKATE call",
       "status": "multi-service",
-      "src": "Multi-service brevity codes, January 2025"
+      "src": "Multi-service brevity codes, January 2025",
+      "seeAlso": {
+        "label": "Worked BVR examples — a flight-simulator community thread on the Mudspike forums, and where this taxonomy's list came from",
+        "url": "https://forums.mudspike.com/t/bvr-combat-maneuvering-examples-www-masterarms-se/9977"
+      }
     },
     {
       "term": "Long Skate",
@@ -520,7 +547,12 @@
       "means": "Execute the launch-and-decide tactic: shoot, then keep manoeuvring towards the visual arena if the briefed criteria support it.",
       "confusedWith": "pressing regardless of the situation, when the whole point is a decision measured against briefed criteria after the shot",
       "status": "multi-service",
-      "src": "Multi-service brevity codes, January 2025"
+      "src": "Multi-service brevity codes, January 2025",
+      "figure": "intercept-timeline/skate-or-banzai",
+      "seeAlso": {
+        "label": "Worked BVR examples — a flight-simulator community thread on the Mudspike forums, and where this taxonomy's list came from",
+        "url": "https://forums.mudspike.com/t/bvr-combat-maneuvering-examples-www-masterarms-se/9977"
+      }
     },
     {
       "term": "Line abreast",
@@ -588,7 +620,8 @@
       "means": "Two detected groups separated mainly side to side across your nose.",
       "confusedWith": "line abreast, which is a friendly formation rather than a description of how contacts are arranged",
       "status": "multi-service",
-      "src": "Multi-service Air Control Communication TTP, October 2024"
+      "src": "Multi-service Air Control Communication TTP, October 2024",
+      "figure": "tactical-pictures/labels"
     },
     {
       "term": "Range",
@@ -599,7 +632,8 @@
       "means": "Two detected groups separated mainly in depth, one behind the other.",
       "confusedWith": "trail formation, which is how friendly aircraft are flying rather than how contacts are arranged",
       "status": "multi-service",
-      "src": "Multi-service Air Control Communication TTP, October 2024"
+      "src": "Multi-service Air Control Communication TTP, October 2024",
+      "figure": "tactical-pictures/labels"
     },
     {
       "term": "Wall",
@@ -610,7 +644,8 @@
       "means": "Three or more detected groups spread mainly in azimuth.",
       "confusedWith": "a friendly line-abreast formation; WALL says how the groups appear in the tactical picture, not that those aircraft are flying any particular formation",
       "status": "multi-service",
-      "src": "Multi-service Air Control Communication TTP, October 2024"
+      "src": "Multi-service Air Control Communication TTP, October 2024",
+      "figure": "tactical-pictures/labels"
     },
     {
       "term": "Ladder",
@@ -621,7 +656,8 @@
       "means": "Three or more detected groups stacked in range, one behind the other.",
       "confusedWith": "trail formation, which describes friendly aircraft rather than detected groups",
       "status": "multi-service",
-      "src": "Multi-service Air Control Communication TTP, October 2024"
+      "src": "Multi-service Air Control Communication TTP, October 2024",
+      "figure": "tactical-pictures/labels"
     },
     {
       "term": "Champagne",
@@ -632,7 +668,8 @@
       "means": "Three detected groups arranged so that azimuth and range separation combine in a defined relationship.",
       "confusedWith": "VIC, the other three-group picture, which places the single group at the opposite end of the arrangement",
       "status": "multi-service",
-      "src": "Multi-service Air Control Communication TTP, October 2024"
+      "src": "Multi-service Air Control Communication TTP, October 2024",
+      "figure": "tactical-pictures/labels"
     },
     {
       "term": "Vic",
@@ -643,7 +680,8 @@
       "means": "Three detected groups with one group leading and two groups trailing it in range and separated in azimuth.",
       "confusedWith": "CHAMPAGNE, which is also a three-group picture but with the single group at the other end",
       "status": "multi-service",
-      "src": "Multi-service Air Control Communication TTP, October 2024"
+      "src": "Multi-service Air Control Communication TTP, October 2024",
+      "figure": "tactical-pictures/labels"
     },
     {
       "term": "Box",
@@ -654,7 +692,8 @@
       "means": "Four detected groups arranged as two lead groups and two trail groups.",
       "confusedWith": "a four-ship box formation, which describes your own aircraft rather than the contacts on the scope",
       "status": "multi-service",
-      "src": "Multi-service Air Control Communication TTP, October 2024"
+      "src": "Multi-service Air Control Communication TTP, October 2024",
+      "figure": "tactical-pictures/labels"
     },
     {
       "term": "Stack",
@@ -697,7 +736,11 @@
       "category": "multi-ship",
       "means": "A loose general description of converging pressure applied from opposed axes.",
       "confusedWith": "BRACKET and PINCE, which are precise brevity words with assigned meanings, whereas pincer gets used loosely for either and should not be treated as equivalent to either",
-      "status": "historical"
+      "status": "historical",
+      "seeAlso": {
+        "label": "Worked BVR examples — a flight-simulator community thread on the Mudspike forums, and where this taxonomy's list came from",
+        "url": "https://forums.mudspike.com/t/bvr-combat-maneuvering-examples-www-masterarms-se/9977"
+      }
     },
     {
       "term": "Defensive split",
@@ -707,7 +750,11 @@
       "category": "multi-ship",
       "means": "Formation members deliberately separate when attacked so the attacker must choose one, opening a chance for the other to come back on him.",
       "confusedWith": "the brevity word SPLIT, which means a flight member leaving to press a separate attack, not a reaction to being attacked",
-      "status": "sim"
+      "status": "sim",
+      "seeAlso": {
+        "label": "Worked BVR examples — a flight-simulator community thread on the Mudspike forums, and where this taxonomy's list came from",
+        "url": "https://forums.mudspike.com/t/bvr-combat-maneuvering-examples-www-masterarms-se/9977"
+      }
     },
     {
       "term": "Split",
@@ -749,7 +796,11 @@
       "category": "multi-ship",
       "means": "A two-aircraft mutual-support scheme from the Vietnam era in which either fighter may take over as the attacker as the fight develops.",
       "confusedWith": "the modern engaged and supporting contract, which assigns those roles explicitly rather than letting them pass back and forth by opportunity",
-      "status": "historical"
+      "status": "historical",
+      "seeAlso": {
+        "label": "Worked BVR examples — a flight-simulator community thread on the Mudspike forums, and where this taxonomy's list came from",
+        "url": "https://forums.mudspike.com/t/bvr-combat-maneuvering-examples-www-masterarms-se/9977"
+      }
     },
     {
       "term": "Drag-and-bag",
@@ -825,7 +876,8 @@
       "means": "How the target is oriented relative to you, measured from its tail round to your position.",
       "confusedWith": "heading crossing angle, which measures the difference between the two headings rather than the target's orientation to you",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "three-numbers/three-angles"
     },
     {
       "term": "Heading crossing angle",
@@ -836,7 +888,8 @@
       "means": "The angular difference between your heading and the target's heading.",
       "confusedWith": "aspect angle, which is measured from the target's tail to you and can be very different from the heading difference",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "three-numbers/three-angles"
     },
     {
       "term": "Lead pursuit",
@@ -847,7 +900,8 @@
       "means": "You point ahead of where the target is now, which cuts across its path and builds closure.",
       "confusedWith": "a lead turn, which is a manoeuvre begun before the pass rather than one of the three pursuit curves",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "pursuit-curves/three-curves"
     },
     {
       "term": "Pure pursuit",
@@ -858,7 +912,8 @@
       "means": "You point your nose directly at the target.",
       "confusedWith": "a collision-course lead, which points ahead of the target to meet it rather than at where it currently is",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "pursuit-curves/three-curves"
     },
     {
       "term": "Lag pursuit",
@@ -869,7 +924,8 @@
       "means": "You point behind the target, which bleeds off closure and buys room to solve the angles.",
       "confusedWith": "an extension, which is separating from the fight entirely with intent to return, whereas lag stays inside the turn",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "pursuit-curves/three-curves"
     },
     {
       "term": "Turn rate",
@@ -880,7 +936,8 @@
       "means": "How quickly you change heading.",
       "confusedWith": "turn radius, which is how much sky the turn consumes rather than how fast the nose comes round",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "rate-and-radius/two-turns"
     },
     {
       "term": "Turn radius",
@@ -889,7 +946,8 @@
       "means": "How much sky your turn takes up.",
       "confusedWith": "turn rate, since a fast turn is not automatically a tight one and the two trade against each other with speed",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "rate-and-radius/two-turns"
     },
     {
       "term": "Corner velocity",
@@ -900,7 +958,8 @@
       "means": "The speed region where the G limit and the lift limit meet, giving the best available turn performance for that aircraft and configuration.",
       "confusedWith": "best sustained-rate speed, which is about holding a turn indefinitely rather than peaking it, and is usually a different number",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "rate-and-radius/doghouse"
     },
     {
       "term": "Energy state",
@@ -911,7 +970,8 @@
       "means": "Your combined speed and altitude, which is what you actually have to spend on manoeuvring.",
       "confusedWith": "airspeed alone, which ignores the altitude you can trade back into speed",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "energy-rate/yo-yo"
     },
     {
       "term": "Turning room",
@@ -922,7 +982,8 @@
       "means": "The displacement available for you to turn in before your flightpath conflicts with the opponent's.",
       "confusedWith": "raw separation, since range directly behind an opponent with no lateral or vertical offset gives you nothing to turn in",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "one-or-two-circle/one-circle"
     },
     {
       "term": "Control zone",
@@ -944,7 +1005,8 @@
       "means": "The fighters turn in opposite directions after the pass and share one common turning circle.",
       "confusedWith": "the rule that it is always a radius fight, when radius tends to dominate but does not decide the outcome by itself",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "one-or-two-circle/one-circle"
     },
     {
       "term": "Two-circle fight",
@@ -955,7 +1017,8 @@
       "means": "The fighters turn in the same relative direction after the pass, each on its own circle.",
       "confusedWith": "the rule that it is always a rate fight, when rate tends to dominate but does not decide the outcome by itself",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "one-or-two-circle/two-circle"
     },
     {
       "term": "Flightpath overshoot",
@@ -966,7 +1029,8 @@
       "means": "The attacker's flightpath crosses the defender's flightpath.",
       "confusedWith": "a 3/9-line overshoot, which is about passing forward of the defender's wingline and can cost you the advantage outright",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "overshoots/two-overshoots"
     },
     {
       "term": "3/9-line overshoot",
@@ -977,7 +1041,8 @@
       "means": "The attacker slides forward of the defender's wingline, which can hand the positional advantage over.",
       "confusedWith": "a flightpath overshoot, which crosses the defender's path without necessarily giving up position",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "overshoots/two-overshoots"
     },
     {
       "term": "Lead turn",
@@ -1008,7 +1073,8 @@
       "means": "You trade speed for height and pull the nose across, killing excess closure while holding onto the angles.",
       "confusedWith": "a pure vertical manoeuvre, since a high yo-yo mostly stays in the plane of the fight and comes straight back down into position",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "energy-rate/yo-yo"
     },
     {
       "term": "Low yo-yo",
@@ -1059,7 +1125,8 @@
       "means": "Both fighters reverse back and forth in the horizontal, each trying to force the other out in front.",
       "confusedWith": "rolling scissors, which fights the same battle through the vertical rather than flat on the deck",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "overshoots/scissors"
     },
     {
       "term": "Rolling scissors",
@@ -1070,7 +1137,8 @@
       "means": "Both fighters roll over and around each other through the vertical, trading who is ahead as they go.",
       "confusedWith": "flat scissors, which is the horizontal version and rewards different aircraft qualities",
       "status": "service",
-      "src": "AETC fighter-training TTP, December 2024"
+      "src": "AETC fighter-training TTP, December 2024",
+      "figure": "overshoots/scissors"
     },
     {
       "term": "Reversal",
