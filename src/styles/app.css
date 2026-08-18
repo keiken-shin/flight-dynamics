@@ -1168,7 +1168,11 @@ button { font: inherit; color: inherit; }
 .gl__plate { min-height: 0; overflow-y: auto; padding: 18px 20px 20px; }
 .gl__plate > :last-child { margin-bottom: 0; }
 .gl__plate .term { margin-bottom: 20px; }
-.gl__plate .term__w { font-size: 20px; }
+/* 19px is the Title step. The headword wants to be larger here than in a
+   chapter, where it is set-apart body at 18px — in the dialog it IS the
+   subject rather than one card among several — but larger has to mean the next
+   documented step, not a number chosen by eye. */
+.gl__plate .term__w { font-size: 19px; }
 /* The other names sit with the headword rather than under it, so the badge is
    still the last thing on the line and the ladder still reads down the plate. */
 .gl__plate .gl__aka { flex: 1 1 auto; margin-top: 0; }
